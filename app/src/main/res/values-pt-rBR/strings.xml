@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Brazilian Portuguese. CLDR plural rule for pt-BR treats 0 and 1 both as "one". -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">Voltar</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_save">Salvar</string>
+    <string name="common_delete">Excluir</string>
+    <string name="common_share">Compartilhar</string>
+    <string name="common_search">Pesquisar</string>
+    <string name="common_undo">Desfazer</string>
+    <string name="common_close">Fechar</string>
+
+    <string name="scan_title">Digitalizar</string>
+    <string name="scan_heading">Digitalizar um documento</string>
+    <string name="scan_subtitle">Capture com a câmera ou importe algo que você já tem.</string>
+    <string name="scan_camera_button">Digitalizar com a câmera</string>
+    <string name="scan_gallery_button">Importar da galeria</string>
+    <string name="scan_pdf_button">Importar PDF</string>
+    <string name="scan_mode_document">Documento</string>
+    <string name="scan_mode_receipt">Recibo</string>
+    <string name="scan_mode_id_card">Identidade</string>
+    <string name="scan_mode_book">Livro</string>
+    <string name="scan_shutter_hint">Toque no obturador para capturar</string>
+    <string name="scan_shutter_cd">Digitalizar um documento</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d página capturada — toque para continuar</item>
+        <item quantity="other">%1$d páginas capturadas — toque para continuar</item>
+    </plurals>
+
+    <string name="review_title">Revisar</string>
+    <plurals name="review_title_pages">
+        <item quantity="one">Revisar (%1$d página)</item>
+        <item quantity="other">Revisar (%1$d páginas)</item>
+    </plurals>
+    <string name="review_discard">Descartar</string>
+    <string name="review_empty_title">Nenhuma digitalização em andamento</string>
+    <string name="review_empty_message">Inicie uma nova digitalização para vê-la aqui.</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF importado — %1$d página</item>
+        <item quantity="other">PDF importado — %1$d páginas</item>
+    </plurals>
+    <string name="review_action_crop">Recortar</string>
+    <string name="review_action_rotate">Girar</string>
+    <string name="review_action_retake">Refazer</string>
+    <string name="review_no_pages_title">Ainda não há páginas</string>
+    <string name="review_no_pages_message">Adicione uma página para começar.</string>
+    <string name="review_add_page">Adicionar página</string>
+    <string name="review_page_being_cropped_desc">Página sendo recortada</string>
+
+    <string name="filter_original">Original</string>
+    <string name="filter_black_and_white">Preto e branco</string>
+    <string name="filter_greyscale">Escala de cinza</string>
+    <string name="filter_enhance">Melhorar</string>
+
+    <string name="save_sheet_title">Salvar documento</string>
+    <string name="save_name_label">Nome</string>
+    <string name="save_folder_label">Pasta</string>
+    <string name="save_no_folder">Sem pasta</string>
+    <string name="save_new_folder_chip">+ Nova</string>
+    <string name="save_new_folder_name_label">Nome da nova pasta</string>
+    <string name="save_add_folder">Adicionar</string>
+    <string name="save_format_label">Formato</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">Imagens separadas</string>
+    <string name="save_button_saving">Salvando…</string>
+    <string name="save_progress_processing_page">Processando página %1$d de %2$d…</string>
+    <string name="save_progress_writing_file">Gravando arquivo…</string>
+    <string name="save_progress_saving_library">Salvando na biblioteca…</string>
+
+    <string name="library_up_desc">Subir</string>
+    <string name="library_toggle_view_desc">Alternar visualização de grade/lista</string>
+    <string name="library_switch_to_grid">Mudar para visualização em grade</string>
+    <string name="library_switch_to_list">Mudar para visualização em lista</string>
+    <string name="library_sort_desc">Ordenar</string>
+    <string name="library_sort_by">Ordenar por %1$s</string>
+    <string name="sort_date">data</string>
+    <string name="sort_name">nome</string>
+    <string name="sort_size">tamanho</string>
+    <string name="library_more_desc">Mais</string>
+    <string name="library_new_folder">Nova pasta</string>
+    <string name="library_filter_by">Filtro: %1$s</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_plain">Documentos simples</string>
+    <string name="filter_receipt">Recibos</string>
+    <string name="filter_warranty">Garantias</string>
+    <string name="library_recently_deleted">Excluídos recentemente</string>
+    <string name="library_scan_a_document">Digitalizar um documento</string>
+    <string name="library_empty_title">Ainda não há documentos</string>
+    <string name="library_empty_message">Digitalize um recibo, cartão de garantia ou qualquer documento em papel para começar.</string>
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d selecionado</item>
+        <item quantity="other">%1$d selecionados</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">Cancelar seleção</string>
+    <string name="library_move_desc">Mover</string>
+    <string name="library_selected_desc">Selecionado</string>
+    <string name="library_not_selected_desc">Não selecionado</string>
+    <string name="library_document_actions_desc">Mais ações</string>
+    <string name="library_create_folder">Criar</string>
+    <string name="library_moved_to_recently_deleted_one">Movido para Excluídos recentemente</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d itens movidos para Excluídos recentemente</string>
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d página</item>
+        <item quantity="other">%1$d páginas</item>
+    </plurals>
+    <string name="library_type_receipt_desc">Recibo</string>
+    <string name="library_type_warranty_desc">Garantia</string>
+
+    <string name="search_placeholder">Pesquise seus documentos</string>
+    <string name="search_empty_title">Pesquise tudo o que você já digitalizou</string>
+    <string name="search_empty_message">Encontre um documento por qualquer texto que o ML Kit tenha lido na página — sem precisar lembrar em qual pasta ele está.</string>
+    <string name="search_no_results_title">Nenhum resultado</string>
+    <string name="search_no_results_message">Nada correspondeu a “%1$s”.</string>
+    <string name="search_page_label">Página %1$d</string>
+
+    <string name="unlock_title">Premium</string>
+    <string name="unlock_owned_title">Você tem o Premium</string>
+    <string name="unlock_owned_message">Obrigado — todos os recursos abaixo estão desbloqueados neste aparelho, para sempre. Sem renovação, nada mais para comprar.</string>
+    <string name="unlock_title_cta">Desbloquear Premium</string>
+    <string name="unlock_message">Uma compra única, para sempre — sem assinatura, nada recorrente. Tudo o mais no Docket já funciona totalmente offline e continua gratuito de qualquer forma.</string>
+    <string name="unlock_benefit_batch_export">Exportação em lote — envie vários documentos de uma vez</string>
+    <string name="unlock_benefit_text_layer">Camada de texto pesquisável em PDFs exportados</string>
+    <string name="unlock_benefit_languages">Idiomas adicionais de OCR além do embutido</string>
+    <string name="unlock_benefit_folders">Pastas ilimitadas</string>
+    <string name="unlock_button_working">Processando…</string>
+    <string name="unlock_button_with_price">Desbloquear Premium — %1$s</string>
+    <string name="unlock_restore">Restaurar compras</string>
+</resources>

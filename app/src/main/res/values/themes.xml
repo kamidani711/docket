@@ -1,0 +1,10 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+        Base application theme. Content is all Compose (Material 3), so this XML theme only
+        needs to cover the window before Compose takes over and system bar styling.
+    -->
+    <style name="Theme.Docket" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+    </style>
+</resources>

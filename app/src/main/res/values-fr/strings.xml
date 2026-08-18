@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- French. CLDR plural rule for French treats 0 and 1 both as "one". -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">Retour</string>
+    <string name="common_cancel">Annuler</string>
+    <string name="common_save">Enregistrer</string>
+    <string name="common_delete">Supprimer</string>
+    <string name="common_share">Partager</string>
+    <string name="common_search">Rechercher</string>
+    <string name="common_undo">Annuler l\'action</string>
+    <string name="common_close">Fermer</string>
+
+    <string name="scan_title">Numériser</string>
+    <string name="scan_heading">Numériser un document</string>
+    <string name="scan_subtitle">Capturez avec votre appareil photo, ou importez un document que vous avez déjà.</string>
+    <string name="scan_camera_button">Numériser avec l\'appareil photo</string>
+    <string name="scan_gallery_button">Importer depuis la galerie</string>
+    <string name="scan_pdf_button">Importer un PDF</string>
+    <string name="scan_mode_document">Document</string>
+    <string name="scan_mode_receipt">Reçu</string>
+    <string name="scan_mode_id_card">Carte d\'identité</string>
+    <string name="scan_mode_book">Livre</string>
+    <string name="scan_shutter_hint">Appuyez sur le déclencheur pour numériser</string>
+    <string name="scan_shutter_cd">Numériser un document</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d page capturée — appuyez pour continuer</item>
+        <item quantity="other">%1$d pages capturées — appuyez pour continuer</item>
+    </plurals>
+
+    <string name="review_title">Vérification</string>
+    <plurals name="review_title_pages">
+        <item quantity="one">Vérification (%1$d page)</item>
+        <item quantity="other">Vérification (%1$d pages)</item>
+    </plurals>
+    <string name="review_discard">Abandonner</string>
+    <string name="review_empty_title">Aucune numérisation en cours</string>
+    <string name="review_empty_message">Démarrez une nouvelle numérisation pour la voir ici.</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF importé — %1$d page</item>
+        <item quantity="other">PDF importé — %1$d pages</item>
+    </plurals>
+    <string name="review_action_crop">Recadrer</string>
+    <string name="review_action_rotate">Pivoter</string>
+    <string name="review_action_retake">Reprendre</string>
+    <string name="review_no_pages_title">Aucune page pour l\'instant</string>
+    <string name="review_no_pages_message">Ajoutez une page pour commencer.</string>
+    <string name="review_add_page">Ajouter une page</string>
+    <string name="review_page_being_cropped_desc">Page en cours de recadrage</string>
+
+    <string name="filter_original">Original</string>
+    <string name="filter_black_and_white">Noir et blanc</string>
+    <string name="filter_greyscale">Niveaux de gris</string>
+    <string name="filter_enhance">Améliorer</string>
+
+    <string name="save_sheet_title">Enregistrer le document</string>
+    <string name="save_name_label">Nom</string>
+    <string name="save_folder_label">Dossier</string>
+    <string name="save_no_folder">Aucun dossier</string>
+    <string name="save_new_folder_chip">+ Nouveau</string>
+    <string name="save_new_folder_name_label">Nom du nouveau dossier</string>
+    <string name="save_add_folder">Ajouter</string>
+    <string name="save_format_label">Format</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">Images séparées</string>
+    <string name="save_button_saving">Enregistrement…</string>
+    <string name="save_progress_processing_page">Traitement de la page %1$d sur %2$d…</string>
+    <string name="save_progress_writing_file">Écriture du fichier…</string>
+    <string name="save_progress_saving_library">Enregistrement dans la bibliothèque…</string>
+
+    <string name="library_up_desc">Remonter</string>
+    <string name="library_toggle_view_desc">Basculer entre grille et liste</string>
+    <string name="library_switch_to_grid">Passer à la vue grille</string>
+    <string name="library_switch_to_list">Passer à la vue liste</string>
+    <string name="library_sort_desc">Trier</string>
+    <string name="library_sort_by">Trier par %1$s</string>
+    <string name="sort_date">date</string>
+    <string name="sort_name">nom</string>
+    <string name="sort_size">taille</string>
+    <string name="library_more_desc">Plus</string>
+    <string name="library_new_folder">Nouveau dossier</string>
+    <string name="library_filter_by">Filtre : %1$s</string>
+    <string name="filter_all">Tous</string>
+    <string name="filter_plain">Documents simples</string>
+    <string name="filter_receipt">Reçus</string>
+    <string name="filter_warranty">Garanties</string>
+    <string name="library_recently_deleted">Supprimés récemment</string>
+    <string name="library_scan_a_document">Numériser un document</string>
+    <string name="library_empty_title">Aucun document pour l\'instant</string>
+    <string name="library_empty_message">Numérisez un reçu, une carte de garantie, ou tout document papier pour commencer.</string>
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d sélectionné</item>
+        <item quantity="other">%1$d sélectionnés</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">Annuler la sélection</string>
+    <string name="library_move_desc">Déplacer</string>
+    <string name="library_selected_desc">Sélectionné</string>
+    <string name="library_not_selected_desc">Non sélectionné</string>
+    <string name="library_document_actions_desc">Plus d\'actions</string>
+    <string name="library_create_folder">Créer</string>
+    <string name="library_moved_to_recently_deleted_one">Déplacé vers Supprimés récemment</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d éléments déplacés vers Supprimés récemment</string>
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <string name="library_type_receipt_desc">Reçu</string>
+    <string name="library_type_warranty_desc">Garantie</string>
+
+    <string name="search_placeholder">Rechercher dans vos documents</string>
+    <string name="search_empty_title">Recherchez dans tout ce que vous avez numérisé</string>
+    <string name="search_empty_message">Trouvez un document grâce à n\'importe quel texte lu par ML Kit sur la page — pas besoin de vous souvenir du dossier où il se trouve.</string>
+    <string name="search_no_results_title">Aucun résultat</string>
+    <string name="search_no_results_message">Rien ne correspond à « %1$s ».</string>
+    <string name="search_page_label">Page %1$d</string>
+
+    <string name="unlock_title">Premium</string>
+    <string name="unlock_owned_title">Vous avez Premium</string>
+    <string name="unlock_owned_message">Merci — chaque fonctionnalité ci-dessous est déverrouillée sur cet appareil, définitivement. Pas de renouvellement, plus rien à acheter.</string>
+    <string name="unlock_title_cta">Déverrouiller Premium</string>
+    <string name="unlock_message">Un seul achat, pour toujours — pas d\'abonnement, rien de récurrent. Tout le reste de Docket fonctionne déjà entièrement hors connexion et reste gratuit dans tous les cas.</string>
+    <string name="unlock_benefit_batch_export">Export groupé — envoyez plusieurs documents à la fois</string>
+    <string name="unlock_benefit_text_layer">Une couche de texte consultable dans les PDF exportés</string>
+    <string name="unlock_benefit_languages">Langues de reconnaissance de texte supplémentaires en plus de celle intégrée</string>
+    <string name="unlock_benefit_folders">Dossiers illimités</string>
+    <string name="unlock_button_working">Traitement…</string>
+    <string name="unlock_button_with_price">Déverrouiller Premium — %1$s</string>
+    <string name="unlock_restore">Restaurer les achats</string>
+</resources>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Indonesian. Uses the "in" resource qualifier rather than "id" for broadest Android version
+     compatibility (a long-standing java.util.Locale quirk both old and current AGP/Android
+     tooling still expect "in" for). CLDR has no singular/plural distinction for Indonesian, so
+     each <plurals> below supplies only the "other" bucket — that's correct, not incomplete. -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">Kembali</string>
+    <string name="common_cancel">Batal</string>
+    <string name="common_save">Simpan</string>
+    <string name="common_delete">Hapus</string>
+    <string name="common_share">Bagikan</string>
+    <string name="common_search">Cari</string>
+    <string name="common_undo">Urungkan</string>
+    <string name="common_close">Tutup</string>
+
+    <string name="scan_title">Pindai</string>
+    <string name="scan_heading">Pindai dokumen</string>
+    <string name="scan_subtitle">Ambil gambar dengan kamera, atau impor dokumen yang sudah Anda miliki.</string>
+    <string name="scan_camera_button">Pindai dengan kamera</string>
+    <string name="scan_gallery_button">Impor dari galeri</string>
+    <string name="scan_pdf_button">Impor PDF</string>
+    <string name="scan_mode_document">Dokumen</string>
+    <string name="scan_mode_receipt">Struk</string>
+    <string name="scan_mode_id_card">KTP</string>
+    <string name="scan_mode_book">Buku</string>
+    <string name="scan_shutter_hint">Ketuk tombol rana untuk memindai</string>
+    <string name="scan_shutter_cd">Pindai dokumen</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="other">%1$d halaman diambil — ketuk untuk lanjut</item>
+    </plurals>
+
+    <string name="review_title">Tinjau</string>
+    <plurals name="review_title_pages">
+        <item quantity="other">Tinjau (%1$d halaman)</item>
+    </plurals>
+    <string name="review_discard">Buang</string>
+    <string name="review_empty_title">Tidak ada pemindaian yang berlangsung</string>
+    <string name="review_empty_message">Mulai pemindaian baru untuk melihatnya di sini.</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="other">PDF diimpor — %1$d halaman</item>
+    </plurals>
+    <string name="review_action_crop">Pangkas</string>
+    <string name="review_action_rotate">Putar</string>
+    <string name="review_action_retake">Ambil ulang</string>
+    <string name="review_no_pages_title">Belum ada halaman</string>
+    <string name="review_no_pages_message">Tambahkan halaman untuk memulai.</string>
+    <string name="review_add_page">Tambah halaman</string>
+    <string name="review_page_being_cropped_desc">Halaman yang sedang dipangkas</string>
+
+    <string name="filter_original">Asli</string>
+    <string name="filter_black_and_white">Hitam Putih</string>
+    <string name="filter_greyscale">Skala Abu-abu</string>
+    <string name="filter_enhance">Pertajam</string>
+
+    <string name="save_sheet_title">Simpan dokumen</string>
+    <string name="save_name_label">Nama</string>
+    <string name="save_folder_label">Folder</string>
+    <string name="save_no_folder">Tanpa folder</string>
+    <string name="save_new_folder_chip">+ Baru</string>
+    <string name="save_new_folder_name_label">Nama folder baru</string>
+    <string name="save_add_folder">Tambah</string>
+    <string name="save_format_label">Format</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">Gambar terpisah</string>
+    <string name="save_button_saving">Menyimpan…</string>
+    <string name="save_progress_processing_page">Memproses halaman %1$d dari %2$d…</string>
+    <string name="save_progress_writing_file">Menulis file…</string>
+    <string name="save_progress_saving_library">Menyimpan ke pustaka…</string>
+
+    <string name="library_up_desc">Naik</string>
+    <string name="library_toggle_view_desc">Alihkan tampilan grid/daftar</string>
+    <string name="library_switch_to_grid">Beralih ke tampilan grid</string>
+    <string name="library_switch_to_list">Beralih ke tampilan daftar</string>
+    <string name="library_sort_desc">Urutkan</string>
+    <string name="library_sort_by">Urutkan berdasarkan %1$s</string>
+    <string name="sort_date">tanggal</string>
+    <string name="sort_name">nama</string>
+    <string name="sort_size">ukuran</string>
+    <string name="library_more_desc">Lainnya</string>
+    <string name="library_new_folder">Folder baru</string>
+    <string name="library_filter_by">Filter: %1$s</string>
+    <string name="filter_all">Semua</string>
+    <string name="filter_plain">Dokumen biasa</string>
+    <string name="filter_receipt">Struk</string>
+    <string name="filter_warranty">Garansi</string>
+    <string name="library_recently_deleted">Baru dihapus</string>
+    <string name="library_scan_a_document">Pindai dokumen</string>
+    <string name="library_empty_title">Belum ada dokumen</string>
+    <string name="library_empty_message">Pindai struk, kartu garansi, atau dokumen kertas apa pun untuk memulai.</string>
+    <plurals name="library_selected_count">
+        <item quantity="other">%1$d dipilih</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">Batalkan pemilihan</string>
+    <string name="library_move_desc">Pindahkan</string>
+    <string name="library_selected_desc">Dipilih</string>
+    <string name="library_not_selected_desc">Tidak dipilih</string>
+    <string name="library_document_actions_desc">Tindakan lainnya</string>
+    <string name="library_create_folder">Buat</string>
+    <string name="library_moved_to_recently_deleted_one">Dipindahkan ke Baru Dihapus</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d item dipindahkan ke Baru Dihapus</string>
+    <plurals name="library_document_pages">
+        <item quantity="other">%1$d halaman</item>
+    </plurals>
+    <string name="library_type_receipt_desc">Struk</string>
+    <string name="library_type_warranty_desc">Garansi</string>
+
+    <string name="search_placeholder">Cari di dokumen Anda</string>
+    <string name="search_empty_title">Cari semua yang pernah Anda pindai</string>
+    <string name="search_empty_message">Temukan dokumen dari teks apa pun yang dibaca ML Kit dari halaman — tanpa perlu mengingat folder tempatnya.</string>
+    <string name="search_no_results_title">Tidak ada hasil</string>
+    <string name="search_no_results_message">Tidak ada yang cocok dengan “%1$s”.</string>
+    <string name="search_page_label">Halaman %1$d</string>
+
+    <string name="unlock_title">Premium</string>
+    <string name="unlock_owned_title">Anda memiliki Premium</string>
+    <string name="unlock_owned_message">Terima kasih — setiap fitur di bawah ini terbuka secara permanen di perangkat ini. Tidak ada perpanjangan, tidak ada yang perlu dibeli lagi.</string>
+    <string name="unlock_title_cta">Buka Premium</string>
+    <string name="unlock_message">Satu kali pembelian, selamanya — tanpa langganan, tanpa pengulangan. Semua fitur lain di Docket sudah bekerja sepenuhnya offline dan tetap gratis.</string>
+    <string name="unlock_benefit_batch_export">Ekspor massal — kirim beberapa dokumen sekaligus</string>
+    <string name="unlock_benefit_text_layer">Lapisan teks yang dapat dicari pada PDF yang diekspor</string>
+    <string name="unlock_benefit_languages">Bahasa OCR tambahan selain bahasa bawaan</string>
+    <string name="unlock_benefit_folders">Folder tanpa batas</string>
+    <string name="unlock_button_working">Memproses…</string>
+    <string name="unlock_button_with_price">Buka Premium — %1$s</string>
+    <string name="unlock_restore">Pulihkan pembelian</string>
+</resources>

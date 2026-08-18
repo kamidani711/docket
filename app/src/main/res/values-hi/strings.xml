@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Hindi. Devanagari script, left-to-right. CLDR plural rule for Hindi treats 0 and 1 both
+     as "one". -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">वापस</string>
+    <string name="common_cancel">रद्द करें</string>
+    <string name="common_save">सेव करें</string>
+    <string name="common_delete">हटाएं</string>
+    <string name="common_share">शेयर करें</string>
+    <string name="common_search">खोजें</string>
+    <string name="common_undo">पूर्ववत करें</string>
+    <string name="common_close">बंद करें</string>
+
+    <string name="scan_title">स्कैन</string>
+    <string name="scan_heading">दस्तावेज़ स्कैन करें</string>
+    <string name="scan_subtitle">अपने कैमरे से कैप्चर करें, या पहले से मौजूद कोई फ़ाइल इंपोर्ट करें।</string>
+    <string name="scan_camera_button">कैमरे से स्कैन करें</string>
+    <string name="scan_gallery_button">गैलरी से इंपोर्ट करें</string>
+    <string name="scan_pdf_button">PDF इंपोर्ट करें</string>
+    <string name="scan_mode_document">दस्तावेज़</string>
+    <string name="scan_mode_receipt">रसीद</string>
+    <string name="scan_mode_id_card">आईडी कार्ड</string>
+    <string name="scan_mode_book">किताब</string>
+    <string name="scan_shutter_hint">स्कैन करने के लिए शटर दबाएं</string>
+    <string name="scan_shutter_cd">दस्तावेज़ स्कैन करें</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d पेज कैप्चर हुआ — जारी रखने के लिए टैप करें</item>
+        <item quantity="other">%1$d पेज कैप्चर हुए — जारी रखने के लिए टैप करें</item>
+    </plurals>
+
+    <string name="review_title">समीक्षा</string>
+    <plurals name="review_title_pages">
+        <item quantity="one">समीक्षा (%1$d पेज)</item>
+        <item quantity="other">समीक्षा (%1$d पेज)</item>
+    </plurals>
+    <string name="review_discard">रद्द करें</string>
+    <string name="review_empty_title">कोई स्कैन जारी नहीं है</string>
+    <string name="review_empty_message">इसे यहां देखने के लिए नया स्कैन शुरू करें।</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF इंपोर्ट हुई — %1$d पेज</item>
+        <item quantity="other">PDF इंपोर्ट हुई — %1$d पेज</item>
+    </plurals>
+    <string name="review_action_crop">क्रॉप करें</string>
+    <string name="review_action_rotate">घुमाएं</string>
+    <string name="review_action_retake">दोबारा लें</string>
+    <string name="review_no_pages_title">अभी कोई पेज नहीं है</string>
+    <string name="review_no_pages_message">शुरू करने के लिए एक पेज जोड़ें।</string>
+    <string name="review_add_page">पेज जोड़ें</string>
+    <string name="review_page_being_cropped_desc">क्रॉप किया जा रहा पेज</string>
+
+    <string name="filter_original">मूल</string>
+    <string name="filter_black_and_white">ब्लैक एंड व्हाइट</string>
+    <string name="filter_greyscale">ग्रेस्केल</string>
+    <string name="filter_enhance">एन्हांस</string>
+
+    <string name="save_sheet_title">दस्तावेज़ सेव करें</string>
+    <string name="save_name_label">नाम</string>
+    <string name="save_folder_label">फ़ोल्डर</string>
+    <string name="save_no_folder">कोई फ़ोल्डर नहीं</string>
+    <string name="save_new_folder_chip">+ नया</string>
+    <string name="save_new_folder_name_label">नए फ़ोल्डर का नाम</string>
+    <string name="save_add_folder">जोड़ें</string>
+    <string name="save_format_label">फ़ॉर्मेट</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">अलग-अलग इमेज</string>
+    <string name="save_button_saving">सेव हो रहा है…</string>
+    <string name="save_progress_processing_page">पेज %1$d की %2$d में से प्रोसेसिंग हो रही है…</string>
+    <string name="save_progress_writing_file">फ़ाइल लिखी जा रही है…</string>
+    <string name="save_progress_saving_library">लाइब्रेरी में सेव हो रहा है…</string>
+
+    <string name="library_up_desc">ऊपर</string>
+    <string name="library_toggle_view_desc">ग्रिड/लिस्ट व्यू टॉगल करें</string>
+    <string name="library_switch_to_grid">ग्रिड व्यू पर स्विच करें</string>
+    <string name="library_switch_to_list">लिस्ट व्यू पर स्विच करें</string>
+    <string name="library_sort_desc">क्रमबद्ध करें</string>
+    <string name="library_sort_by">%1$s के अनुसार क्रमबद्ध करें</string>
+    <string name="sort_date">तारीख़</string>
+    <string name="sort_name">नाम</string>
+    <string name="sort_size">आकार</string>
+    <string name="library_more_desc">और</string>
+    <string name="library_new_folder">नया फ़ोल्डर</string>
+    <string name="library_filter_by">फ़िल्टर: %1$s</string>
+    <string name="filter_all">सभी</string>
+    <string name="filter_plain">सामान्य दस्तावेज़</string>
+    <string name="filter_receipt">रसीदें</string>
+    <string name="filter_warranty">वारंटी</string>
+    <string name="library_recently_deleted">हाल ही में हटाए गए</string>
+    <string name="library_scan_a_document">दस्तावेज़ स्कैन करें</string>
+    <string name="library_empty_title">अभी तक कोई दस्तावेज़ नहीं है</string>
+    <string name="library_empty_message">शुरू करने के लिए रसीद, वारंटी कार्ड, या कोई भी कागज़ी दस्तावेज़ स्कैन करें।</string>
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d चयनित</item>
+        <item quantity="other">%1$d चयनित</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">चयन रद्द करें</string>
+    <string name="library_move_desc">ले जाएं</string>
+    <string name="library_selected_desc">चयनित</string>
+    <string name="library_not_selected_desc">अचयनित</string>
+    <string name="library_document_actions_desc">अधिक विकल्प</string>
+    <string name="library_create_folder">बनाएं</string>
+    <string name="library_moved_to_recently_deleted_one">हाल ही में हटाए गए में ले जाया गया</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d आइटम हाल ही में हटाए गए में ले जाए गए</string>
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d पेज</item>
+        <item quantity="other">%1$d पेज</item>
+    </plurals>
+    <string name="library_type_receipt_desc">रसीद</string>
+    <string name="library_type_warranty_desc">वारंटी</string>
+
+    <string name="search_placeholder">अपने दस्तावेज़ों में खोजें</string>
+    <string name="search_empty_title">जो कुछ भी आपने स्कैन किया है उसमें खोजें</string>
+    <string name="search_empty_message">पेज पर ML Kit द्वारा पढ़े गए किसी भी टेक्स्ट से दस्तावेज़ ढूंढें — यह याद रखने की ज़रूरत नहीं कि वह किस फ़ोल्डर में है।</string>
+    <string name="search_no_results_title">कोई नतीजा नहीं</string>
+    <string name="search_no_results_message">"%1$s" से कुछ मेल नहीं खाया।</string>
+    <string name="search_page_label">पेज %1$d</string>
+
+    <string name="unlock_title">प्रीमियम</string>
+    <string name="unlock_owned_title">आपके पास प्रीमियम है</string>
+    <string name="unlock_owned_message">धन्यवाद — नीचे दी गई हर सुविधा इस डिवाइस पर हमेशा के लिए अनलॉक है। न कोई रिन्यूअल, न कुछ और खरीदना।</string>
+    <string name="unlock_title_cta">प्रीमियम अनलॉक करें</string>
+    <string name="unlock_message">एक बार की खरीद, हमेशा के लिए — कोई सब्सक्रिप्शन नहीं, कुछ भी दोहराव वाला नहीं। Docket में बाकी सब कुछ पहले से ही पूरी तरह ऑफ़लाइन काम करता है और दोनों ही तरह से मुफ़्त रहता है।</string>
+    <string name="unlock_benefit_batch_export">बैच एक्सपोर्ट — एक साथ कई दस्तावेज़ भेजें</string>
+    <string name="unlock_benefit_text_layer">एक्सपोर्ट की गई PDF में खोजने योग्य टेक्स्ट लेयर</string>
+    <string name="unlock_benefit_languages">बिल्ट-इन भाषा के अलावा अतिरिक्त OCR भाषाएं</string>
+    <string name="unlock_benefit_folders">असीमित फ़ोल्डर</string>
+    <string name="unlock_button_working">प्रोसेस हो रहा है…</string>
+    <string name="unlock_button_with_price">प्रीमियम अनलॉक करें — %1$s</string>
+    <string name="unlock_restore">खरीदारी बहाल करें</string>
+</resources>

@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Core-flow strings only: Scan, Review/Save, Library, Search, and the Premium unlock screen —
+    the loop described in the project brief as "this is the core loop." Settings, Privacy,
+    Backup, document detail, receipt/warranty editing, and the dev-only navigation list are NOT
+    yet extracted; they remain hardcoded English. See the chat write-up for the full list of
+    what's still outstanding.
+
+    Translator context comments sit above each string/group. All 8 locale files (this one plus
+    ar, ur, hi, in, pt-rBR, es, fr) share the exact same key set — a key present here must be
+    present in all seven, and vice versa.
+-->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <!-- ===================== Common / shared across screens ===================== -->
+
+    <!-- Generic back-navigation button, top app bars -->
+    <string name="common_back">Back</string>
+    <!-- Generic cancel button in dialogs -->
+    <string name="common_cancel">Cancel</string>
+    <!-- Generic save/confirm button -->
+    <string name="common_save">Save</string>
+    <!-- Generic delete action (icon button and swipe-to-delete background) -->
+    <string name="common_delete">Delete</string>
+    <!-- Generic share action -->
+    <string name="common_share">Share</string>
+    <!-- Search: both the Search screen's title and the icon button that opens it -->
+    <string name="common_search">Search</string>
+    <!-- "Undo" action label on a Snackbar, after deleting something -->
+    <string name="common_undo">Undo</string>
+    <!-- Generic close/dismiss action (icon buttons on full-bleed screens with no back arrow) -->
+    <string name="common_close">Close</string>
+
+    <!-- ===================== Scan screen (capture entry point) ===================== -->
+
+    <!-- Top app bar title on the Scan screen. No longer shown as visible title text (the
+         redesigned screen has no title bar), kept for any residual accessibility use. -->
+    <string name="scan_title">Scan</string>
+    <!-- Unused since the redesign folded "Scan a document" into the camera screen itself —
+         kept (with scan_subtitle/scan_camera_button below) only so the 8-locale key set stays
+         intact; see the chat write-up for the cleanup this owes. -->
+    <string name="scan_heading">Scan a document</string>
+    <!-- Subtitle under scan_heading, explaining the three options below it -->
+    <string name="scan_subtitle">Capture with your camera, or import something you already have.</string>
+    <!-- Button: opens the camera-based document scanner -->
+    <string name="scan_camera_button">Scan with camera</string>
+    <!-- Button: opens the system photo picker to import existing images. Doubles as the
+         content description for the icon-only version of this action in the redesigned
+         top bar. -->
+    <string name="scan_gallery_button">Import from gallery</string>
+    <!-- Button: opens the system file picker filtered to PDF files. Doubles as the content
+         description for the icon-only version of this action in the redesigned top bar. -->
+    <string name="scan_pdf_button">Import PDF</string>
+    <!-- Capture mode chips above the shutter button. Document and Receipt actually do
+         something (see ScanCaptureMode); ID Card and Book are visually present but inert
+         until the custom capture screen exists to act on them. -->
+    <string name="scan_mode_document">Document</string>
+    <string name="scan_mode_receipt">Receipt</string>
+    <string name="scan_mode_id_card">ID Card</string>
+    <string name="scan_mode_book">Book</string>
+    <!-- Hint text under the mode chips, above the shutter button -->
+    <string name="scan_shutter_hint">Tap the shutter to capture</string>
+    <!-- Content description for the big circular capture button -->
+    <string name="scan_shutter_cd">Scan a document</string>
+    <!-- Content description for the bottom-left stack of already-captured page thumbnails —
+         %d is the page count. Tapping it continues straight to Review. -->
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d page captured — tap to continue</item>
+        <item quantity="other">%1$d pages captured — tap to continue</item>
+    </plurals>
+
+    <!-- ===================== Review screen (page editing before save) ===================== -->
+
+    <!-- Top app bar title when no pages have been captured yet -->
+    <string name="review_title">Review</string>
+    <!-- Top app bar title once pages exist — %d is the page count. one="Review (1 page)" -->
+    <plurals name="review_title_pages">
+        <item quantity="one">Review (%1$d page)</item>
+        <item quantity="other">Review (%1$d pages)</item>
+    </plurals>
+    <!-- Button in the top bar: discards the whole in-progress scan and its captured images -->
+    <string name="review_discard">Discard</string>
+    <!-- Shown when the user reaches Review with no active scan session (e.g. deep link edge case) -->
+    <string name="review_empty_title">No scan in progress</string>
+    <string name="review_empty_message">Start a new scan to see it here.</string>
+    <!-- Shown in place of the page strip when a whole PDF was imported instead of individual pages — %d is the page count -->
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF imported — %1$d page</item>
+        <item quantity="other">PDF imported — %1$d pages</item>
+    </plurals>
+    <!-- Per-page action button labels, shown under the page preview -->
+    <string name="review_action_crop">Crop</string>
+    <string name="review_action_rotate">Rotate</string>
+    <string name="review_action_retake">Retake</string>
+    <!-- Shown when all pages have been removed from the session -->
+    <string name="review_no_pages_title">No pages yet</string>
+    <string name="review_no_pages_message">Add a page to get started.</string>
+    <!-- Button/content-description: adds another scanned page to the session -->
+    <string name="review_add_page">Add page</string>
+    <!-- Content description for the page thumbnail shown full-size in the crop tool -->
+    <string name="review_page_being_cropped_desc">Page being cropped</string>
+
+    <!-- Filter names shown under each filter swatch on the Review screen -->
+    <string name="filter_original">Original</string>
+    <string name="filter_black_and_white">B &amp; W</string>
+    <string name="filter_greyscale">Greyscale</string>
+    <string name="filter_enhance">Enhance</string>
+
+    <!-- ===================== Save sheet (bottom sheet reached from Review's Save button) ===================== -->
+
+    <string name="save_sheet_title">Save document</string>
+    <!-- Text field label for the document's name -->
+    <string name="save_name_label">Name</string>
+    <!-- Heading above the row of folder choice chips -->
+    <string name="save_folder_label">Folder</string>
+    <!-- Folder chip meaning "don't file this into any folder" -->
+    <string name="save_no_folder">No folder</string>
+    <!-- Chip that reveals the new-folder name field -->
+    <string name="save_new_folder_chip">+ New</string>
+    <string name="save_new_folder_name_label">New folder name</string>
+    <!-- Confirms creating the new folder just named -->
+    <string name="save_add_folder">Add</string>
+    <!-- Heading above the PDF-vs-images format choice -->
+    <string name="save_format_label">Format</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">Separate images</string>
+    <!-- Save button label while the export is actively running -->
+    <string name="save_button_saving">Saving…</string>
+    <!-- Export progress line — %1$d is the current page number, %2$d is the total -->
+    <string name="save_progress_processing_page">Processing page %1$d of %2$d…</string>
+    <string name="save_progress_writing_file">Writing file…</string>
+    <string name="save_progress_saving_library">Saving to library…</string>
+
+    <!-- ===================== Library screen (main document list) ===================== -->
+
+    <!-- Content description for the "navigate up one folder level" button -->
+    <string name="library_up_desc">Up</string>
+    <!-- Content description for the grid/list view toggle button. Unused since the redesign
+         moved this into the overflow menu as text (library_switch_to_grid/list below); kept so
+         the 8-locale key set stays intact. -->
+    <string name="library_toggle_view_desc">Toggle grid/list view</string>
+    <!-- Overflow menu item, shown while in list view, to switch to the grid -->
+    <string name="library_switch_to_grid">Switch to grid view</string>
+    <!-- Overflow menu item, shown while in grid view, to switch to the list -->
+    <string name="library_switch_to_list">Switch to list view</string>
+    <!-- Content description for the sort icon button, which opens a menu -->
+    <string name="library_sort_desc">Sort</string>
+    <!-- Sort menu item — %s is one of sort_date/sort_name/sort_size below -->
+    <string name="library_sort_by">Sort by %1$s</string>
+    <string name="sort_date">date</string>
+    <string name="sort_name">name</string>
+    <string name="sort_size">size</string>
+    <!-- Content description for the overflow ("more") menu button -->
+    <string name="library_more_desc">More</string>
+    <!-- Overflow menu item: creates a new folder in the current location -->
+    <string name="library_new_folder">New folder</string>
+    <!-- Overflow menu item: filter menu entry — %s is one of the filter_* names below -->
+    <string name="library_filter_by">Filter: %1$s</string>
+    <string name="filter_all">All</string>
+    <string name="filter_plain">Plain documents</string>
+    <string name="filter_receipt">Receipts</string>
+    <string name="filter_warranty">Warranties</string>
+    <!-- Overflow menu item: opens the recently-deleted bin -->
+    <string name="library_recently_deleted">Recently deleted</string>
+    <!-- FAB content description and the empty-state's call-to-action button, both start a scan -->
+    <string name="library_scan_a_document">Scan a document</string>
+    <!-- Shown when the current folder has no folders or documents in it at all -->
+    <string name="library_empty_title">No documents yet</string>
+    <string name="library_empty_message">Scan a receipt, warranty card, or any paper document to get started.</string>
+    <!-- Selection-mode top bar title — %d is the number of selected documents -->
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d selected</item>
+        <item quantity="other">%1$d selected</item>
+    </plurals>
+    <!-- Content description for the "X" button that exits multi-select mode -->
+    <string name="library_cancel_selection_desc">Cancel selection</string>
+    <!-- Content description for the "move to folder" action in selection mode -->
+    <string name="library_move_desc">Move</string>
+    <string name="library_selected_desc">Selected</string>
+    <string name="library_not_selected_desc">Not selected</string>
+    <string name="library_document_actions_desc">More actions</string>
+    <!-- "New folder" dialog: confirm button -->
+    <string name="library_create_folder">Create</string>
+    <!-- Snackbar after swipe-deleting or batch-deleting — one document -->
+    <string name="library_moved_to_recently_deleted_one">Moved to Recently Deleted</string>
+    <!-- Snackbar after batch-deleting — %d documents, always more than one here -->
+    <string name="library_moved_to_recently_deleted_many">%1$d moved to Recently Deleted</string>
+    <!-- Grid card secondary line: page count — %d is the page count -->
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d page</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <!-- Grid card type-indicator icon content description, shown when a document has been
+         tagged/detected as a receipt -->
+    <string name="library_type_receipt_desc">Receipt</string>
+    <!-- Grid card type-indicator icon content description, shown when a document has an active
+         warranty attached -->
+    <string name="library_type_warranty_desc">Warranty</string>
+
+    <!-- ===================== Search screen ===================== -->
+
+    <!-- Search box placeholder text -->
+    <string name="search_placeholder">Search your documents</string>
+    <!-- Shown before the user has typed anything -->
+    <string name="search_empty_title">Search everything you\'ve scanned</string>
+    <string name="search_empty_message">Find a document by any text ML Kit read off the page — no need to remember which folder it\'s in.</string>
+    <!-- Shown when a query returns nothing -->
+    <string name="search_no_results_title">No results</string>
+    <!-- %s is the user's own search query, shown back to them in quotes -->
+    <string name="search_no_results_message">Nothing matched “%1$s”.</string>
+    <!-- Result row subtitle — %d is which page of the document the match was found on -->
+    <string name="search_page_label">Page %1$d</string>
+
+    <!-- ===================== Unlock (Premium) screen ===================== -->
+
+    <string name="unlock_title">Premium</string>
+    <!-- Shown when the user already owns Premium -->
+    <string name="unlock_owned_title">You have Premium</string>
+    <string name="unlock_owned_message">Thank you — every feature below is unlocked on this device, for good. No renewal, nothing more to buy.</string>
+    <!-- Shown when Premium is not yet purchased -->
+    <string name="unlock_title_cta">Unlock Premium</string>
+    <string name="unlock_message">One purchase, forever — no subscription, nothing recurring. Everything else in Docket already works fully offline and stays free either way.</string>
+    <!-- The five things Premium unlocks, each shown with a checkmark -->
+    <string name="unlock_benefit_batch_export">Batch export — send several documents out at once</string>
+    <string name="unlock_benefit_text_layer">A searchable text layer in exported PDFs</string>
+    <string name="unlock_benefit_languages">Additional OCR languages beyond the built-in one</string>
+    <string name="unlock_benefit_folders">Unlimited folders</string>
+    <!-- Purchase button while the purchase flow is starting -->
+    <string name="unlock_button_working">Working…</string>
+    <!-- Purchase button once Play has returned a localized price — %s is that price string as-is (e.g. "$4.99"), do not reformat or translate it -->
+    <string name="unlock_button_with_price">Unlock Premium — %1$s</string>
+    <string name="unlock_restore">Restore purchases</string>
+</resources>

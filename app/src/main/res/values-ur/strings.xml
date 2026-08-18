@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Urdu. RTL (Arabic script) — layout mirroring is automatic, this file only supplies
+     translated text. CLDR plural rule for Urdu treats 0 and 1 both as "one". -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">پیچھے</string>
+    <string name="common_cancel">منسوخ کریں</string>
+    <string name="common_save">محفوظ کریں</string>
+    <string name="common_delete">حذف کریں</string>
+    <string name="common_share">اشتراک کریں</string>
+    <string name="common_search">تلاش کریں</string>
+    <string name="common_undo">واپس لائیں</string>
+    <string name="common_close">بند کریں</string>
+
+    <string name="scan_title">اسکین</string>
+    <string name="scan_heading">دستاویز اسکین کریں</string>
+    <string name="scan_subtitle">اپنے کیمرے سے کیپچر کریں، یا کوئی موجودہ چیز درآمد کریں۔</string>
+    <string name="scan_camera_button">کیمرے سے اسکین کریں</string>
+    <string name="scan_gallery_button">گیلری سے درآمد کریں</string>
+    <string name="scan_pdf_button">PDF درآمد کریں</string>
+    <string name="scan_mode_document">دستاویز</string>
+    <string name="scan_mode_receipt">رسید</string>
+    <string name="scan_mode_id_card">شناختی کارڈ</string>
+    <string name="scan_mode_book">کتاب</string>
+    <string name="scan_shutter_hint">اسکین کے لیے شٹر دبائیں</string>
+    <string name="scan_shutter_cd">دستاویز اسکین کریں</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d صفحہ کیپچر ہوا — جاری رکھنے کے لیے دبائیں</item>
+        <item quantity="other">%1$d صفحات کیپچر ہوئے — جاری رکھنے کے لیے دبائیں</item>
+    </plurals>
+
+    <string name="review_title">جائزہ</string>
+    <plurals name="review_title_pages">
+        <item quantity="one">جائزہ (%1$d صفحہ)</item>
+        <item quantity="other">جائزہ (%1$d صفحات)</item>
+    </plurals>
+    <string name="review_discard">مسترد کریں</string>
+    <string name="review_empty_title">کوئی اسکین جاری نہیں</string>
+    <string name="review_empty_message">اسے یہاں دیکھنے کے لیے نیا اسکین شروع کریں۔</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF درآمد ہوئی — %1$d صفحہ</item>
+        <item quantity="other">PDF درآمد ہوئی — %1$d صفحات</item>
+    </plurals>
+    <string name="review_action_crop">کراپ</string>
+    <string name="review_action_rotate">گھمائیں</string>
+    <string name="review_action_retake">دوبارہ لیں</string>
+    <string name="review_no_pages_title">ابھی تک کوئی صفحہ نہیں</string>
+    <string name="review_no_pages_message">شروع کرنے کے لیے ایک صفحہ شامل کریں۔</string>
+    <string name="review_add_page">صفحہ شامل کریں</string>
+    <string name="review_page_being_cropped_desc">کراپ کیا جانے والا صفحہ</string>
+
+    <string name="filter_original">اصل</string>
+    <string name="filter_black_and_white">بلیک اینڈ وائٹ</string>
+    <string name="filter_greyscale">گرے اسکیل</string>
+    <string name="filter_enhance">بہتر بنائیں</string>
+
+    <string name="save_sheet_title">دستاویز محفوظ کریں</string>
+    <string name="save_name_label">نام</string>
+    <string name="save_folder_label">فولڈر</string>
+    <string name="save_no_folder">کوئی فولڈر نہیں</string>
+    <string name="save_new_folder_chip">+ نیا</string>
+    <string name="save_new_folder_name_label">نئے فولڈر کا نام</string>
+    <string name="save_add_folder">شامل کریں</string>
+    <string name="save_format_label">فارمیٹ</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">علیحدہ تصاویر</string>
+    <string name="save_button_saving">محفوظ ہو رہا ہے…</string>
+    <string name="save_progress_processing_page">صفحہ %1$d از %2$d پر کارروائی ہو رہی ہے…</string>
+    <string name="save_progress_writing_file">فائل لکھی جا رہی ہے…</string>
+    <string name="save_progress_saving_library">لائبریری میں محفوظ ہو رہا ہے…</string>
+
+    <string name="library_up_desc">اوپر</string>
+    <string name="library_toggle_view_desc">گرڈ/فہرست منظر تبدیل کریں</string>
+    <string name="library_switch_to_grid">گرڈ ویو پر جائیں</string>
+    <string name="library_switch_to_list">فہرست ویو پر جائیں</string>
+    <string name="library_sort_desc">ترتیب دیں</string>
+    <string name="library_sort_by">ترتیب دیں بلحاظ %1$s</string>
+    <string name="sort_date">تاریخ</string>
+    <string name="sort_name">نام</string>
+    <string name="sort_size">حجم</string>
+    <string name="library_more_desc">مزید</string>
+    <string name="library_new_folder">نیا فولڈر</string>
+    <string name="library_filter_by">فلٹر: %1$s</string>
+    <string name="filter_all">تمام</string>
+    <string name="filter_plain">سادہ دستاویزات</string>
+    <string name="filter_receipt">رسیدیں</string>
+    <string name="filter_warranty">وارنٹیاں</string>
+    <string name="library_recently_deleted">حال ہی میں حذف شدہ</string>
+    <string name="library_scan_a_document">دستاویز اسکین کریں</string>
+    <string name="library_empty_title">ابھی تک کوئی دستاویز نہیں</string>
+    <string name="library_empty_message">شروع کرنے کے لیے رسید، وارنٹی کارڈ، یا کوئی بھی کاغذی دستاویز اسکین کریں۔</string>
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d منتخب</item>
+        <item quantity="other">%1$d منتخب</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">انتخاب منسوخ کریں</string>
+    <string name="library_move_desc">منتقل کریں</string>
+    <string name="library_selected_desc">منتخب</string>
+    <string name="library_not_selected_desc">غیر منتخب</string>
+    <string name="library_document_actions_desc">مزید اقدامات</string>
+    <string name="library_create_folder">بنائیں</string>
+    <string name="library_moved_to_recently_deleted_one">حال ہی میں حذف شدہ میں منتقل ہو گیا</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d آئٹمز حال ہی میں حذف شدہ میں منتقل ہو گئے</string>
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d صفحہ</item>
+        <item quantity="other">%1$d صفحات</item>
+    </plurals>
+    <string name="library_type_receipt_desc">رسید</string>
+    <string name="library_type_warranty_desc">وارنٹی</string>
+
+    <string name="search_placeholder">اپنی دستاویزات میں تلاش کریں</string>
+    <string name="search_empty_title">جو کچھ آپ نے اسکین کیا اس میں تلاش کریں</string>
+    <string name="search_empty_message">صفحے سے ML Kit کے پڑھے گئے کسی بھی متن سے دستاویز تلاش کریں — یہ یاد رکھنے کی ضرورت نہیں کہ وہ کس فولڈر میں ہے۔</string>
+    <string name="search_no_results_title">کوئی نتیجہ نہیں</string>
+    <string name="search_no_results_message">"%1$s" سے کچھ مماثل نہیں ملا۔</string>
+    <string name="search_page_label">صفحہ %1$d</string>
+
+    <string name="unlock_title">پریمیم</string>
+    <string name="unlock_owned_title">آپ کے پاس پریمیم ہے</string>
+    <string name="unlock_owned_message">شکریہ — نیچے دی گئی ہر خصوصیت اس ڈیوائس پر ہمیشہ کے لیے غیر مقفل ہے۔ نہ تجدید، نہ کچھ اور خریدنا۔</string>
+    <string name="unlock_title_cta">پریمیم غیر مقفل کریں</string>
+    <string name="unlock_message">ایک بار خریداری، ہمیشہ کے لیے — نہ سبسکرپشن، نہ کچھ بار بار۔ Docket میں باقی سب کچھ پہلے ہی مکمل طور پر آف لائن کام کرتا ہے اور دونوں صورتوں میں مفت رہتا ہے۔</string>
+    <string name="unlock_benefit_batch_export">بیچ ایکسپورٹ — ایک ساتھ کئی دستاویزات بھیجیں</string>
+    <string name="unlock_benefit_text_layer">ایکسپورٹ شدہ PDFs میں تلاش کے قابل ٹیکسٹ لیئر</string>
+    <string name="unlock_benefit_languages">بلٹ اِن زبان کے علاوہ اضافی OCR زبانیں</string>
+    <string name="unlock_benefit_folders">لامحدود فولڈرز</string>
+    <string name="unlock_button_working">کارروائی جاری ہے…</string>
+    <string name="unlock_button_with_price">پریمیم غیر مقفل کریں — %1$s</string>
+    <string name="unlock_restore">خریداریاں بحال کریں</string>
+</resources>

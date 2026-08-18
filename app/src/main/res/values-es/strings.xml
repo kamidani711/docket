@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Spanish. CLDR plural rule: only n = 1 is "one"; 0 and everything else is "other". -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">Atrás</string>
+    <string name="common_cancel">Cancelar</string>
+    <string name="common_save">Guardar</string>
+    <string name="common_delete">Eliminar</string>
+    <string name="common_share">Compartir</string>
+    <string name="common_search">Buscar</string>
+    <string name="common_undo">Deshacer</string>
+    <string name="common_close">Cerrar</string>
+
+    <string name="scan_title">Escanear</string>
+    <string name="scan_heading">Escanear un documento</string>
+    <string name="scan_subtitle">Captura con la cámara o importa algo que ya tengas.</string>
+    <string name="scan_camera_button">Escanear con la cámara</string>
+    <string name="scan_gallery_button">Importar de la galería</string>
+    <string name="scan_pdf_button">Importar PDF</string>
+    <string name="scan_mode_document">Documento</string>
+    <string name="scan_mode_receipt">Recibo</string>
+    <string name="scan_mode_id_card">Identificación</string>
+    <string name="scan_mode_book">Libro</string>
+    <string name="scan_shutter_hint">Toca el obturador para escanear</string>
+    <string name="scan_shutter_cd">Escanear un documento</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="one">%1$d página capturada — toca para continuar</item>
+        <item quantity="other">%1$d páginas capturadas — toca para continuar</item>
+    </plurals>
+
+    <string name="review_title">Revisar</string>
+    <plurals name="review_title_pages">
+        <item quantity="one">Revisar (%1$d página)</item>
+        <item quantity="other">Revisar (%1$d páginas)</item>
+    </plurals>
+    <string name="review_discard">Descartar</string>
+    <string name="review_empty_title">No hay ningún escaneo en curso</string>
+    <string name="review_empty_message">Inicia un nuevo escaneo para verlo aquí.</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="one">PDF importado — %1$d página</item>
+        <item quantity="other">PDF importado — %1$d páginas</item>
+    </plurals>
+    <string name="review_action_crop">Recortar</string>
+    <string name="review_action_rotate">Girar</string>
+    <string name="review_action_retake">Repetir</string>
+    <string name="review_no_pages_title">Todavía no hay páginas</string>
+    <string name="review_no_pages_message">Añade una página para empezar.</string>
+    <string name="review_add_page">Añadir página</string>
+    <string name="review_page_being_cropped_desc">Página que se está recortando</string>
+
+    <string name="filter_original">Original</string>
+    <string name="filter_black_and_white">Blanco y negro</string>
+    <string name="filter_greyscale">Escala de grises</string>
+    <string name="filter_enhance">Realzar</string>
+
+    <string name="save_sheet_title">Guardar documento</string>
+    <string name="save_name_label">Nombre</string>
+    <string name="save_folder_label">Carpeta</string>
+    <string name="save_no_folder">Sin carpeta</string>
+    <string name="save_new_folder_chip">+ Nueva</string>
+    <string name="save_new_folder_name_label">Nombre de la nueva carpeta</string>
+    <string name="save_add_folder">Añadir</string>
+    <string name="save_format_label">Formato</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">Imágenes separadas</string>
+    <string name="save_button_saving">Guardando…</string>
+    <string name="save_progress_processing_page">Procesando página %1$d de %2$d…</string>
+    <string name="save_progress_writing_file">Escribiendo archivo…</string>
+    <string name="save_progress_saving_library">Guardando en la biblioteca…</string>
+
+    <string name="library_up_desc">Subir</string>
+    <string name="library_toggle_view_desc">Alternar vista de cuadrícula/lista</string>
+    <string name="library_switch_to_grid">Cambiar a vista de cuadrícula</string>
+    <string name="library_switch_to_list">Cambiar a vista de lista</string>
+    <string name="library_sort_desc">Ordenar</string>
+    <string name="library_sort_by">Ordenar por %1$s</string>
+    <string name="sort_date">fecha</string>
+    <string name="sort_name">nombre</string>
+    <string name="sort_size">tamaño</string>
+    <string name="library_more_desc">Más</string>
+    <string name="library_new_folder">Carpeta nueva</string>
+    <string name="library_filter_by">Filtro: %1$s</string>
+    <string name="filter_all">Todos</string>
+    <string name="filter_plain">Documentos comunes</string>
+    <string name="filter_receipt">Recibos</string>
+    <string name="filter_warranty">Garantías</string>
+    <string name="library_recently_deleted">Eliminados recientemente</string>
+    <string name="library_scan_a_document">Escanear un documento</string>
+    <string name="library_empty_title">Todavía no hay documentos</string>
+    <string name="library_empty_message">Escanea un recibo, una tarjeta de garantía o cualquier documento en papel para empezar.</string>
+    <plurals name="library_selected_count">
+        <item quantity="one">%1$d seleccionado</item>
+        <item quantity="other">%1$d seleccionados</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">Cancelar selección</string>
+    <string name="library_move_desc">Mover</string>
+    <string name="library_selected_desc">Seleccionado</string>
+    <string name="library_not_selected_desc">No seleccionado</string>
+    <string name="library_document_actions_desc">Más acciones</string>
+    <string name="library_create_folder">Crear</string>
+    <string name="library_moved_to_recently_deleted_one">Movido a Eliminados recientemente</string>
+    <string name="library_moved_to_recently_deleted_many">%1$d elementos movidos a Eliminados recientemente</string>
+    <plurals name="library_document_pages">
+        <item quantity="one">%1$d página</item>
+        <item quantity="other">%1$d páginas</item>
+    </plurals>
+    <string name="library_type_receipt_desc">Recibo</string>
+    <string name="library_type_warranty_desc">Garantía</string>
+
+    <string name="search_placeholder">Busca en tus documentos</string>
+    <string name="search_empty_title">Busca todo lo que has escaneado</string>
+    <string name="search_empty_message">Encuentra un documento por cualquier texto que ML Kit haya leído en la página, sin necesidad de recordar en qué carpeta está.</string>
+    <string name="search_no_results_title">Sin resultados</string>
+    <string name="search_no_results_message">No hay coincidencias con “%1$s”.</string>
+    <string name="search_page_label">Página %1$d</string>
+
+    <string name="unlock_title">Premium</string>
+    <string name="unlock_owned_title">Tienes Premium</string>
+    <string name="unlock_owned_message">Gracias — todas las funciones a continuación están desbloqueadas en este dispositivo, para siempre. Sin renovación, nada más que comprar.</string>
+    <string name="unlock_title_cta">Desbloquear Premium</string>
+    <string name="unlock_message">Una sola compra, para siempre — sin suscripción, sin nada recurrente. Todo lo demás en Docket ya funciona completamente sin conexión y sigue siendo gratis de todos modos.</string>
+    <string name="unlock_benefit_batch_export">Exportación por lotes — envía varios documentos a la vez</string>
+    <string name="unlock_benefit_text_layer">Una capa de texto con capacidad de búsqueda en los PDF exportados</string>
+    <string name="unlock_benefit_languages">Idiomas de OCR adicionales además del integrado</string>
+    <string name="unlock_benefit_folders">Carpetas ilimitadas</string>
+    <string name="unlock_button_working">Procesando…</string>
+    <string name="unlock_button_with_price">Desbloquear Premium — %1$s</string>
+    <string name="unlock_restore">Restaurar compras</string>
+</resources>

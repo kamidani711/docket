@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+        Still no INTERNET permission — see chat notes on the ML Kit Document Scanner's
+        Play-services-module offline caveats (unchanged from the project skeleton).
+
+        Play Billing (the Premium unlock) does NOT change this: BillingClient talks to the Play
+        Store app over a bound AIDL service that's already part of Google Play services — the
+        network round-trip happens inside Play Store's own already-connected process, not this
+        app's. Docket itself never opens a socket for it, so no permission is needed here. If
+        that ever stops being true for some billing feature added later, this comment is wrong
+        and INTERNET needs to be added, isolated, and the privacy page updated to match.
+
+        CAMERA is new as of the scanning flow: required to capture pages, both for
+        GmsDocumentScanner and for our own runtime permission gate in ScanScreen. The
+        <uses-feature> is required="false" so devices without a camera (or emulators
+        without one configured) can still install and use gallery/PDF import.
+    -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
+    <!--
+        New for warranty reminders: POST_NOTIFICATIONS is a runtime (dangerous) permission on
+        API 33+, requested contextually the first time a user sets a warranty reminder — not at
+        launch. Nothing here calls out to a server; this only ever posts a local notification
+        WorkManager scheduled on-device.
+    -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:name=".DocketApplication"
+        android:allowBackup="false"
+        android:icon="@drawable/ic_launcher"
+        android:roundIcon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Docket"
+        android:supportsRtl="true">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.Docket"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!--
+            Needed to share exported PDFs/images: a raw file:// Uri to another app is blocked
+            (FileUriExposedException) on our targetSdk, so sharing requires handing out a
+            content:// Uri scoped to just that file instead. Still no network involved.
+        -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+        <!--
+            DocketApplication implements Configuration.Provider (see that class) to hand
+            WorkManager a HiltWorkerFactory — that means WorkManager must initialize on-demand
+            through that Configuration, not through its own default auto-init. This removes the
+            androidx.startup entry WorkManager's own manifest otherwise contributes; without it,
+            release lint fails with RemoveWorkManagerInitializer (a real, well-documented
+            WorkManager+Configuration.Provider requirement, not a Docket-specific workaround).
+        -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            <meta-data
+                android:name="androidx.work.WorkManagerInitializer"
+                android:value="androidx.startup"
+                tools:node="remove" />
+        </provider>
+    </application>
+
+</manifest>

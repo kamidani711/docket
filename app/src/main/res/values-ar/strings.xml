@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Arabic. RTL — layout mirroring is automatic (android:supportsRtl="true" + Compose), this
+     file only supplies translated text. Uses all six CLDR plural categories since Arabic
+     grammar genuinely distinguishes them (zero/one/two/few/many/other), unlike most of the
+     other locale files here. -->
+<resources>
+    <string name="app_name">Docket</string>
+
+    <string name="common_back">رجوع</string>
+    <string name="common_cancel">إلغاء</string>
+    <string name="common_save">حفظ</string>
+    <string name="common_delete">حذف</string>
+    <string name="common_share">مشاركة</string>
+    <string name="common_search">بحث</string>
+    <string name="common_undo">تراجع</string>
+    <string name="common_close">إغلاق</string>
+
+    <string name="scan_title">مسح ضوئي</string>
+    <string name="scan_heading">مسح مستند ضوئيًا</string>
+    <string name="scan_subtitle">التقط الصورة بالكاميرا، أو استورد مستندًا لديك بالفعل.</string>
+    <string name="scan_camera_button">المسح بالكاميرا</string>
+    <string name="scan_gallery_button">استيراد من المعرض</string>
+    <string name="scan_pdf_button">استيراد ملف PDF</string>
+    <string name="scan_mode_document">مستند</string>
+    <string name="scan_mode_receipt">إيصال</string>
+    <string name="scan_mode_id_card">بطاقة هوية</string>
+    <string name="scan_mode_book">كتاب</string>
+    <string name="scan_shutter_hint">اضغط على زر الالتقاط للمسح</string>
+    <string name="scan_shutter_cd">مسح مستند ضوئيًا</string>
+    <plurals name="scan_pages_in_progress">
+        <item quantity="zero">لم يتم التقاط أي صفحة — اضغط للمتابعة</item>
+        <item quantity="one">تم التقاط صفحة واحدة — اضغط للمتابعة</item>
+        <item quantity="two">تم التقاط صفحتين — اضغط للمتابعة</item>
+        <item quantity="few">تم التقاط %1$d صفحات — اضغط للمتابعة</item>
+        <item quantity="many">تم التقاط %1$d صفحة — اضغط للمتابعة</item>
+        <item quantity="other">تم التقاط %1$d صفحة — اضغط للمتابعة</item>
+    </plurals>
+
+    <string name="review_title">مراجعة</string>
+    <plurals name="review_title_pages">
+        <item quantity="zero">مراجعة (بلا صفحات)</item>
+        <item quantity="one">مراجعة (صفحة واحدة)</item>
+        <item quantity="two">مراجعة (صفحتان)</item>
+        <item quantity="few">مراجعة (%1$d صفحات)</item>
+        <item quantity="many">مراجعة (%1$d صفحة)</item>
+        <item quantity="other">مراجعة (%1$d صفحة)</item>
+    </plurals>
+    <string name="review_discard">تجاهل</string>
+    <string name="review_empty_title">لا يوجد مسح قيد التنفيذ</string>
+    <string name="review_empty_message">ابدأ مسحًا جديدًا لرؤيته هنا.</string>
+    <plurals name="review_pdf_imported_pages">
+        <item quantity="zero">تم استيراد ملف PDF — بلا صفحات</item>
+        <item quantity="one">تم استيراد ملف PDF — صفحة واحدة</item>
+        <item quantity="two">تم استيراد ملف PDF — صفحتان</item>
+        <item quantity="few">تم استيراد ملف PDF — %1$d صفحات</item>
+        <item quantity="many">تم استيراد ملف PDF — %1$d صفحة</item>
+        <item quantity="other">تم استيراد ملف PDF — %1$d صفحة</item>
+    </plurals>
+    <string name="review_action_crop">قص</string>
+    <string name="review_action_rotate">تدوير</string>
+    <string name="review_action_retake">إعادة الالتقاط</string>
+    <string name="review_no_pages_title">لا توجد صفحات بعد</string>
+    <string name="review_no_pages_message">أضف صفحة للبدء.</string>
+    <string name="review_add_page">إضافة صفحة</string>
+    <string name="review_page_being_cropped_desc">الصفحة قيد القص</string>
+
+    <string name="filter_original">الأصلي</string>
+    <string name="filter_black_and_white">أبيض وأسود</string>
+    <string name="filter_greyscale">تدرج رمادي</string>
+    <string name="filter_enhance">تحسين</string>
+
+    <string name="save_sheet_title">حفظ المستند</string>
+    <string name="save_name_label">الاسم</string>
+    <string name="save_folder_label">المجلد</string>
+    <string name="save_no_folder">بدون مجلد</string>
+    <string name="save_new_folder_chip">+ جديد</string>
+    <string name="save_new_folder_name_label">اسم المجلد الجديد</string>
+    <string name="save_add_folder">إضافة</string>
+    <string name="save_format_label">الصيغة</string>
+    <string name="save_format_pdf">PDF</string>
+    <string name="save_format_images">صور منفصلة</string>
+    <string name="save_button_saving">جارٍ الحفظ…</string>
+    <string name="save_progress_processing_page">معالجة الصفحة %1$d من %2$d…</string>
+    <string name="save_progress_writing_file">جارٍ كتابة الملف…</string>
+    <string name="save_progress_saving_library">جارٍ الحفظ في المكتبة…</string>
+
+    <string name="library_up_desc">للأعلى</string>
+    <string name="library_toggle_view_desc">تبديل العرض شبكة/قائمة</string>
+    <string name="library_switch_to_grid">التبديل إلى عرض الشبكة</string>
+    <string name="library_switch_to_list">التبديل إلى عرض القائمة</string>
+    <string name="library_sort_desc">فرز</string>
+    <string name="library_sort_by">فرز حسب %1$s</string>
+    <string name="sort_date">التاريخ</string>
+    <string name="sort_name">الاسم</string>
+    <string name="sort_size">الحجم</string>
+    <string name="library_more_desc">المزيد</string>
+    <string name="library_new_folder">مجلد جديد</string>
+    <string name="library_filter_by">تصفية: %1$s</string>
+    <string name="filter_all">الكل</string>
+    <string name="filter_plain">مستندات عادية</string>
+    <string name="filter_receipt">إيصالات</string>
+    <string name="filter_warranty">ضمانات</string>
+    <string name="library_recently_deleted">المحذوفة مؤخرًا</string>
+    <string name="library_scan_a_document">مسح مستند ضوئيًا</string>
+    <string name="library_empty_title">لا توجد مستندات بعد</string>
+    <string name="library_empty_message">امسح إيصالًا أو بطاقة ضمان أو أي مستند ورقي للبدء.</string>
+    <plurals name="library_selected_count">
+        <item quantity="zero">لم يتم تحديد شيء</item>
+        <item quantity="one">تم تحديد عنصر واحد</item>
+        <item quantity="two">تم تحديد عنصرين</item>
+        <item quantity="few">تم تحديد %1$d عناصر</item>
+        <item quantity="many">تم تحديد %1$d عنصرًا</item>
+        <item quantity="other">تم تحديد %1$d عنصر</item>
+    </plurals>
+    <string name="library_cancel_selection_desc">إلغاء التحديد</string>
+    <string name="library_move_desc">نقل</string>
+    <string name="library_selected_desc">محدد</string>
+    <string name="library_not_selected_desc">غير محدد</string>
+    <string name="library_document_actions_desc">المزيد من الإجراءات</string>
+    <string name="library_create_folder">إنشاء</string>
+    <string name="library_moved_to_recently_deleted_one">نُقل إلى المحذوفة مؤخرًا</string>
+    <string name="library_moved_to_recently_deleted_many">تم نقل %1$d عناصر إلى المحذوفة مؤخرًا</string>
+    <plurals name="library_document_pages">
+        <item quantity="zero">بلا صفحات</item>
+        <item quantity="one">صفحة واحدة</item>
+        <item quantity="two">صفحتان</item>
+        <item quantity="few">%1$d صفحات</item>
+        <item quantity="many">%1$d صفحة</item>
+        <item quantity="other">%1$d صفحة</item>
+    </plurals>
+    <string name="library_type_receipt_desc">إيصال</string>
+    <string name="library_type_warranty_desc">ضمان</string>
+
+    <string name="search_placeholder">ابحث في مستنداتك</string>
+    <string name="search_empty_title">ابحث في كل ما مسحته ضوئيًا</string>
+    <string name="search_empty_message">اعثر على مستند بأي نص قرأته خدمة ML Kit من الصفحة — دون الحاجة لتذكر المجلد الذي يوجد به.</string>
+    <string name="search_no_results_title">لا توجد نتائج</string>
+    <string name="search_no_results_message">لم يُعثر على تطابق مع "%1$s".</string>
+    <string name="search_page_label">الصفحة %1$d</string>
+
+    <string name="unlock_title">بريميوم</string>
+    <string name="unlock_owned_title">لديك بريميوم</string>
+    <string name="unlock_owned_message">شكرًا لك — كل ميزة أدناه مفعّلة على هذا الجهاز بشكل دائم. لا تجديد، ولا شيء آخر لشرائه.</string>
+    <string name="unlock_title_cta">فتح بريميوم</string>
+    <string name="unlock_message">عملية شراء واحدة، إلى الأبد — لا اشتراك، ولا تكرار. كل شيء آخر في Docket يعمل بالفعل دون اتصال بالإنترنت ويبقى مجانيًا في الحالتين.</string>
+    <string name="unlock_benefit_batch_export">تصدير دفعي — أرسل عدة مستندات دفعة واحدة</string>
+    <string name="unlock_benefit_text_layer">طبقة نص قابلة للبحث في ملفات PDF المُصدَّرة</string>
+    <string name="unlock_benefit_languages">لغات تعرف ضوئي إضافية بجانب اللغة المدمجة</string>
+    <string name="unlock_benefit_folders">مجلدات غير محدودة</string>
+    <string name="unlock_button_working">جارٍ التنفيذ…</string>
+    <string name="unlock_button_with_price">فتح بريميوم — %1$s</string>
+    <string name="unlock_restore">استعادة المشتريات</string>
+</resources>
