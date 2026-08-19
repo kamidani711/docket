@@ -10,6 +10,7 @@ import com.docket.domain.model.DocumentTypeFilter
 import com.docket.domain.model.Folder
 import com.docket.domain.repository.DocumentRepository
 import com.docket.domain.repository.SettingsRepository
+import com.docket.domain.repository.StorageRepository
 import com.docket.domain.usecase.CreateFolderUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.io.File
@@ -42,8 +43,16 @@ sealed interface LibraryEvent {
 class LibraryViewModel @Inject constructor(
     private val documentRepository: DocumentRepository,
     private val settingsRepository: SettingsRepository,
+    private val storageRepository: StorageRepository,
     private val createFolderUseCase: CreateFolderUseCase
 ) : ViewModel() {
+
+    /** Whole-library count + on-device size — the Files header's "Total N files · X MB" line. */
+    val totalDocumentCount: StateFlow<Int> = documentRepository.observeLibrarySize()
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), 0)
+
+    private val _totalStorageBytes = MutableStateFlow<Long?>(null)
+    val totalStorageBytes: StateFlow<Long?> = _totalStorageBytes.asStateFlow()
 
     // Empty = root. At most 2 entries (one level of nesting) — see FolderEntity.
     private val _folderStack = MutableStateFlow<List<Long>>(emptyList())
@@ -60,6 +69,7 @@ class LibraryViewModel @Inject constructor(
 
     init {
         viewModelScope.launch { _sortBy.value = settingsRepository.defaultLibrarySort.first() }
+        viewModelScope.launch { _totalStorageBytes.value = storageRepository.getStorageBreakdown().documentsBytes }
     }
 
     private val _typeFilter = MutableStateFlow(DocumentTypeFilter.ALL)
@@ -67,7 +77,7 @@ class LibraryViewModel @Inject constructor(
 
     // Grid is the default per the design brief — documents should read as documents (paper-feel
     // cards), not as a dense text list. List stays one tap away in the overflow menu.
-    private val _viewMode = MutableStateFlow(LibraryViewMode.GRID)
+    private val _viewMode = MutableStateFlow(LibraryViewMode.LIST)
     val viewMode: StateFlow<LibraryViewMode> = _viewMode.asStateFlow()
 
     private val _selection = MutableStateFlow<Set<Long>>(emptySet())

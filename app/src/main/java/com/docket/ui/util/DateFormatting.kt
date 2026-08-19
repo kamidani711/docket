@@ -19,6 +19,10 @@ import java.util.Locale
 fun formatDisplayDate(epochMillis: Long): String =
     DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault()).format(Date(epochMillis))
 
+fun formatDisplayDateTime(epochMillis: Long): String =
+    DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.getDefault())
+        .format(Date(epochMillis))
+
 /**
  * Month + year only, for group headers (the receipt summary's monthly groups). `java.text
  * .DateFormat` has no built-in "month and year" style, so this still goes through a pattern

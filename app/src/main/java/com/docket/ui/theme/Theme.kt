@@ -88,8 +88,8 @@ private val DocketLightColorScheme = lightColorScheme(
  * App-wide Material 3 theme: color scheme + type scale + shapes + the extended (status) color
  * roles. Light-first — [darkTheme] defaults to the system setting, not forced light.
  *
- * Dynamic color (Android 12+) is opt-in and off by default: the brand is one deliberate teal,
- * not per-device wallpaper theming — see the accent rationale in Color.kt.
+ * Dynamic color (Android 12+) is opt-in and off by default: the brand is one deliberate
+ * indigo/violet, not per-device wallpaper theming — see the accent rationale in Color.kt.
  */
 @Composable
 fun DocketTheme(

@@ -4,8 +4,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Receipt
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -13,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketDimens
 
 /**
@@ -31,16 +30,18 @@ fun ReceiptRow(
         modifier = modifier,
         onClick = onClick,
         leading = {
+            // Secondary container distinguishes receipts from folders (primaryContainer) without
+            // introducing a new hue — reuses the existing secondary role.
             Box(
                 modifier = Modifier
                     .size(DocketDimens.rowIconSize)
-                    .background(MaterialTheme.colorScheme.surfaceContainerHigh, CircleShape),
+                    .background(MaterialTheme.colorScheme.secondaryContainer, CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    imageVector = Icons.Filled.Receipt,
+                    imageVector = DocketIcons.Receipt,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant
+                    tint = MaterialTheme.colorScheme.onSecondaryContainer
                 )
             }
         },

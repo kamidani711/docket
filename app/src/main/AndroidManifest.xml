@@ -68,6 +68,22 @@
         </provider>
 
         <!--
+            AppCompat's per-app-language auto-store service (LanguageScreen) — persists the
+            AppCompatDelegate.setApplicationLocales() choice across process death on API < 33
+            (API 33+ delegates to the platform's own LocaleManager instead, which needs no
+            manifest entry). Disabled/not exported: it's a marker the library reads, never
+            actually started as a running service.
+        -->
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+
+        <!--
             DocketApplication implements Configuration.Provider (see that class) to hand
             WorkManager a HiltWorkerFactory — that means WorkManager must initialize on-demand
             through that Configuration, not through its own default auto-init. This removes the

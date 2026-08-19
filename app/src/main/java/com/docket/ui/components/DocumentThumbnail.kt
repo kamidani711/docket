@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.docket.R
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketDimens
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.theme.docketCardShadow
@@ -68,7 +69,7 @@ fun DocumentThumbnail(
             )
         } else {
             Icon(
-                imageVector = Icons.Filled.Description,
+                imageVector = DocketIcons.Doc,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier

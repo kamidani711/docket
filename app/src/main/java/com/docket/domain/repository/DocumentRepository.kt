@@ -17,6 +17,14 @@ interface DocumentRepository {
 
     /** [folderId] null = root. */
     fun observeLibrary(folderId: Long?, typeFilter: DocumentTypeFilter, sortBy: DocumentSort): Flow<List<Document>>
+
+    /** Most recent documents across every folder, newest first — Home's "Recent Files". */
+    fun observeRecentDocuments(limit: Int): Flow<List<Document>>
+
+    /** Total active (non-deleted) document count across the whole library — Files' header
+     *  count line ("Total N files · X MB"). */
+    fun observeLibrarySize(): Flow<Int>
+
     fun observeDocument(documentId: Long): Flow<Document?>
     suspend fun getDocument(documentId: Long): Document?
 

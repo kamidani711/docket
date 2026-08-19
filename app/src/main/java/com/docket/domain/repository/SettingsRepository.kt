@@ -19,4 +19,14 @@ interface SettingsRepository {
 
     val appLockEnabled: Flow<Boolean>
     suspend fun setAppLockEnabled(enabled: Boolean)
+
+    /** Whether the first-launch onboarding carousel has already been shown once. */
+    val hasSeenOnboarding: Flow<Boolean>
+    suspend fun setOnboardingSeen()
+
+    /** `null` = not yet set, caller falls back to the system dark-theme setting for that one
+     *  read (same "null = loading, don't guess" convention as [appLockEnabled]'s consumers) —
+     *  once the user touches the Dark Mode toggle this becomes an explicit override. */
+    val darkModeOverride: Flow<Boolean?>
+    suspend fun setDarkModeOverride(enabled: Boolean)
 }

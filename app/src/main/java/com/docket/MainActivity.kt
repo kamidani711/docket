@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -12,15 +13,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.docket.data.analytics.CrashSessionTracker
 import com.docket.ui.lock.AppLockGate
 import com.docket.ui.lock.BiometricAuthenticator
-import com.docket.ui.navigation.DocketNavHost
+import com.docket.ui.navigation.DocketApp
+import com.docket.ui.onboarding.OnboardingGate
+import com.docket.ui.theme.AppThemeViewModel
 import com.docket.ui.theme.DocketTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 /**
- * Single-Activity host. All screens are Compose destinations inside [DocketNavHost].
+ * Single-Activity host. All screens are Compose destinations inside [DocketApp]/[com.docket.ui
+ * .navigation.DocketNavHost].
  *
  * `android:launchMode="singleTop"` (manifest) + [onNewIntent] is what lets a warranty reminder
  * notification tap route into an already-running instance instead of spawning a duplicate one —
@@ -41,20 +47,24 @@ class MainActivity : FragmentActivity() {
         val biometricAuthenticator = BiometricAuthenticator(this)
         handleIntent(intent)
         setContent {
-            DocketTheme {
+            val themeViewModel: AppThemeViewModel = hiltViewModel()
+            val darkModeOverride by themeViewModel.darkModeOverride.collectAsStateWithLifecycle()
+            DocketTheme(darkTheme = darkModeOverride ?: isSystemInDarkTheme()) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    AppLockGate(
-                        onAuthenticate = { onSuccess, onError ->
-                            biometricAuthenticator.authenticate(onSuccess, onError)
+                    OnboardingGate {
+                        AppLockGate(
+                            onAuthenticate = { onSuccess, onError ->
+                                biometricAuthenticator.authenticate(onSuccess, onError)
+                            }
+                        ) {
+                            DocketApp(
+                                pendingDocumentId = pendingDocumentId,
+                                onPendingDocumentIdConsumed = { pendingDocumentId = null }
+                            )
                         }
-                    ) {
-                        DocketNavHost(
-                            pendingDocumentId = pendingDocumentId,
-                            onPendingDocumentIdConsumed = { pendingDocumentId = null }
-                        )
                     }
                 }
             }

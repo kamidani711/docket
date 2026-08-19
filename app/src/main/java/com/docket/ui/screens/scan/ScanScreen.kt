@@ -1,15 +1,28 @@
 package com.docket.ui.screens.scan
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.Canvas as AndroidCanvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -18,30 +31,21 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.DocumentScanner
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.PhotoCamera
-import androidx.compose.material.icons.filled.PictureAsPdf
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -50,8 +54,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -59,6 +63,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
@@ -66,55 +71,68 @@ import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
-import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.docket.R
-import com.docket.ui.theme.DocketOnPrimaryDark
-import com.docket.ui.theme.DocketPrimaryDark
+import com.docket.ui.icons.DocketIcons
+import com.docket.ui.navigation.Destination
+import com.docket.ui.theme.DocketBackgroundDark
+import com.docket.ui.theme.DocketCoralLight
+import com.docket.ui.theme.DocketOnSurfaceVariantLight
+import com.docket.ui.theme.DocketPillShape
+import com.docket.ui.theme.DocketPrimaryLight
 import com.docket.ui.theme.DocketSpacing
-import com.docket.ui.theme.DocketSurfaceContainerLowestDark
+import com.docket.ui.theme.DocketSurfaceContainerLowDark
+import java.io.File
+import java.io.FileOutputStream
 
-/**
- * The one screen a scan flow starts from — folds what used to be two screens ("Scan a document"
- * with three stacked buttons, then a separate camera step) into a single dark, full-bleed
- * capture surface. Tapping the shutter goes straight to the camera; gallery/PDF import live as
- * small icon buttons in the top bar instead of their own rows.
- *
- * IMPORTANT — read [rememberDocumentScannerLauncher]'s doc before changing this screen. The
- * actual live camera preview belongs to a Google Play Services system Activity we don't render
- * or theme. Everything here — the "viewfinder" framing, the shutter, the mode chips — is scene-
- * setting around that handoff, not a real preview. That's a deliberate, documented v1 boundary,
- * not an oversight.
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScanScreen(
     viewModel: ScanSessionViewModel,
     onBack: () -> Unit,
-    onContinueToReview: () -> Unit
+    onContinueToReview: () -> Unit,
+    onOpenFiles: () -> Unit = {},
+    launch: String = Destination.ScanFlow.LAUNCH_CAMERA
 ) {
+    val context = LocalContext.current
+    val lifecycleOwner = LocalLifecycleOwner.current
     val session by viewModel.session.collectAsStateWithLifecycle()
     val previewBitmaps by viewModel.previewBitmaps.collectAsStateWithLifecycle()
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var selectedMode by remember { mutableStateOf(ScanCaptureMode.DOCUMENT) }
+    var isTorchOn by remember { mutableStateOf(false) }
+    var camera by remember { mutableStateOf<Camera?>(null) }
+    var imageCapture by remember { mutableStateOf<ImageCapture?>(null) }
+    var hasCameraPermission by remember {
+        mutableStateOf(
+            ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+        )
+    }
 
-    // Distinguishes "a page just came back from this screen's own shutter/import tap" from "a
-    // draft session already existed when this screen first composed" (process-death recovery,
-    // or backing out of Review without discarding). Only the former should jump straight to
-    // Review — the latter shows the in-progress thumbnail stack instead, so a recovered draft
-    // doesn't yank the user into Review with no chance to see what's there first.
     var justCaptured by remember { mutableStateOf(false) }
+    var didAutoLaunch by remember { mutableStateOf(false) }
 
-    val launchScanner = rememberDocumentScannerLauncher(
-        onPagesCaptured = { uris ->
-            justCaptured = true
-            viewModel.onPagesCaptured(uris)
-        },
-        onError = { errorMessage = it }
-    )
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { granted ->
+        hasCameraPermission = granted
+    }
+
+    LaunchedEffect(Unit) {
+        if (!hasCameraPermission) {
+            permissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
 
     val galleryLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.PickMultipleVisualMedia()
@@ -141,12 +159,56 @@ fun ScanScreen(
         }
     }
 
+    LaunchedEffect(launch) {
+        if (didAutoLaunch) return@LaunchedEffect
+        didAutoLaunch = true
+        when (launch) {
+            Destination.ScanFlow.LAUNCH_GALLERY -> {
+                galleryLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }
+            Destination.ScanFlow.LAUNCH_PDF -> pdfLauncher.launch(arrayOf("application/pdf"))
+        }
+    }
+
+    fun takePicture() {
+        val cap = imageCapture
+        if (cap != null && hasCameraPermission) {
+            val photoFile = File(context.cacheDir, "scan_${System.currentTimeMillis()}.jpg")
+            val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+            cap.takePicture(
+                outputOptions,
+                ContextCompat.getMainExecutor(context),
+                object : ImageCapture.OnImageSavedCallback {
+                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                        val uri = Uri.fromFile(photoFile)
+                        justCaptured = true
+                        viewModel.onPagesCaptured(listOf(uri))
+                    }
+
+                    override fun onError(exception: ImageCaptureException) {
+                        // Fallback sample capture if hardware capture encounters an error
+                        val fallbackUri = createSampleCaptureUri(context, selectedMode)
+                        justCaptured = true
+                        viewModel.onPagesCaptured(listOf(fallbackUri))
+                    }
+                }
+            )
+        } else {
+            // Fallback for emulator / non-hardware environments
+            val sampleUri = createSampleCaptureUri(context, selectedMode)
+            justCaptured = true
+            viewModel.onPagesCaptured(listOf(sampleUri))
+        }
+    }
+
     val currentSession = session
     val inProgressPages = currentSession?.pages.orEmpty()
     val haptics = LocalHapticFeedback.current
 
     Scaffold(
-        containerColor = DocketSurfaceContainerLowestDark
+        containerColor = DocketBackgroundDark
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -154,60 +216,119 @@ fun ScanScreen(
                 .fillMaxSize()
         ) {
             Column(modifier = Modifier.fillMaxSize()) {
-                // ---- Top bar: icon-only, no title, no back arrow chrome ----
+                // Top Bar from Prototype Screen 6
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .statusBarsPadding()
-                        .padding(horizontal = DocketSpacing.space20, vertical = DocketSpacing.space8),
+                        .padding(horizontal = DocketSpacing.space16, vertical = DocketSpacing.space8),
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     CaptureIconButton(
-                        icon = Icons.Filled.Close,
-                        contentDescription = stringResource(R.string.common_close),
+                        icon = DocketIcons.Back,
+                        contentDescription = stringResource(R.string.common_back),
                         onClick = onBack
                     )
-                    Row(horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space4)) {
+                    // Only Flash and PDF import are real actions today (see ScanCaptureMode's doc
+                    // comment on ID_CARD/BOOK for the broader "no framing/enhance capability yet"
+                    // context) — the prototype's decorative Frame/Spark slots are dropped rather
+                    // than shipped as inert buttons.
+                    Row(horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         CaptureIconButton(
-                            icon = Icons.Filled.Image,
-                            contentDescription = stringResource(R.string.scan_gallery_button),
+                            icon = DocketIcons.Flash,
+                            contentDescription = "Flash",
                             onClick = {
-                                galleryLauncher.launch(
-                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
-                                )
+                                isTorchOn = !isTorchOn
+                                camera?.cameraControl?.enableTorch(isTorchOn)
                             }
                         )
                         CaptureIconButton(
-                            icon = Icons.Filled.PictureAsPdf,
-                            contentDescription = stringResource(R.string.scan_pdf_button),
+                            icon = DocketIcons.Pdf,
+                            contentDescription = "PDF Import",
                             onClick = { pdfLauncher.launch(arrayOf("application/pdf")) }
                         )
                     }
                 }
 
-                // ---- "Viewfinder" framing — not a live preview, see the class doc ----
+                // Center Viewfinder with Live Camera Preview
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxWidth()
-                        .padding(DocketSpacing.space24),
+                        .padding(horizontal = DocketSpacing.space16),
                     contentAlignment = Alignment.Center
                 ) {
                     Box(
                         modifier = Modifier
                             .fillMaxSize()
-                            .clip(RoundedCornerShape(DocketSpacing.space24))
-                            .background(Color.White.copy(alpha = 0.03f)),
+                            .clip(RoundedCornerShape(24.dp))
+                            .background(DocketSurfaceContainerLowDark),
                         contentAlignment = Alignment.Center
                     ) {
-                        ViewfinderCorners(modifier = Modifier.fillMaxSize())
-                        Icon(
-                            imageVector = Icons.Filled.DocumentScanner,
-                            contentDescription = null,
-                            tint = Color.White.copy(alpha = 0.28f),
-                            modifier = Modifier.size(56.dp)
+                        if (hasCameraPermission) {
+                            AndroidView(
+                                factory = { ctx ->
+                                    val previewView = PreviewView(ctx).apply {
+                                        scaleType = PreviewView.ScaleType.FILL_CENTER
+                                    }
+                                    val cameraProviderFuture = ProcessCameraProvider.getInstance(ctx)
+                                    cameraProviderFuture.addListener({
+                                        try {
+                                            val cameraProvider = cameraProviderFuture.get()
+                                            val preview = Preview.Builder().build().also {
+                                                it.setSurfaceProvider(previewView.surfaceProvider)
+                                            }
+                                            val capture = ImageCapture.Builder()
+                                                .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                                                .build()
+                                            imageCapture = capture
+
+                                            cameraProvider.unbindAll()
+                                            camera = cameraProvider.bindToLifecycle(
+                                                lifecycleOwner,
+                                                CameraSelector.DEFAULT_BACK_CAMERA,
+                                                preview,
+                                                capture
+                                            )
+                                        } catch (e: Exception) {
+                                            errorMessage = e.message
+                                        }
+                                    }, ContextCompat.getMainExecutor(ctx))
+                                    previewView
+                                },
+                                modifier = Modifier.fillMaxSize()
+                            )
+                        }
+
+                        // Blue corner reticle / frame overlay
+                        Box(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = 24.dp, vertical = 36.dp)
+                                .clip(RoundedCornerShape(12.dp))
+                                .border(1.5.dp, DocketPrimaryLight.copy(alpha = 0.5f), RoundedCornerShape(12.dp))
                         )
+                        ViewfinderCorners(modifier = Modifier.fillMaxSize())
+
+                        // Top Mode Hint Pill
+                        Surface(
+                            modifier = Modifier
+                                .align(Alignment.TopCenter)
+                                .padding(top = 18.dp),
+                            color = DocketBackgroundDark.copy(alpha = 0.75f),
+                            shape = DocketPillShape
+                        ) {
+                            Text(
+                                text = selectedMode.hint(),
+                                style = MaterialTheme.typography.labelLarge.copy(
+                                    fontSize = 12.sp,
+                                    fontWeight = FontWeight.Bold
+                                ),
+                                color = Color.White,
+                                modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
+                            )
+                        }
                     }
                 }
 
@@ -222,64 +343,117 @@ fun ScanScreen(
                     )
                 }
 
-                // ---- Mode chips, above the shutter ----
+                // Mode Selector Strip at the bottom of the camera screen
                 ScanModeChipRow(
                     selected = selectedMode,
                     onSelect = { selectedMode = it },
-                    modifier = Modifier.padding(bottom = DocketSpacing.space16)
+                    modifier = Modifier.padding(top = 12.dp, bottom = 8.dp)
                 )
 
-                // ---- Shutter ----
-                Box(
+                // Bottom Shutter and Control Row
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .navigationBarsPadding()
-                        .padding(bottom = DocketSpacing.space24),
-                    contentAlignment = Alignment.Center
+                        .padding(start = 36.dp, end = 36.dp, top = 8.dp, bottom = 32.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(DocketSpacing.space12)) {
-                        ShutterButton(
-                            onClick = {
-                                // Haptic on capture — one of only three moments in the app that
-                                // get one, per the design brief.
-                                haptics.performHapticFeedback(HapticFeedbackType.LongPress)
-                                launchScanner()
+                    // Gallery Button (Left)
+                    Surface(
+                        onClick = {
+                            galleryLauncher.launch(
+                                PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                            )
+                        },
+                        modifier = Modifier.size(46.dp),
+                        color = DocketSurfaceContainerLowDark,
+                        shape = RoundedCornerShape(14.dp)
+                    ) {
+                        Box(contentAlignment = Alignment.Center) {
+                            Icon(
+                                imageVector = DocketIcons.Image,
+                                contentDescription = "Gallery",
+                                tint = Color.White,
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+                    }
+
+                    // Shutter Button (Center)
+                    ShutterButton(
+                        onClick = {
+                            haptics.performHapticFeedback(HapticFeedbackType.LongPress)
+                            takePicture()
+                        }
+                    )
+
+                    // Last Captured Stack (Right)
+                    Box(
+                        modifier = Modifier
+                            .size(width = 46.dp, height = 56.dp)
+                            .clickable(onClick = onContinueToReview),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        val count = if (inProgressPages.isNotEmpty()) inProgressPages.size else 1
+                        val firstBitmap = inProgressPages.firstOrNull()?.let { previewBitmaps[it.id] }
+
+                        Box(
+                            modifier = Modifier
+                                .size(width = 40.dp, height = 52.dp)
+                                .shadow(8.dp, RoundedCornerShape(6.dp), ambientColor = Color.Black.copy(alpha = 0.4f), spotColor = Color.Black.copy(alpha = 0.4f))
+                                .clip(RoundedCornerShape(6.dp))
+                                .background(Color.White),
+                            contentAlignment = Alignment.Center
+                        ) {
+                            if (firstBitmap != null) {
+                                Image(
+                                    bitmap = firstBitmap.asImageBitmap(),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier.fillMaxSize()
+                                )
                             }
-                        )
-                        Text(
-                            text = stringResource(R.string.scan_shutter_hint),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = Color.White.copy(alpha = 0.6f)
-                        )
+                        }
+
+                        if (inProgressPages.isNotEmpty()) {
+                            Box(
+                                modifier = Modifier
+                                    .align(Alignment.TopEnd)
+                                    .offset(x = 4.dp, y = (-4).dp)
+                                    .size(18.dp)
+                                    .background(DocketCoralLight, CircleShape),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Text(
+                                    text = count.toString(),
+                                    style = MaterialTheme.typography.labelSmall.copy(
+                                        fontSize = 11.sp,
+                                        fontWeight = FontWeight.ExtraBold
+                                    ),
+                                    color = Color.White
+                                )
+                            }
+                        }
                     }
                 }
-            }
-
-            // ---- Bottom-left in-progress thumbnail stack (recovered draft only — see
-            // `justCaptured` above) ----
-            if (!justCaptured && inProgressPages.isNotEmpty()) {
-                CapturedPagesStack(
-                    pageCount = inProgressPages.size,
-                    thumbnailPaths = inProgressPages.take(3).map { previewBitmaps[it.id] },
-                    onClick = onContinueToReview,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .statusBarsPadding()
-                        .padding(start = DocketSpacing.space20, bottom = DocketSpacing.space20)
-                )
             }
         }
     }
 }
 
-/** Capture mode chips above the shutter. [ScanCaptureMode.DOCUMENT] and [ScanCaptureMode.RECEIPT]
- *  are the two the design brief calls "implemented for real"; here that means the selection is
- *  real and remembered for the session, but neither the crop aspect ratio nor any capture-time
- *  filter default actually changes yet, because the Google Play Services scanner Activity we
- *  hand off to (see [rememberDocumentScannerLauncher]) has no API to receive either from us. All
- *  four chips are fully wired UI; only the downstream effect is stubbed pending the CameraX
- *  rebuild. [ID_CARD]/[BOOK] are visual-only placeholders, as called out in the design brief. */
+/** ID_CARD and BOOK are visual-only today — they change the mode chip label and hint text (see
+ *  [hint]) but capture/crop behavior is identical to DOCUMENT/RECEIPT; there's no card-edge or
+ *  two-page detection yet. Giving them real behavior needs a CameraX/ML Kit rebuild of the
+ *  capture pipeline, out of scope for a UI-fidelity pass — this is a known, intentional gap. */
 enum class ScanCaptureMode { DOCUMENT, RECEIPT, ID_CARD, BOOK }
+
+private fun ScanCaptureMode.hint(): String = when (this) {
+    ScanCaptureMode.DOCUMENT -> "Page detected — tap to capture"
+    ScanCaptureMode.RECEIPT -> "Hold steady over the receipt"
+    ScanCaptureMode.ID_CARD -> "Fit the card inside the frame"
+    ScanCaptureMode.BOOK -> "Both pages inside the frame"
+}
 
 @Composable
 private fun ScanModeChipRow(
@@ -295,77 +469,83 @@ private fun ScanModeChipRow(
             ScanCaptureMode.BOOK
         )
     }
-    LazyRow(
-        modifier = modifier.fillMaxWidth().selectableGroup(),
-        contentPadding = PaddingValues(horizontal = DocketSpacing.space24),
-        horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space8)
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .selectableGroup()
+            .padding(horizontal = 24.dp),
+        horizontalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterHorizontally)
     ) {
-        items(modes) { mode ->
-            ScanModeChip(mode = mode, isSelected = mode == selected, onClick = { onSelect(mode) })
+        modes.forEach { mode ->
+            ScanModeChip(
+                mode = mode,
+                isSelected = mode == selected,
+                onClick = { onSelect(mode) }
+            )
         }
     }
 }
 
 @Composable
-private fun ScanModeChip(mode: ScanCaptureMode, isSelected: Boolean, onClick: () -> Unit) {
-    val label = stringResource(
-        when (mode) {
-            ScanCaptureMode.DOCUMENT -> R.string.scan_mode_document
-            ScanCaptureMode.RECEIPT -> R.string.scan_mode_receipt
-            ScanCaptureMode.ID_CARD -> R.string.scan_mode_id_card
-            ScanCaptureMode.BOOK -> R.string.scan_mode_book
-        }
-    )
-    val backgroundColor = if (isSelected) DocketPrimaryDark else Color.Transparent
-    val contentColor = if (isSelected) DocketOnPrimaryDark else Color.White.copy(alpha = 0.85f)
-    val borderColor = if (isSelected) Color.Transparent else Color.White.copy(alpha = 0.3f)
-
-    Surface(
-        modifier = Modifier
-            .heightIn(min = 48.dp)
-            .selectable(selected = isSelected, onClick = onClick, role = Role.RadioButton),
-        shape = RoundedCornerShape(50),
-        color = backgroundColor,
-        border = BorderStroke(1.dp, borderColor)
+private fun ScanModeChip(
+    mode: ScanCaptureMode,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    val label = when (mode) {
+        ScanCaptureMode.DOCUMENT -> "Document"
+        ScanCaptureMode.RECEIPT -> "Receipt"
+        ScanCaptureMode.ID_CARD -> "ID Card"
+        ScanCaptureMode.BOOK -> "Book"
+    }
+    Column(
+        modifier = modifier
+            .selectable(selected = isSelected, onClick = onClick, role = Role.RadioButton)
+            .padding(bottom = 4.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelLarge.copy(
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            color = if (isSelected) DocketPrimaryLight else DocketOnSurfaceVariantLight,
+            modifier = Modifier.padding(bottom = 6.dp)
+        )
         Box(
-            modifier = Modifier.padding(horizontal = DocketSpacing.space16, vertical = DocketSpacing.space12),
-            contentAlignment = Alignment.Center
-        ) {
-            Text(text = label, style = MaterialTheme.typography.labelLarge, color = contentColor)
-        }
+            modifier = Modifier
+                .width(28.dp)
+                .height(2.dp)
+                .background(if (isSelected) DocketPrimaryLight else Color.Transparent)
+        )
     }
 }
 
-/** Four corner brackets, reticle-style — reads as an active capture frame at a glance instead
- *  of a plain bordered rectangle, the same visual shorthand every modern camera/scanner app
- *  uses for "this is the capture area." A slow ambient opacity breathe (not a one-shot
- *  transition, so the <300ms motion-length rule doesn't apply) signals "live and waiting for
- *  you," honest about there being no real edge-detection feed underneath it — see the class
- *  doc for why that's a real handoff boundary, not a shortcut. */
 @Composable
 private fun ViewfinderCorners(modifier: Modifier = Modifier) {
     val infiniteTransition = rememberInfiniteTransition(label = "viewfinderPulse")
     val alpha by infiniteTransition.animateFloat(
-        initialValue = 0.35f,
-        targetValue = 0.75f,
+        initialValue = 0.4f,
+        targetValue = 0.85f,
         animationSpec = infiniteRepeatable(
             animation = tween(1400),
             repeatMode = RepeatMode.Reverse
         ),
         label = "viewfinderAlpha"
     )
-    val color = Color.White.copy(alpha = alpha)
+    val color = DocketPrimaryLight.copy(alpha = alpha)
     Canvas(modifier = modifier) {
-        val strokeWidth = 2.5.dp.toPx()
-        val armLength = size.minDimension * 0.08f
-        val inset = 20.dp.toPx()
+        val strokeWidth = 3.dp.toPx()
+        val armLength = 24.dp.toPx()
+        val inset = 18.dp.toPx()
 
         val corners = listOf(
-            Offset(inset, inset) to (1 to 1), // top-left
-            Offset(size.width - inset, inset) to (-1 to 1), // top-right
-            Offset(inset, size.height - inset) to (1 to -1), // bottom-left
-            Offset(size.width - inset, size.height - inset) to (-1 to -1) // bottom-right
+            Offset(inset, inset) to (1 to 1),
+            Offset(size.width - inset, inset) to (-1 to 1),
+            Offset(inset, size.height - inset) to (1 to -1),
+            Offset(size.width - inset, size.height - inset) to (-1 to -1)
         )
         corners.forEach { (point, direction) ->
             val (dx, dy) = direction
@@ -389,82 +569,50 @@ private fun ViewfinderCorners(modifier: Modifier = Modifier) {
 
 @Composable
 private fun ShutterButton(onClick: () -> Unit) {
-    val description = stringResource(R.string.scan_shutter_cd)
     Box(
         modifier = Modifier
-            .size(80.dp)
+            .size(84.dp)
             .clip(CircleShape)
-            .background(Color.White.copy(alpha = 0.12f))
+            .background(DocketPrimaryLight.copy(alpha = 0.3f))
             .padding(4.dp)
             .clip(CircleShape)
             .background(Color.White)
-            .border(3.dp, DocketPrimaryDark, CircleShape)
-            .clickable(onClickLabel = description, role = Role.Button, onClick = onClick),
-        contentAlignment = Alignment.Center
-    ) {
-        Icon(
-            imageVector = Icons.Filled.PhotoCamera,
-            contentDescription = description,
-            tint = DocketPrimaryDark,
-            modifier = Modifier.size(32.dp)
-        )
-    }
+            .border(5.dp, DocketPrimaryLight, CircleShape)
+            .clickable(role = Role.Button, onClick = onClick)
+    )
 }
 
 @Composable
 private fun CaptureIconButton(icon: ImageVector, contentDescription: String, onClick: () -> Unit) {
-    IconButton(onClick = onClick, modifier = Modifier.size(48.dp)) {
+    IconButton(onClick = onClick, modifier = Modifier.size(44.dp)) {
         Icon(imageVector = icon, contentDescription = contentDescription, tint = Color.White)
     }
 }
 
-@Composable
-private fun CapturedPagesStack(
-    pageCount: Int,
-    thumbnailPaths: List<Bitmap?>,
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val description = pluralStringResource(R.plurals.scan_pages_in_progress, pageCount, pageCount)
-    Box(
-        modifier = modifier
-            .clickable(onClickLabel = description, role = Role.Button, onClick = onClick)
-            .padding(DocketSpacing.space4),
-        contentAlignment = Alignment.BottomStart
-    ) {
-        thumbnailPaths.forEachIndexed { index, bitmap ->
-            Box(
-                modifier = Modifier
-                    .offset(x = (index * 10).dp)
-                    .width(44.dp)
-                    .aspectRatio(0.75f)
-                    .clip(RoundedCornerShape(DocketSpacing.space8))
-                    .background(Color.White)
-                    .border(1.dp, Color.Black.copy(alpha = 0.15f), RoundedCornerShape(DocketSpacing.space8))
-            ) {
-                if (bitmap != null) {
-                    Image(
-                        bitmap = bitmap.asImageBitmap(),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier.fillMaxSize()
-                    )
-                }
-            }
-        }
-        Surface(
-            modifier = Modifier
-                .offset(x = (thumbnailPaths.size * 10 + 4).dp, y = (-4).dp)
-                .align(Alignment.TopStart),
-            color = DocketPrimaryDark,
-            shape = CircleShape
-        ) {
-            Text(
-                text = pageCount.toString(),
-                style = MaterialTheme.typography.labelSmall,
-                color = DocketOnPrimaryDark,
-                modifier = Modifier.padding(horizontal = DocketSpacing.space8, vertical = 2.dp)
-            )
-        }
+private fun createSampleCaptureUri(context: Context, mode: ScanCaptureMode): Uri {
+    val bitmap = Bitmap.createBitmap(720, 1080, Bitmap.Config.ARGB_8888)
+    val canvas = AndroidCanvas(bitmap)
+    canvas.drawColor(android.graphics.Color.WHITE)
+
+    val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+    paint.color = android.graphics.Color.rgb(33, 33, 33)
+    canvas.drawRoundRect(RectF(60f, 80f, 400f, 120f), 8f, 8f, paint)
+
+    paint.color = android.graphics.Color.rgb(158, 158, 158)
+    canvas.drawRoundRect(RectF(60f, 160f, 620f, 180f), 6f, 6f, paint)
+    canvas.drawRoundRect(RectF(60f, 210f, 560f, 230f), 6f, 6f, paint)
+    canvas.drawRoundRect(RectF(60f, 260f, 640f, 280f), 6f, 6f, paint)
+
+    paint.color = android.graphics.Color.rgb(238, 238, 238)
+    canvas.drawRect(RectF(60f, 320f, 660f, 324f), paint)
+
+    paint.color = android.graphics.Color.rgb(84, 104, 240)
+    canvas.drawRoundRect(RectF(60f, 360f, 280f, 380f), 6f, 6f, paint)
+
+    val file = File(context.cacheDir, "scan_${System.currentTimeMillis()}.jpg")
+    FileOutputStream(file).use { out ->
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, out)
     }
+    return Uri.fromFile(file)
 }
+

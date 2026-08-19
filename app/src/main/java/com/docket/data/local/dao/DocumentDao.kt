@@ -76,6 +76,25 @@ interface DocumentDao {
     )
     fun observeLibraryRows(folderId: Long?, typeFilter: String, sortBy: String): Flow<List<DocumentRow>>
 
+    /** Most recently created documents across the *whole* library (every folder), for Home's
+     *  "Recent Files" — unlike [observeLibraryRows], not scoped to one folder. */
+    @Query(
+        """
+        SELECT d.*,
+               EXISTS(SELECT 1 FROM receipts r WHERE r.documentId = d.id) AS hasReceipt,
+               EXISTS(SELECT 1 FROM warranties w WHERE w.documentId = d.id) AS hasWarranty
+        FROM documents d
+        WHERE d.deletedAt IS NULL
+        ORDER BY d.createdAt DESC
+        LIMIT :limit
+        """
+    )
+    fun observeRecent(limit: Int): Flow<List<DocumentRow>>
+
+    /** Total active (non-deleted) document count across the whole library. */
+    @Query("SELECT COUNT(*) FROM documents WHERE deletedAt IS NULL")
+    fun observeLibrarySize(): Flow<Int>
+
     @Query("SELECT * FROM documents WHERE deletedAt IS NOT NULL ORDER BY deletedAt DESC")
     fun observeDeleted(): Flow<List<DocumentEntity>>
 

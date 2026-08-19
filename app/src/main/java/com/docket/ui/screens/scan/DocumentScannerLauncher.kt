@@ -47,6 +47,7 @@ import com.google.mlkit.vision.documentscanner.GmsDocumentScanningResult
 @Composable
 fun rememberDocumentScannerLauncher(
     onPagesCaptured: (List<Uri>) -> Unit,
+    onCancel: () -> Unit = {},
     onError: (String) -> Unit = {}
 ): () -> Unit {
     val context = LocalContext.current
@@ -63,8 +64,9 @@ fun rememberDocumentScannerLauncher(
             } else {
                 onPagesCaptured(uris)
             }
+        } else {
+            onCancel()
         }
-        // RESULT_CANCELED just means the user backed out — not an error worth surfacing.
     }
 
     fun startScan() {

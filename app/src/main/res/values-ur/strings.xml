@@ -134,4 +134,86 @@
     <string name="unlock_button_working">کارروائی جاری ہے…</string>
     <string name="unlock_button_with_price">پریمیم غیر مقفل کریں — %1$s</string>
     <string name="unlock_restore">خریداریاں بحال کریں</string>
+    <string name="unlock_price_suffix">/ ایک بار</string>
+    <string name="unlock_active_label">پریمیم فعال ہے</string>
+
+    <string name="onboarding_slide1_title">کچھ بھی اسکین کریں، اپنے فون پر رکھیں</string>
+    <string name="onboarding_slide1_body">رسیدیں، وارنٹی کارڈز، لیز۔ Docket صفحات کیپچر کرتا ہے اور انہیں کسی سرور پر بھیجے بغیر فائل کرتا ہے۔</string>
+    <string name="onboarding_slide2_title">ہر لفظ قابلِ تلاش ہے</string>
+    <string name="onboarding_slide2_body">اسکین محفوظ ہوتے ہی متن ڈیوائس پر پڑھ لیا جاتا ہے، تاکہ آپ دستاویز کو اس کے مواد سے تلاش کر سکیں، نہ کہ یہ یاد رکھ کر کہ اسے کہاں فائل کیا تھا۔</string>
+    <string name="onboarding_slide3_title">رسیدیں اور وارنٹیاں، ٹریک کی گئیں</string>
+    <string name="onboarding_slide3_body">Docket رسیدوں سے کل رقم نکالتا ہے اور وارنٹی ختم ہونے سے پہلے آپ کو یاد دلاتا ہے۔</string>
+    <string name="onboarding_skip">نظرانداز کریں</string>
+    <string name="onboarding_next">اگلا</string>
+
+    <string name="signin_headline">دوبارہ خوش آمدید</string>
+    <string name="signin_body">Docket سب کچھ اسی ڈیوائس پر رکھتا ہے۔ صرف اس صورت میں سائن ان کریں اگر آپ کو بیک اپ اور سنک چاہیے۔</string>
+    <string name="signin_email_label">ای میل</string>
+    <string name="signin_password_label">پاس ورڈ</string>
+    <string name="signin_remember_me">مجھے یاد رکھیں</string>
+    <string name="signin_forgot_password">پاس ورڈ بھول گئے</string>
+    <string name="signin_or_continue_with">یا اس کے ساتھ جاری رکھیں</string>
+    <string name="signin_button">سائن ان کریں</string>
+    <string name="signin_no_account_prompt">اکاؤنٹ نہیں ہے؟ </string>
+    <string name="signin_sign_up_link">سائن اپ کریں</string>
+
+    <string name="signup_headline">اکاؤنٹ بنائیں</string>
+    <string name="signup_body">ہمیشہ کے لیے مفت۔ پریمیم ایک بار کی خریداری ہے، کبھی سبسکرپشن نہیں۔</string>
+    <string name="signup_name_label">پورا نام</string>
+    <string name="signup_email_label">ای میل</string>
+    <string name="signup_password_label">پاس ورڈ</string>
+    <string name="signup_consent">میں سروس کی شرائط اور رازداری کی پالیسی سے اتفاق کرتا ہوں۔ اسکینز اسی ڈیوائس پر رہتے ہیں۔</string>
+    <string name="signup_button">سائن اپ کریں</string>
+    <string name="signup_have_account_prompt">پہلے سے اکاؤنٹ ہے؟ </string>
+    <string name="signup_sign_in_link">سائن ان کریں</string>
+
+    <string name="reset_headline">اپنی میل چیک کریں</string>
+    <string name="reset_body">ہم نے %1$s پر چھ ہندسوں کا کوڈ بھیجا ہے۔ اپنا پاس ورڈ ری سیٹ کرنے کے لیے اسے نیچے درج کریں۔</string>
+    <string name="reset_default_email">آپ کی ای میل</string>
+    <string name="reset_resend_prompt">ای میل موصول نہیں ہوئی؟</string>
+    <string name="reset_resend_prefix">آپ کوڈ دوبارہ اتنی دیر میں بھیج سکتے ہیں: </string>
+    <string name="reset_resend_seconds">%1$d سیکنڈ</string>
+    <string name="reset_confirm_button">تصدیق کریں</string>
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">تمام فائلیں دیکھیں</string>
+    <string name="home_recent_files_header">حالیہ فائلیں</string>
+    <string name="home_empty_title">ابھی تک کوئی دستاویز نہیں</string>
+    <string name="home_empty_message">یہاں دیکھنے کے لیے اپنی پہلی دستاویز اسکین کریں۔</string>
+    <string name="home_scan_fab_desc">اسکین کریں</string>
+    <string name="home_tool_scan_doc">دستاویز اسکین کریں</string>
+    <string name="home_tool_receipt">رسید</string>
+    <string name="home_tool_id_card">شناختی کارڈ</string>
+    <string name="home_tool_import_pdf">PDF درآمد کریں</string>
+    <string name="home_tool_warranties">وارنٹیاں</string>
+    <string name="home_tool_protect">تحفظ دیں</string>
+    <string name="home_tool_export_csv">CSV برآمد کریں</string>
+    <string name="home_tool_all_tools">تمام ٹولز</string>
+
+    <string name="account_title">اکاؤنٹ</string>
+    <string name="account_more_desc">مزید</string>
+    <string name="account_row_personal_info">ذاتی معلومات</string>
+    <string name="account_row_scan_preferences">اسکین ترجیحات</string>
+    <string name="account_row_security">سیکیورٹی</string>
+    <string name="account_row_language">زبان</string>
+    <string name="account_row_backup">بیک اپ اور بحالی</string>
+    <string name="account_row_privacy">رازداری</string>
+    <string name="account_row_usage">استعمال</string>
+    <string name="account_storage_header">اسٹوریج</string>
+    <string name="account_calculating">شمار ہو رہا ہے…</string>
+    <string name="account_storage_used_cache">%1$s استعمال شدہ · %2$s کیش</string>
+    <string name="account_clearing_cache">صاف ہو رہا ہے…</string>
+    <string name="account_clear_cache">کیش صاف کریں</string>
+    <string name="account_dark_mode">ڈارک موڈ</string>
+    <string name="account_log_out">لاگ آؤٹ کریں</string>
+    <string name="account_not_signed_in_title">آپ سائن ان نہیں ہیں</string>
+    <string name="account_not_signed_in_body">Docket بغیر پروفائل کے مکمل طور پر کام کرتا ہے۔ صرف اس صورت میں سائن ان کریں یا اکاؤنٹ بنائیں اگر آپ چاہتے ہیں کہ یہاں نام اور ای میل دکھائی دے۔</string>
+    <string name="account_create_account_button">اکاؤنٹ بنائیں</string>
+    <string name="account_used_on_device">اس ڈیوائس پر %1$s استعمال ہوا</string>
+    <string name="account_premium_banner_title">پریمیم پر جائیں</string>
+    <string name="account_premium_banner_subtitle">بیچ ایکسپورٹ، OCR زبانیں، ٹیکسٹ لیئر</string>
+    <string name="account_unlock_button">غیر مقفل کریں</string>
+
+    <string name="document_detail_action_export">برآمد کریں</string>
+    <string name="document_detail_action_rename">نام تبدیل کریں</string>
 </resources>

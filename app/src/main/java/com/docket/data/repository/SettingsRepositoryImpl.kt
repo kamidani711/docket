@@ -43,4 +43,18 @@ class SettingsRepositoryImpl @Inject constructor(
     override suspend fun setAppLockEnabled(enabled: Boolean) {
         dataStore.edit { prefs -> prefs[SettingsKeys.APP_LOCK_ENABLED] = enabled }
     }
+
+    override val hasSeenOnboarding: Flow<Boolean> =
+        dataStore.data.map { prefs -> prefs[SettingsKeys.HAS_SEEN_ONBOARDING] ?: false }
+
+    override suspend fun setOnboardingSeen() {
+        dataStore.edit { prefs -> prefs[SettingsKeys.HAS_SEEN_ONBOARDING] = true }
+    }
+
+    override val darkModeOverride: Flow<Boolean?> =
+        dataStore.data.map { prefs -> prefs[SettingsKeys.DARK_MODE_OVERRIDE] }
+
+    override suspend fun setDarkModeOverride(enabled: Boolean) {
+        dataStore.edit { prefs -> prefs[SettingsKeys.DARK_MODE_OVERRIDE] = enabled }
+    }
 }

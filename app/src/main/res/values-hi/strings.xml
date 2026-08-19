@@ -134,4 +134,86 @@
     <string name="unlock_button_working">प्रोसेस हो रहा है…</string>
     <string name="unlock_button_with_price">प्रीमियम अनलॉक करें — %1$s</string>
     <string name="unlock_restore">खरीदारी बहाल करें</string>
+    <string name="unlock_price_suffix">/ एक बार</string>
+    <string name="unlock_active_label">प्रीमियम सक्रिय</string>
+
+    <string name="onboarding_slide1_title">कुछ भी स्कैन करें, इसे अपने फ़ोन में रखें</string>
+    <string name="onboarding_slide1_body">रसीदें, वारंटी कार्ड, लीज़। Docket पन्ने कैप्चर करता है और उन्हें बिना किसी सर्वर पर भेजे फ़ाइल करता है।</string>
+    <string name="onboarding_slide2_title">हर शब्द खोजा जा सकता है</string>
+    <string name="onboarding_slide2_body">स्कैन सेव होते ही टेक्स्ट डिवाइस पर पढ़ लिया जाता है, ताकि आप दस्तावेज़ को उसमें लिखी बात से ढूंढ सकें, न कि यह याद रखकर कि उसे कहाँ फ़ाइल किया था।</string>
+    <string name="onboarding_slide3_title">रसीदें और वारंटी, ट्रैक की गईं</string>
+    <string name="onboarding_slide3_body">Docket रसीदों से कुल राशि निकालता है और वारंटी खत्म होने से पहले आपको याद दिलाता है।</string>
+    <string name="onboarding_skip">छोड़ें</string>
+    <string name="onboarding_next">आगे</string>
+
+    <string name="signin_headline">वापसी पर स्वागत है</string>
+    <string name="signin_body">Docket सब कुछ इसी डिवाइस पर रखता है। बैकअप और सिंक चाहिए तो ही साइन इन करें।</string>
+    <string name="signin_email_label">ईमेल</string>
+    <string name="signin_password_label">पासवर्ड</string>
+    <string name="signin_remember_me">मुझे याद रखें</string>
+    <string name="signin_forgot_password">पासवर्ड भूल गए</string>
+    <string name="signin_or_continue_with">या इसके साथ जारी रखें</string>
+    <string name="signin_button">साइन इन करें</string>
+    <string name="signin_no_account_prompt">खाता नहीं है? </string>
+    <string name="signin_sign_up_link">साइन अप करें</string>
+
+    <string name="signup_headline">खाता बनाएं</string>
+    <string name="signup_body">हमेशा के लिए मुफ़्त। प्रीमियम एक बार की खरीद है, कभी सदस्यता नहीं।</string>
+    <string name="signup_name_label">पूरा नाम</string>
+    <string name="signup_email_label">ईमेल</string>
+    <string name="signup_password_label">पासवर्ड</string>
+    <string name="signup_consent">मैं सेवा की शर्तों और गोपनीयता नीति से सहमत हूं। स्कैन इसी डिवाइस पर रहते हैं।</string>
+    <string name="signup_button">साइन अप करें</string>
+    <string name="signup_have_account_prompt">पहले से खाता है? </string>
+    <string name="signup_sign_in_link">साइन इन करें</string>
+
+    <string name="reset_headline">अपना मेल जांचें</string>
+    <string name="reset_body">हमने %1$s पर छह अंकों का कोड भेजा है। अपना पासवर्ड रीसेट करने के लिए इसे नीचे दर्ज करें।</string>
+    <string name="reset_default_email">आपका ईमेल</string>
+    <string name="reset_resend_prompt">ईमेल नहीं मिला?</string>
+    <string name="reset_resend_prefix">आप कोड को फिर से इतने समय में भेज सकते हैं: </string>
+    <string name="reset_resend_seconds">%1$d सेकंड</string>
+    <string name="reset_confirm_button">पुष्टि करें</string>
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">सभी फ़ाइलें देखें</string>
+    <string name="home_recent_files_header">हाल की फ़ाइलें</string>
+    <string name="home_empty_title">अभी तक कोई दस्तावेज़ नहीं</string>
+    <string name="home_empty_message">यहां देखने के लिए अपना पहला दस्तावेज़ स्कैन करें।</string>
+    <string name="home_scan_fab_desc">स्कैन करें</string>
+    <string name="home_tool_scan_doc">दस्तावेज़ स्कैन करें</string>
+    <string name="home_tool_receipt">रसीद</string>
+    <string name="home_tool_id_card">पहचान पत्र</string>
+    <string name="home_tool_import_pdf">PDF आयात करें</string>
+    <string name="home_tool_warranties">वारंटी</string>
+    <string name="home_tool_protect">सुरक्षित करें</string>
+    <string name="home_tool_export_csv">CSV निर्यात करें</string>
+    <string name="home_tool_all_tools">सभी टूल</string>
+
+    <string name="account_title">खाता</string>
+    <string name="account_more_desc">अधिक</string>
+    <string name="account_row_personal_info">व्यक्तिगत जानकारी</string>
+    <string name="account_row_scan_preferences">स्कैन प्राथमिकताएं</string>
+    <string name="account_row_security">सुरक्षा</string>
+    <string name="account_row_language">भाषा</string>
+    <string name="account_row_backup">बैकअप और पुनर्स्थापना</string>
+    <string name="account_row_privacy">गोपनीयता</string>
+    <string name="account_row_usage">उपयोग</string>
+    <string name="account_storage_header">संग्रहण</string>
+    <string name="account_calculating">गणना हो रही है…</string>
+    <string name="account_storage_used_cache">%1$s उपयोग हुआ · %2$s कैश</string>
+    <string name="account_clearing_cache">साफ़ हो रहा है…</string>
+    <string name="account_clear_cache">कैश साफ़ करें</string>
+    <string name="account_dark_mode">डार्क मोड</string>
+    <string name="account_log_out">लॉग आउट करें</string>
+    <string name="account_not_signed_in_title">आप साइन इन नहीं हैं</string>
+    <string name="account_not_signed_in_body">Docket बिना प्रोफ़ाइल के भी पूरी तरह काम करता है। यहां नाम और ईमेल दिखाने के लिए ही साइन इन करें या खाता बनाएं।</string>
+    <string name="account_create_account_button">खाता बनाएं</string>
+    <string name="account_used_on_device">इस डिवाइस पर %1$s उपयोग हुआ</string>
+    <string name="account_premium_banner_title">प्रीमियम पर जाएं</string>
+    <string name="account_premium_banner_subtitle">बैच एक्सपोर्ट, OCR भाषाएं, टेक्स्ट लेयर</string>
+    <string name="account_unlock_button">अनलॉक करें</string>
+
+    <string name="document_detail_action_export">निर्यात करें</string>
+    <string name="document_detail_action_rename">नाम बदलें</string>
 </resources>

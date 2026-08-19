@@ -8,9 +8,11 @@ import com.docket.domain.model.DocumentTypeFilter
 import com.docket.domain.model.ExportFormat
 import com.docket.domain.model.Folder
 import com.docket.domain.model.PremiumFeature
+import com.docket.domain.model.StorageBreakdown
 import com.docket.domain.repository.DocumentRepository
 import com.docket.domain.repository.PremiumRepository
 import com.docket.domain.repository.SettingsRepository
+import com.docket.domain.repository.StorageRepository
 import com.docket.domain.usecase.CreateFolderUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -272,6 +274,7 @@ class LibraryViewModelTest {
         val viewModel = LibraryViewModel(
             documentRepository = FakeDocumentRepository(),
             settingsRepository = FakeSettingsRepository(defaultSort = DocumentSort.NAME),
+            storageRepository = FakeStorageRepository(),
             createFolderUseCase = CreateFolderUseCase(FakeDocumentRepository(), FakePremiumRepository(false))
         ).also { createdViewModels += it }
         testDispatcher.scheduler.advanceUntilIdle()
@@ -298,6 +301,7 @@ class LibraryViewModelTest {
     ) = LibraryViewModel(
         documentRepository = documentRepository,
         settingsRepository = FakeSettingsRepository(),
+        storageRepository = FakeStorageRepository(),
         createFolderUseCase = CreateFolderUseCase(documentRepository, FakePremiumRepository(isPremium))
     ).also { createdViewModels += it }
 
@@ -328,6 +332,15 @@ class LibraryViewModelTest {
         override suspend fun setDefaultLibrarySort(sort: DocumentSort) = Unit
         override val appLockEnabled: Flow<Boolean> = flowOf(false)
         override suspend fun setAppLockEnabled(enabled: Boolean) = Unit
+        override val hasSeenOnboarding: Flow<Boolean> = flowOf(true)
+        override suspend fun setOnboardingSeen() = Unit
+        override val darkModeOverride: Flow<Boolean?> = flowOf(null)
+        override suspend fun setDarkModeOverride(enabled: Boolean) = Unit
+    }
+
+    private class FakeStorageRepository : StorageRepository {
+        override suspend fun getStorageBreakdown() = StorageBreakdown(documentsBytes = 0L, databaseBytes = 0L, cacheBytes = 0L)
+        override suspend fun clearCache() = Unit
     }
 
     private class FakePremiumRepository(isPremium: Boolean) : PremiumRepository {
@@ -381,6 +394,12 @@ class LibraryViewModelTest {
                         }
                     }
             }
+
+        override fun observeRecentDocuments(limit: Int): Flow<List<Document>> =
+            documentsFlow.map { docs -> docs.filter { it.deletedAt == null }.sortedByDescending { it.createdAt }.take(limit) }
+
+        override fun observeLibrarySize(): Flow<Int> =
+            documentsFlow.map { docs -> docs.count { it.deletedAt == null } }
 
         override fun observeDocument(documentId: Long): Flow<Document?> =
             documentsFlow.map { docs -> docs.find { it.id == documentId } }

@@ -48,7 +48,7 @@ android {
         compose = true
         // AGP 8+ defaults this to false — needed for BuildConfig.DEBUG, which gates the dev-only
         // navigation list and premium-testing toggle out of release builds. See LibraryScreen.kt
-        // and SettingsScreen.kt.
+        // and AccountScreen.kt.
         buildConfig = true
     }
 
@@ -69,6 +69,8 @@ ksp {
 dependencies {
     // Core / Lifecycle
     implementation(libs.androidx.core.ktx)
+    // AppCompatDelegate's per-app-language API only — see LanguageScreen.kt.
+    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     // Lifecycle-aware StateFlow collection in Compose (collectAsStateWithLifecycle) — pauses
     // collection below STARTED instead of collecting for the app's entire process lifetime.

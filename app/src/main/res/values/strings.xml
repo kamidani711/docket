@@ -240,4 +240,113 @@
     <!-- Purchase button once Play has returned a localized price — %s is that price string as-is (e.g. "$4.99"), do not reformat or translate it -->
     <string name="unlock_button_with_price">Unlock Premium — %1$s</string>
     <string name="unlock_restore">Restore purchases</string>
+    <!-- Price display suffix, e.g. "$14.99 / once" -->
+    <string name="unlock_price_suffix">/ once</string>
+    <!-- Purchase button label once Premium is already owned -->
+    <string name="unlock_active_label">Premium Active</string>
+
+    <!-- ===================== Onboarding (3-slide first-launch intro) ===================== -->
+
+    <string name="onboarding_slide1_title">Scan anything, keep it on your phone</string>
+    <string name="onboarding_slide1_body">Receipts, warranty cards, leases. Docket captures pages and files them without sending anything to a server.</string>
+    <string name="onboarding_slide2_title">Every word is searchable</string>
+    <string name="onboarding_slide2_body">Text is read on device the moment a scan is saved, so you can find a document by what it says, not where you filed it.</string>
+    <string name="onboarding_slide3_title">Receipts and warranties, tracked</string>
+    <string name="onboarding_slide3_body">Docket pulls totals off receipts and reminds you before a warranty runs out.</string>
+    <string name="onboarding_skip">Skip</string>
+    <string name="onboarding_next">Next</string>
+
+    <!-- ===================== Sign in ===================== -->
+
+    <string name="signin_headline">Welcome back</string>
+    <string name="signin_body">Docket keeps everything on this device. Sign in only if you want backup and sync.</string>
+    <string name="signin_email_label">Email</string>
+    <string name="signin_password_label">Password</string>
+    <string name="signin_remember_me">Remember me</string>
+    <string name="signin_forgot_password">Forgot password</string>
+    <!-- Divider text between the email/password fields and the social sign-in row -->
+    <string name="signin_or_continue_with">or continue with</string>
+    <string name="signin_button">Sign in</string>
+    <!-- Trailing space is intentional — a bold "Sign up" link is appended right after it -->
+    <string name="signin_no_account_prompt">Don\'t have an account? </string>
+    <string name="signin_sign_up_link">Sign up</string>
+
+    <!-- ===================== Sign up ===================== -->
+
+    <string name="signup_headline">Create account</string>
+    <string name="signup_body">Free forever. Premium is a single purchase, never a subscription.</string>
+    <string name="signup_name_label">Full name</string>
+    <string name="signup_email_label">Email</string>
+    <string name="signup_password_label">Password</string>
+    <string name="signup_consent">I agree to the Terms of Service and the Privacy Policy. Scans stay on this device.</string>
+    <string name="signup_button">Sign up</string>
+    <!-- Trailing space is intentional — a bold "Sign in" link is appended right after it -->
+    <string name="signup_have_account_prompt">Already have an account? </string>
+    <string name="signup_sign_in_link">Sign in</string>
+
+    <!-- ===================== Password reset (local-only OTP screen, see ProfileRepository) ===================== -->
+
+    <string name="reset_headline">Check your mail</string>
+    <!-- %1$s is the profile's email address -->
+    <string name="reset_body">We sent a six digit code to %1$s. Enter it below to reset your password.</string>
+    <!-- Fallback shown in reset_body when no profile email is on file yet -->
+    <string name="reset_default_email">your email</string>
+    <string name="reset_resend_prompt">Didn\'t receive the email?</string>
+    <!-- First half of the resend-countdown line; the bold "%1$d s" suffix (reset_resend_seconds)
+         is appended in a different text color, so the two are separate resources -->
+    <string name="reset_resend_prefix">You can resend the code in </string>
+    <string name="reset_resend_seconds">%1$d s</string>
+    <string name="reset_confirm_button">Confirm</string>
+
+    <!-- ===================== Home screen ===================== -->
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">See all files</string>
+    <string name="home_recent_files_header">Recent Files</string>
+    <string name="home_empty_title">No documents yet</string>
+    <string name="home_empty_message">Scan your first document to see it here.</string>
+    <!-- FAB content description for the camera-capture shortcut -->
+    <string name="home_scan_fab_desc">Scan</string>
+    <!-- Tool grid labels -->
+    <string name="home_tool_scan_doc">Scan Doc</string>
+    <string name="home_tool_receipt">Receipt</string>
+    <string name="home_tool_id_card">ID Card</string>
+    <string name="home_tool_import_pdf">Import PDF</string>
+    <string name="home_tool_warranties">Warranties</string>
+    <string name="home_tool_protect">Protect</string>
+    <string name="home_tool_export_csv">Export CSV</string>
+    <string name="home_tool_all_tools">All Tools</string>
+
+    <!-- ===================== Account screen ===================== -->
+
+    <string name="account_title">Account</string>
+    <string name="account_more_desc">More</string>
+    <string name="account_row_personal_info">Personal Info</string>
+    <string name="account_row_scan_preferences">Scan preferences</string>
+    <string name="account_row_security">Security</string>
+    <string name="account_row_language">Language</string>
+    <string name="account_row_backup">Backup &amp; restore</string>
+    <string name="account_row_privacy">Privacy</string>
+    <string name="account_row_usage">Usage</string>
+    <string name="account_storage_header">Storage</string>
+    <string name="account_calculating">Calculating…</string>
+    <!-- %1$s and %2$s are pre-formatted byte sizes, e.g. "620 MB" -->
+    <string name="account_storage_used_cache">%1$s used · %2$s cache</string>
+    <string name="account_clearing_cache">Clearing…</string>
+    <string name="account_clear_cache">Clear cache</string>
+    <string name="account_dark_mode">Dark Mode</string>
+    <string name="account_log_out">Log out</string>
+    <string name="account_not_signed_in_title">You\'re not signed in</string>
+    <string name="account_not_signed_in_body">Docket works fully without a profile. Sign in or create one only if you want a name and email shown here.</string>
+    <string name="account_create_account_button">Create account</string>
+    <!-- %1$s is a pre-formatted byte size, e.g. "620 MB" -->
+    <string name="account_used_on_device">%1$s used on this device</string>
+    <string name="account_premium_banner_title">Go to Premium</string>
+    <string name="account_premium_banner_subtitle">Batch export, OCR languages, text layer</string>
+    <string name="account_unlock_button">Unlock</string>
+
+    <!-- ===================== Document detail action row ===================== -->
+
+    <string name="document_detail_action_export">Export</string>
+    <string name="document_detail_action_rename">Rename</string>
 </resources>

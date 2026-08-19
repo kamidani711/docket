@@ -13,43 +13,32 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.DriveFileMove
 import androidx.compose.material.icons.automirrored.filled.ViewList
-import androidx.compose.material.icons.filled.CameraAlt
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Description
-import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.GridView
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.filled.RadioButtonUnchecked
-import androidx.compose.material.icons.filled.Receipt
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
-import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -97,6 +86,7 @@ import com.docket.ui.components.EmptyState
 import com.docket.ui.components.PrimaryButton
 import com.docket.ui.navigation.Destination
 import com.docket.ui.theme.DocketDimens
+import com.docket.ui.theme.DocketPillShape
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.theme.docketCardShadow
 import com.docket.ui.util.formatDisplayDate
@@ -121,6 +111,8 @@ fun LibraryScreen(
     val typeFilter by viewModel.typeFilter.collectAsStateWithLifecycle()
     val viewMode by viewModel.viewMode.collectAsStateWithLifecycle()
     val selection by viewModel.selection.collectAsStateWithLifecycle()
+    val totalDocumentCount by viewModel.totalDocumentCount.collectAsStateWithLifecycle()
+    val totalStorageBytes by viewModel.totalStorageBytes.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -167,7 +159,7 @@ fun LibraryScreen(
                 )
             } else {
                 LibraryTopBar(
-                    title = stringResource(R.string.app_name),
+                    title = folderStack.lastOrNull()?.let { folderId -> folders.firstOrNull { it.id == folderId }?.name } ?: "Files",
                     canGoUp = folderStack.isNotEmpty(),
                     onUp = { viewModel.navigateUp() },
                     onOpenSearch = onOpenSearch,
@@ -179,24 +171,8 @@ fun LibraryScreen(
                     onViewModeChange = viewModel::setViewMode,
                     onNewFolder = { showNewFolderPrompt = true },
                     canCreateSubfolder = canCreateSubfolder,
-                    onOpenRecentlyDeleted = onOpenRecentlyDeleted,
-                    onOpenSettingsClick = { onNavigate(Destination.Settings) }
+                    onOpenRecentlyDeleted = onOpenRecentlyDeleted
                 )
-            }
-        },
-        floatingActionButton = {
-            if (!isSelectionMode) {
-                FloatingActionButton(
-                    onClick = { onNavigate(Destination.Scan) },
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
-                    elevation = FloatingActionButtonDefaults.elevation(
-                        defaultElevation = DocketSpacing.space8,
-                        pressedElevation = DocketSpacing.space4
-                    )
-                ) {
-                    Icon(Icons.Filled.CameraAlt, contentDescription = stringResource(R.string.library_scan_a_document))
-                }
             }
         }
     ) { innerPadding ->
@@ -207,20 +183,73 @@ fun LibraryScreen(
                 message = stringResource(R.string.library_empty_message),
                 illustration = { LibraryEmptyIllustration() },
                 actionLabel = stringResource(R.string.library_scan_a_document),
-                onAction = { onNavigate(Destination.Scan) },
+                onAction = { onNavigate(Destination.ScanFlow()) },
                 modifier = Modifier.padding(innerPadding).fillMaxSize()
             )
         } else {
             Column(modifier = Modifier.padding(innerPadding).fillMaxSize()) {
-                // Folders live in their own horizontal row now, separate from the document
-                // grid/list below — a folder isn't a document and reading them as one
-                // undifferentiated set was exactly the "unfinished" flatness being fixed here.
-                if (folders.isNotEmpty()) {
-                    FolderChipRow(
-                        folders = folders,
-                        documentCounts = folderDocumentCounts,
-                        onOpenFolder = viewModel::openFolder
-                    )
+                // Search bar matching prototype Screen 8
+                Surface(
+                    onClick = onOpenSearch,
+                    shape = RoundedCornerShape(16.dp),
+                    color = MaterialTheme.colorScheme.surfaceContainerLowest,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = DocketSpacing.space24, vertical = 6.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 14.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    ) {
+                        Icon(
+                            imageVector = com.docket.ui.icons.DocketIcons.Search,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Text(
+                            text = "Search text inside your scans",
+                            style = MaterialTheme.typography.bodyLarge,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+
+                Text(
+                    text = "Total $totalDocumentCount files" + (totalStorageBytes?.let { " · ${formatFilesBytes(it)}" } ?: ""),
+                    style = MaterialTheme.typography.bodySmall.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.SemiBold),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = DocketSpacing.space24, vertical = DocketSpacing.space8)
+                )
+
+                // Folders 2-column grid from prototype Screen 8
+                if (folders.isNotEmpty() && folderStack.isEmpty()) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = DocketSpacing.space16, vertical = 4.dp),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        folders.chunked(2).forEach { rowFolders ->
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+                                rowFolders.forEach { folder ->
+                                    com.docket.ui.components.FolderTile(
+                                        name = folder.name,
+                                        documentCount = folderDocumentCounts[folder.id] ?: 0,
+                                        onClick = { viewModel.openFolder(folder.id) },
+                                        modifier = Modifier.weight(1f)
+                                    )
+                                }
+                                if (rowFolders.size == 1) {
+                                    Spacer(modifier = Modifier.weight(1f))
+                                }
+                            }
+                        }
+                    }
                 }
 
                 if (documents.isEmpty()) {
@@ -234,7 +263,7 @@ fun LibraryScreen(
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(DocketSpacing.space20),
+                        contentPadding = PaddingValues(DocketSpacing.space16),
                         horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space12),
                         verticalArrangement = Arrangement.spacedBy(DocketSpacing.space16)
                     ) {
@@ -253,7 +282,7 @@ fun LibraryScreen(
                 } else {
                     LazyColumn(
                         modifier = Modifier.fillMaxSize(),
-                        contentPadding = PaddingValues(DocketSpacing.space20),
+                        contentPadding = PaddingValues(horizontal = DocketSpacing.space16, vertical = DocketSpacing.space8),
                         verticalArrangement = Arrangement.spacedBy(DocketSpacing.space8)
                     ) {
                         items(documents, key = { it.id }) { document ->
@@ -326,9 +355,9 @@ private fun FolderChipRow(
         items(folders, key = { it.id }) { folder ->
             Surface(
                 onClick = { onOpenFolder(folder.id) },
-                shape = RoundedCornerShape(50),
+                shape = DocketPillShape,
                 color = MaterialTheme.colorScheme.surfaceContainerLowest,
-                modifier = Modifier.docketCardShadow(elevation = DocketSpacing.space4, shape = RoundedCornerShape(50))
+                modifier = Modifier.docketCardShadow(elevation = DocketSpacing.space4, shape = DocketPillShape)
             ) {
                 Row(
                     modifier = Modifier.padding(horizontal = DocketSpacing.space12, vertical = DocketSpacing.space8),
@@ -336,7 +365,7 @@ private fun FolderChipRow(
                     horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space8)
                 ) {
                     Icon(
-                        imageVector = Icons.Filled.Folder,
+                        imageVector = com.docket.ui.icons.DocketIcons.folder(),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(18.dp)
@@ -376,31 +405,36 @@ private fun LibraryTopBar(
     onViewModeChange: (LibraryViewMode) -> Unit,
     onNewFolder: () -> Unit,
     canCreateSubfolder: Boolean,
-    onOpenRecentlyDeleted: () -> Unit,
-    onOpenSettingsClick: () -> Unit
+    onOpenRecentlyDeleted: () -> Unit
 ) {
     var showOverflowMenu by remember { mutableStateOf(false) }
     var showSortSubmenu by remember { mutableStateOf(false) }
     var showFilterSubmenu by remember { mutableStateOf(false) }
 
-    TopAppBar(
-        title = { Text(title) },
-        navigationIcon = {
-            if (canGoUp) {
-                IconButton(onClick = onUp) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.library_up_desc))
-                }
+    if (!canGoUp) {
+        com.docket.ui.components.BrandHeader(title = "Files") {
+            IconButton(onClick = { showSortSubmenu = true }) {
+                Icon(
+                    imageVector = com.docket.ui.icons.DocketIcons.Sort,
+                    contentDescription = stringResource(R.string.library_sort_by, sortBy.label()),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
             }
-        },
-        actions = {
-            IconButton(onClick = onOpenSearch) {
-                Icon(Icons.Filled.Search, contentDescription = stringResource(R.string.common_search))
+            IconButton(onClick = onNewFolder) {
+                Icon(
+                    imageVector = com.docket.ui.icons.DocketIcons.FolderPlus,
+                    contentDescription = stringResource(R.string.library_new_folder),
+                    tint = MaterialTheme.colorScheme.onSurface
+                )
             }
             Box {
-                IconButton(onClick = { showOverflowMenu = true }) {
-                    Icon(Icons.Filled.MoreVert, contentDescription = stringResource(R.string.library_more_desc))
-                }
-                DropdownMenu(expanded = showOverflowMenu, onDismissRequest = { showOverflowMenu = false }) {
+                DropdownMenu(expanded = showSortSubmenu, onDismissRequest = { showSortSubmenu = false }) {
+                    DocumentSort.entries.forEach { sort ->
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.library_sort_by, sort.label())) },
+                            onClick = { onSortChange(sort); showSortSubmenu = false }
+                        )
+                    }
                     DropdownMenuItem(
                         text = {
                             Text(
@@ -419,56 +453,94 @@ private fun LibraryTopBar(
                         },
                         onClick = {
                             onViewModeChange(if (viewMode == LibraryViewMode.LIST) LibraryViewMode.GRID else LibraryViewMode.LIST)
-                            showOverflowMenu = false
+                            showSortSubmenu = false
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text(stringResource(R.string.library_sort_by, sortBy.label())) },
-                        leadingIcon = { Icon(Icons.AutoMirrored.Filled.Sort, contentDescription = null) },
-                        onClick = { showSortSubmenu = true }
-                    )
-                    DropdownMenuItem(
-                        text = { Text(stringResource(R.string.library_filter_by, typeFilter.label())) },
-                        onClick = { showFilterSubmenu = true }
-                    )
-                    if (canCreateSubfolder) {
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.library_new_folder)) },
-                            onClick = { onNewFolder(); showOverflowMenu = false }
-                        )
-                    }
-                    DropdownMenuItem(
                         text = { Text(stringResource(R.string.library_recently_deleted)) },
-                        onClick = { onOpenRecentlyDeleted(); showOverflowMenu = false }
+                        onClick = { onOpenRecentlyDeleted(); showSortSubmenu = false }
                     )
-                    // Settings itself isn't part of the localized core flow yet (see the
-                    // shipping-package weak-points list), so this stays plain English too,
-                    // consistent with SettingsScreen's own hardcoded title rather than
-                    // introducing a new inconsistency by localizing just the entry point to it.
-                    DropdownMenuItem(
-                        text = { Text("Settings") },
-                        onClick = { onOpenSettingsClick(); showOverflowMenu = false }
-                    )
-                }
-                DropdownMenu(expanded = showSortSubmenu, onDismissRequest = { showSortSubmenu = false }) {
-                    DocumentSort.entries.forEach { sort ->
-                        DropdownMenuItem(
-                            text = { Text(stringResource(R.string.library_sort_by, sort.label())) },
-                            onClick = { onSortChange(sort); showSortSubmenu = false; showOverflowMenu = false }
-                        )
-                    }
-                }
-                DropdownMenu(expanded = showFilterSubmenu, onDismissRequest = { showFilterSubmenu = false }) {
-                    DocumentTypeFilter.entries.forEach { filter ->
-                        DropdownMenuItem(
-                            text = { Text(filter.label()) },
-                            onClick = { onTypeFilterChange(filter); showFilterSubmenu = false; showOverflowMenu = false }
-                        )
-                    }
                 }
             }
         }
-    )
+    } else {
+        TopAppBar(
+            title = { Text(title) },
+            navigationIcon = {
+                IconButton(onClick = onUp) {
+                    Icon(com.docket.ui.icons.DocketIcons.Back, contentDescription = stringResource(R.string.library_up_desc))
+                }
+            },
+            actions = {
+                IconButton(onClick = onOpenSearch) {
+                    Icon(com.docket.ui.icons.DocketIcons.Search, contentDescription = stringResource(R.string.common_search))
+                }
+                Box {
+                    IconButton(onClick = { showOverflowMenu = true }) {
+                        Icon(com.docket.ui.icons.DocketIcons.Dots, contentDescription = stringResource(R.string.library_more_desc))
+                    }
+                    DropdownMenu(expanded = showOverflowMenu, onDismissRequest = { showOverflowMenu = false }) {
+                        DropdownMenuItem(
+                            text = {
+                                Text(
+                                    if (viewMode == LibraryViewMode.LIST) {
+                                        stringResource(R.string.library_switch_to_grid)
+                                    } else {
+                                        stringResource(R.string.library_switch_to_list)
+                                    }
+                                )
+                            },
+                            leadingIcon = {
+                                Icon(
+                                    if (viewMode == LibraryViewMode.LIST) Icons.Filled.GridView else Icons.AutoMirrored.Filled.ViewList,
+                                    contentDescription = null
+                                )
+                            },
+                            onClick = {
+                                onViewModeChange(if (viewMode == LibraryViewMode.LIST) LibraryViewMode.GRID else LibraryViewMode.LIST)
+                                showOverflowMenu = false
+                            }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.library_sort_by, sortBy.label())) },
+                            leadingIcon = { Icon(com.docket.ui.icons.DocketIcons.Sort, contentDescription = null) },
+                            onClick = { showSortSubmenu = true }
+                        )
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.library_filter_by, typeFilter.label())) },
+                            onClick = { showFilterSubmenu = true }
+                        )
+                        if (canCreateSubfolder) {
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.library_new_folder)) },
+                                onClick = { onNewFolder(); showOverflowMenu = false }
+                            )
+                        }
+                        DropdownMenuItem(
+                            text = { Text(stringResource(R.string.library_recently_deleted)) },
+                            onClick = { onOpenRecentlyDeleted(); showOverflowMenu = false }
+                        )
+                    }
+                    DropdownMenu(expanded = showSortSubmenu, onDismissRequest = { showSortSubmenu = false }) {
+                        DocumentSort.entries.forEach { sort ->
+                            DropdownMenuItem(
+                                text = { Text(stringResource(R.string.library_sort_by, sort.label())) },
+                                onClick = { onSortChange(sort); showSortSubmenu = false; showOverflowMenu = false }
+                            )
+                        }
+                    }
+                    DropdownMenu(expanded = showFilterSubmenu, onDismissRequest = { showFilterSubmenu = false }) {
+                        DocumentTypeFilter.entries.forEach { filter ->
+                            DropdownMenuItem(
+                                text = { Text(filter.label()) },
+                                onClick = { onTypeFilterChange(filter); showFilterSubmenu = false; showOverflowMenu = false }
+                            )
+                        }
+                    }
+                }
+            }
+        )
+    }
 }
 
 @Composable
@@ -497,7 +569,7 @@ private fun SelectionTopBar(count: Int, onClose: () -> Unit, onDelete: () -> Uni
             }
         },
         actions = {
-            IconButton(onClick = onShare) { Icon(Icons.Filled.Share, contentDescription = stringResource(R.string.common_share)) }
+            IconButton(onClick = onShare) { Icon(com.docket.ui.icons.DocketIcons.Share, contentDescription = stringResource(R.string.common_share)) }
             IconButton(onClick = onMove) { Icon(Icons.AutoMirrored.Filled.DriveFileMove, contentDescription = stringResource(R.string.library_move_desc)) }
             IconButton(onClick = onDelete) { Icon(Icons.Filled.Delete, contentDescription = stringResource(R.string.common_delete)) }
         }
@@ -547,7 +619,7 @@ private fun LibraryDocumentCard(
                 } else {
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Icon(
-                            imageVector = Icons.Filled.Description,
+                            imageVector = com.docket.ui.icons.DocketIcons.Doc,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.6f),
                             modifier = Modifier.size(32.dp)
@@ -565,10 +637,10 @@ private fun LibraryDocumentCard(
                         horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space4)
                     ) {
                         if (document.hasReceipt) {
-                            TypeBadge(icon = Icons.Filled.Receipt, contentDescription = stringResource(R.string.library_type_receipt_desc))
+                            TypeBadge(icon = com.docket.ui.icons.DocketIcons.Receipt, contentDescription = stringResource(R.string.library_type_receipt_desc))
                         }
                         if (document.hasWarranty) {
-                            TypeBadge(icon = Icons.Filled.Shield, contentDescription = stringResource(R.string.library_type_warranty_desc))
+                            TypeBadge(icon = com.docket.ui.icons.DocketIcons.Shield, contentDescription = stringResource(R.string.library_type_warranty_desc))
                         }
                     }
                 }
@@ -604,7 +676,7 @@ private fun LibraryDocumentCard(
                             .align(Alignment.TopEnd)
                             .padding(DocketSpacing.space8)
                             .size(20.dp)
-                            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(50))
+                            .background(MaterialTheme.colorScheme.surface, DocketPillShape)
                     )
                 }
             }
@@ -633,7 +705,7 @@ private fun LibraryDocumentCard(
 private fun TypeBadge(icon: androidx.compose.ui.graphics.vector.ImageVector, contentDescription: String) {
     Surface(
         color = Color.White,
-        shape = RoundedCornerShape(50),
+        shape = DocketPillShape,
         shadowElevation = 1.dp
     ) {
         Icon(
@@ -717,7 +789,7 @@ private fun DocumentListItem(
                                 modifier = Modifier.fillMaxSize()
                             )
                         } else {
-                            Icon(Icons.Filled.Description, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Icon(com.docket.ui.icons.DocketIcons.Doc, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                     }
                 }
@@ -731,14 +803,14 @@ private fun DocumentListItem(
                     Box {
                         IconButton(onClick = { menuExpanded = true }) {
                             Icon(
-                                Icons.Filled.MoreVert,
+                                com.docket.ui.icons.DocketIcons.Dots,
                                 contentDescription = stringResource(R.string.library_document_actions_desc)
                             )
                         }
                         DropdownMenu(expanded = menuExpanded, onDismissRequest = { menuExpanded = false }) {
                             DropdownMenuItem(
                                 text = { Text(stringResource(R.string.common_share)) },
-                                leadingIcon = { Icon(Icons.Filled.Share, contentDescription = null) },
+                                leadingIcon = { Icon(com.docket.ui.icons.DocketIcons.Share, contentDescription = null) },
                                 onClick = {
                                     menuExpanded = false
                                     onShare()
@@ -860,3 +932,9 @@ private fun LibraryEmptyIllustration() {
 }
 
 private fun formatDate(epochMillis: Long): String = formatDisplayDate(epochMillis)
+
+private fun formatFilesBytes(bytes: Long): String = when {
+    bytes >= 1024 * 1024 -> "%.0f MB".format(bytes / (1024.0 * 1024.0))
+    bytes >= 1024 -> "%.0f KB".format(bytes / 1024.0)
+    else -> "$bytes B"
+}

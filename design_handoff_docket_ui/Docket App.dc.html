@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;600;700;800&display=swap"><style>body{margin:0;background:#ececec;font-family:Urbanist,system-ui,sans-serif;-webkit-font-smoothing:antialiased}a{color:#5468f0;text-decoration:none}a:hover{color:#4356db}button,input{font-family:inherit}::-webkit-scrollbar{width:0;height:0}</style></helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:18px;padding:26px 20px 60px">
+
+  <div style="display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:700px">
+    <sc-for list="{{ menu }}" as="m" hint-placeholder-count="11">
+      <button onClick="{{ m.go }}" style="border:0;background:{{ m.bg }};color:{{ m.fg }};font-size:12px;font-weight:600;padding:7px 14px;border-radius:999px;cursor:pointer">{{ m.label }}</button>
+    </sc-for>
+  </div>
+
+  <div style="width:412px;padding:7px;background:#ffffff;border-radius:44px;box-shadow:0 18px 50px rgba(33,33,33,.14)">
+    <div style="position:relative;width:398px;height:862px;background:#ffffff;border-radius:38px;overflow:hidden;color:#212121">
+
+      <sc-if value="{{ isOnboard }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#ffffff">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700;color:#212121">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 30px;text-align:center">
+            <div style="position:relative;width:270px;height:290px;display:flex;align-items:center;justify-content:center">
+              <span style="position:absolute;width:200px;height:200px;border-radius:50%;background:#edeffe"></span>
+              <span style="position:absolute;top:16px;left:8px;width:28px;height:28px;border-radius:50%;background:#5468f0;opacity:.18"></span>
+              <span style="position:absolute;bottom:38px;right:2px;width:18px;height:18px;border-radius:50%;background:#fcaf4e;opacity:.5"></span>
+              <div style="position:relative;width:146px;height:222px;background:#ffffff;border-radius:18px;box-shadow:0 12px 34px rgba(33,33,33,.14);padding:16px 14px;text-align:left;overflow:hidden">
+                <div style="height:6px;width:50px;background:#5468f0;border-radius:3px"></div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:14px">
+                  <span style="height:26px;border-radius:9px;background:#edeffe"></span><span style="height:26px;border-radius:9px;background:#ffeceb"></span><span style="height:26px;border-radius:9px;background:#e3f8f1"></span>
+                  <span style="height:26px;border-radius:9px;background:#fff3e1"></span><span style="height:26px;border-radius:9px;background:#edeffe"></span><span style="height:26px;border-radius:9px;background:#fafafa"></span>
+                </div>
+                <div style="height:5px;width:68px;background:#eeeeee;border-radius:3px;margin-top:18px"></div>
+                <div style="height:32px;background:#fafafa;border-radius:10px;margin-top:10px"></div>
+                <div style="height:32px;background:#fafafa;border-radius:10px;margin-top:8px"></div>
+              </div>
+            </div>
+            <h1 style="font-size:28px;line-height:1.25;font-weight:800;margin:24px 0 0;letter-spacing:-.01em">{{ slide.title }}</h1>
+            <p style="font-size:15px;line-height:1.6;color:#9e9e9e;font-weight:500;margin:12px 0 0;max-width:300px;text-wrap:pretty">{{ slide.body }}</p>
+            <div style="display:flex;gap:6px;margin-top:26px">
+              <sc-for list="{{ dots }}" as="d" hint-placeholder-count="3">
+                <span style="display:block;height:8px;width:{{ d.w }};border-radius:4px;background:{{ d.bg }}"></span>
+              </sc-for>
+            </div>
+          </div>
+          <div style="display:flex;gap:12px;padding:0 24px 36px">
+            <button onClick="{{ nav.signin }}" style="flex:1;border:0;background:#edeffe;color:#5468f0;font-size:16px;font-weight:700;padding:17px;border-radius:999px;cursor:pointer" style-hover="background:#e2e6fd">Skip</button>
+            <button onClick="{{ onboardNext }}" style="flex:1.4;border:0;background:#5468f0;color:#ffffff;font-size:16px;font-weight:700;padding:17px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Next</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSignin }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;padding:0 24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 0 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <button onClick="{{ nav.onboard }}" style="margin-top:16px;width:32px;height:32px;border:0;background:transparent;cursor:pointer;padding:0;display:flex;align-items:center">{{ icons.back }}</button>
+          <h1 style="font-size:30px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em">Welcome back</h1>
+          <p style="font-size:15px;font-weight:500;color:#9e9e9e;margin:0 0 26px;line-height:1.6">Docket keeps everything on this device. Sign in only if you want backup and sync.</p>
+          <label style="font-size:13px;font-weight:700;color:#9e9e9e">Email</label>
+          <input value="andrew.ainsley@yourdomain.com" style="border:0;border-bottom:1.5px solid #eeeeee;padding:11px 0;font-size:16px;font-weight:600;color:#212121;margin-bottom:22px;outline:none;background:transparent">
+          <label style="font-size:13px;font-weight:700;color:#9e9e9e">Password</label>
+          <input type="password" value="docketpassword" style="border:0;border-bottom:1.5px solid #5468f0;padding:11px 0;font-size:16px;font-weight:600;color:#212121;margin-bottom:20px;outline:none;background:transparent">
+          <div style="display:flex;align-items:center;gap:10px">
+            <button onClick="{{ toggleRemember }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid #5468f0;background:{{ rememberBg }};cursor:pointer;padding:0;display:flex;align-items:center;justify-content:center">{{ rememberMark }}</button>
+            <span style="font-size:15px;font-weight:600">Remember me</span>
+          </div>
+          <button onClick="{{ nav.forgot }}" style="align-self:center;border:0;background:transparent;color:#5468f0;font-size:15px;font-weight:700;margin-top:26px;cursor:pointer" style-hover="color:#4356db">Forgot password</button>
+          <div style="display:flex;align-items:center;gap:12px;margin-top:22px"><span style="flex:1;height:1px;background:#eeeeee"></span><span style="font-size:13px;font-weight:500;color:#9e9e9e">or continue with</span><span style="flex:1;height:1px;background:#eeeeee"></span></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:18px">
+            <div style="height:56px;border:1px solid #eeeeee;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#616161">G</div>
+            <div style="height:56px;border:1px solid #eeeeee;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#616161">&#63743;</div>
+            <div style="height:56px;border:1px solid #eeeeee;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:#616161">f</div>
+          </div>
+          <div style="flex:1"></div>
+          <button onClick="{{ nav.home }}" style="border:0;background:#5468f0;color:#ffffff;font-size:17px;font-weight:700;padding:18px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Sign in</button>
+          <p style="text-align:center;font-size:14px;font-weight:500;color:#9e9e9e;margin:16px 0 32px">Don't have an account? <a href="#" onClick="{{ nav.signup }}" style="font-weight:700">Sign up</a></p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isSignup }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;padding:0 24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 0 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <button onClick="{{ nav.signin }}" style="margin-top:16px;width:32px;height:32px;border:0;background:transparent;cursor:pointer;padding:0;display:flex;align-items:center">{{ icons.back }}</button>
+          <h1 style="font-size:30px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em">Create account</h1>
+          <p style="font-size:15px;font-weight:500;color:#9e9e9e;margin:0 0 28px;line-height:1.6">Free forever. Premium is a single purchase, never a subscription.</p>
+          <sc-for list="{{ signupFields }}" as="f" hint-placeholder-count="3">
+            <div style="margin-bottom:20px">
+              <label style="display:block;font-size:13px;font-weight:700;color:#9e9e9e;margin-bottom:6px">{{ f.label }}</label>
+              <input value="{{ f.value }}" style="width:100%;border:0;border-bottom:1.5px solid #eeeeee;padding:11px 0;font-size:16px;font-weight:600;color:#212121;outline:none;background:transparent">
+            </div>
+          </sc-for>
+          <div style="display:flex;align-items:flex-start;gap:10px;margin-top:6px">
+            <button onClick="{{ toggleRemember }}" style="width:22px;height:22px;border-radius:6px;border:1.5px solid #5468f0;background:{{ rememberBg }};cursor:pointer;padding:0;flex:none;display:flex;align-items:center;justify-content:center">{{ rememberMark }}</button>
+            <span style="font-size:14px;font-weight:500;color:#9e9e9e;line-height:1.5">I agree to the Terms of Service and the Privacy Policy. Scans stay on this device.</span>
+          </div>
+          <div style="flex:1"></div>
+          <button onClick="{{ nav.home }}" style="border:0;background:#5468f0;color:#ffffff;font-size:17px;font-weight:700;padding:18px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Sign up</button>
+          <p style="text-align:center;font-size:14px;font-weight:500;color:#9e9e9e;margin:16px 0 32px">Already have an account? <a href="#" onClick="{{ nav.signin }}" style="font-weight:700">Sign in</a></p>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isForgot }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;padding:0 24px">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 0 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <button onClick="{{ nav.signin }}" style="margin-top:16px;width:32px;height:32px;border:0;background:transparent;cursor:pointer;padding:0;display:flex;align-items:center">{{ icons.back }}</button>
+          <h1 style="font-size:30px;font-weight:800;margin:18px 0 6px;letter-spacing:-.01em">Check your mail</h1>
+          <p style="font-size:15px;font-weight:500;color:#9e9e9e;margin:0 0 30px;line-height:1.6">We sent a six digit code to andrew.ainsley@yourdomain.com. Enter it below to reset your password.</p>
+          <div style="display:flex;gap:12px">
+            <sc-for list="{{ otp }}" as="o" hint-placeholder-count="4">
+              <div style="flex:1;height:66px;border:1.5px solid {{ o.border }};background:{{ o.bg }};border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700">{{ o.v }}</div>
+            </sc-for>
+          </div>
+          <p style="text-align:center;font-size:14px;font-weight:500;color:#9e9e9e;margin:26px 0 4px">Didn't receive the email?</p>
+          <p style="text-align:center;font-size:14px;font-weight:500;color:#9e9e9e;margin:0">You can resend the code in <span style="color:#5468f0;font-weight:700">55 s</span></p>
+          <button onClick="{{ nav.signin }}" style="margin-top:28px;border:0;background:#5468f0;color:#ffffff;font-size:17px;font-weight:700;padding:18px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Confirm</button>
+          <div style="flex:1"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:#fafafa;border-radius:18px;padding:10px 4px;margin-bottom:26px">
+            <sc-for list="{{ keys }}" as="k" hint-placeholder-count="12">
+              <div style="height:46px;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:600">{{ k }}</div>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:{{ ui.bg }};color:{{ ui.text }}">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:{{ ui.text }}"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:{{ ui.text }}"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:{{ ui.text }}"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px 18px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:28px;height:28px;border-radius:50%;background:#5468f0;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#ffffff;display:block"></span></span>
+              <span style="font-size:23px;font-weight:800;letter-spacing:-.01em">Docket</span>
+            </div>
+            <button onClick="{{ nav.files }}" style="border:0;background:transparent;cursor:pointer;padding:4px;display:flex;align-items:center" style-hover="opacity:.6">{{ icons.search }}</button>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:18px 4px;padding:0 16px 20px">
+            <sc-for list="{{ tools }}" as="t" hint-placeholder-count="8">
+              <button onClick="{{ t.go }}" style="border:0;background:transparent;color:{{ ui.muted }};display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;padding:0" style-hover="opacity:.7">
+                <span style="width:54px;height:54px;border-radius:50%;background:{{ t.tint }};display:flex;align-items:center;justify-content:center">{{ t.icon }}</span>
+                <span style="font-size:12px;font-weight:600;line-height:1.2;text-align:center">{{ t.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="height:1px;background:{{ ui.line }};margin:0 24px 18px"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:0 24px 14px">
+            <span style="font-size:20px;font-weight:800">Recent Files</span>
+            <button onClick="{{ nav.files }}" style="border:0;background:transparent;cursor:pointer;padding:2px;display:flex;align-items:center" style-hover="opacity:.6">{{ icons.arrowRight }}</button>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:0 16px">
+            <sc-for list="{{ docs }}" as="d" hint-placeholder-count="4">
+              <button onClick="{{ d.open }}" style="width:100%;text-align:left;display:flex;align-items:center;gap:14px;padding:12px;margin-bottom:10px;border:0;border-radius:16px;background:{{ ui.tile }};color:{{ ui.text }};cursor:pointer" style-hover="opacity:.85">
+                <span style="width:46px;height:62px;border-radius:6px;background:{{ ui.thumb }};border:1px solid {{ ui.line }};flex:none"></span>
+                <span style="flex:1;min-width:0;display:block">
+                  <span style="display:block;font-size:15px;font-weight:700;line-height:1.35">{{ d.name }}</span>
+                  <span style="display:block;font-size:12px;font-weight:500;color:{{ ui.muted }};margin-top:6px">{{ d.meta }}</span>
+                </span>
+                <span style="display:flex;align-items:center;gap:10px;flex:none;color:{{ ui.text }}">{{ icons.share }}{{ icons.more }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="position:absolute;right:22px;bottom:104px;display:flex;gap:12px">
+            <button onClick="{{ nav.scan }}" style="width:56px;height:56px;border-radius:50%;border:0;background:#5468f0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(84,104,240,.45)" style-hover="background:#4356db">{{ icons.camera }}</button>
+            <button onClick="{{ nav.review }}" style="width:56px;height:56px;border-radius:50%;border:0;background:#5468f0;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px rgba(84,104,240,.45)" style-hover="background:#4356db">{{ icons.image }}</button>
+          </div>
+          <div style="display:flex;background:{{ ui.bg }};padding:8px 0 24px">
+            <sc-for list="{{ tabsHome }}" as="tb" hint-placeholder-count="4">
+              <button onClick="{{ tb.go }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:6px 0;color:{{ tb.color }}">
+                {{ tb.icon }}<span style="font-size:11px;font-weight:{{ tb.weight }}">{{ tb.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isScan }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#181818;color:#ffffff">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#ffffff"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#ffffff"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#ffffff"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px">
+            <button onClick="{{ nav.home }}" style="border:0;background:transparent;cursor:pointer;padding:0;display:flex">{{ icons.backLight }}</button>
+            <div style="display:flex;gap:20px;align-items:center">{{ icons.frameLight }}{{ icons.sparkLight }}{{ icons.flashLight }}{{ icons.moreLight }}</div>
+          </div>
+          <div style="flex:1;margin:0 16px;border-radius:20px;background:repeating-linear-gradient(160deg,#2c2c2c 0 14px,#242424 14px 28px);position:relative;overflow:hidden">
+            <div style="position:absolute;inset:56px 38px;border:2px solid #5468f0;border-radius:8px;background:rgba(84,104,240,.12)"></div>
+            <span style="position:absolute;top:48px;left:30px;width:16px;height:16px;border-top:3px solid #ffffff;border-left:3px solid #ffffff;border-radius:2px 0 0 0"></span>
+            <span style="position:absolute;top:48px;right:30px;width:16px;height:16px;border-top:3px solid #ffffff;border-right:3px solid #ffffff;border-radius:0 2px 0 0"></span>
+            <span style="position:absolute;bottom:48px;left:30px;width:16px;height:16px;border-bottom:3px solid #ffffff;border-left:3px solid #ffffff;border-radius:0 0 0 2px"></span>
+            <span style="position:absolute;bottom:48px;right:30px;width:16px;height:16px;border-bottom:3px solid #ffffff;border-right:3px solid #ffffff;border-radius:0 0 2px 0"></span>
+            <div style="position:absolute;left:0;right:0;top:16px;display:flex;justify-content:center">
+              <span style="background:rgba(24,24,24,.8);color:#ffffff;font-size:14px;font-weight:700;padding:9px 18px;border-radius:999px">{{ modeHint }}</span>
+            </div>
+          </div>
+          <div style="display:flex;gap:24px;justify-content:center;padding:20px 0 4px">
+            <sc-for list="{{ modes }}" as="m" hint-placeholder-count="4">
+              <button onClick="{{ m.pick }}" style="border:0;background:transparent;color:{{ m.color }};font-size:14px;font-weight:700;cursor:pointer;padding:4px 2px;border-bottom:2px solid {{ m.underline }}">{{ m.label }}</button>
+            </sc-for>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 36px 32px">
+            <button onClick="{{ nav.files }}" style="width:46px;height:46px;border-radius:14px;border:0;background:#2c2c2c;cursor:pointer;display:flex;align-items:center;justify-content:center">{{ icons.folderLight }}</button>
+            <button onClick="{{ nav.review }}" style="width:76px;height:76px;border-radius:50%;border:5px solid #5468f0;background:#ffffff;cursor:pointer;box-shadow:0 0 0 4px rgba(84,104,240,.22)" style-hover="background:#edeffe"></button>
+            <button onClick="{{ nav.review }}" style="width:46px;height:56px;border-radius:8px;border:2px solid #5468f0;background:repeating-linear-gradient(180deg,#d4d4d4 0 2px,#f5f5f5 2px 6px);cursor:pointer;position:relative">
+              <span style="position:absolute;right:-7px;top:-9px;background:#5468f0;color:#ffffff;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px">2</span>
+            </button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isReview }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#181818;color:#ffffff;position:relative">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#ffffff"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#ffffff"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#ffffff"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px">
+            <button onClick="{{ nav.scan }}" style="border:0;background:transparent;cursor:pointer;padding:0;display:flex">{{ icons.backLight }}</button>
+            <span style="font-size:17px;font-weight:700">Review (2 pages)</span>
+            <button onClick="{{ nav.home }}" style="border:0;background:transparent;color:#ff6b67;font-size:14px;font-weight:700;cursor:pointer">Discard</button>
+          </div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:6px 40px">
+            <div style="width:100%;aspect-ratio:3/4;background:{{ pageBg }};border-radius:10px;padding:22px 18px;box-shadow:0 18px 40px rgba(0,0,0,.45);overflow:hidden">
+              <div style="height:9px;width:60%;background:#424242;border-radius:3px"></div>
+              <div style="height:5px;width:40%;background:#9e9e9e;border-radius:3px;margin-top:10px"></div>
+              <div style="margin-top:22px;display:flex;flex-direction:column;gap:7px">
+                <sc-for list="{{ lines }}" as="l" hint-placeholder-count="12">
+                  <span style="display:block;height:5px;width:{{ l }};background:#bdbdbd;border-radius:3px"></span>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:center;gap:34px;padding:8px 0 16px">
+            <sc-for list="{{ pageActions }}" as="a" hint-placeholder-count="3">
+              <button style="border:0;background:transparent;color:#e0e0e0;font-size:12px;font-weight:600;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:7px" style-hover="color:#ffffff">
+                <span style="width:44px;height:44px;border-radius:14px;background:#2c2c2c;display:flex;align-items:center;justify-content:center">{{ a.icon }}</span>{{ a.label }}
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;padding:0 20px 16px;overflow:hidden">
+            <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+              <button onClick="{{ f.pick }}" style="flex:1;border:2px solid {{ f.border }};background:#222222;border-radius:14px;padding:8px;cursor:pointer;color:{{ f.color }}">
+                <span style="display:block;height:38px;border-radius:8px;background:{{ f.swatch }}"></span>
+                <span style="display:block;font-size:12px;font-weight:600;margin-top:8px">{{ f.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;gap:12px;padding:0 20px 30px">
+            <button onClick="{{ nav.scan }}" style="flex:1;border:0;background:#2c2c2c;color:#ffffff;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer" style-hover="background:#383838">Add page</button>
+            <button onClick="{{ openSave }}" style="flex:1.4;border:0;background:#5468f0;color:#ffffff;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.4)" style-hover="background:#4356db">Save</button>
+          </div>
+          <sc-if value="{{ saveOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(24,24,24,.6);display:flex;align-items:flex-end">
+              <div style="width:100%;background:#ffffff;color:#212121;border-radius:28px 28px 0 0;padding:22px 24px 32px">
+                <span style="display:block;width:44px;height:4px;border-radius:3px;background:#eeeeee;margin:0 auto 20px"></span>
+                <h2 style="font-size:21px;font-weight:800;margin:0 0 20px">Save document</h2>
+                <label style="display:block;font-size:13px;font-weight:700;color:#9e9e9e;margin-bottom:6px">Name</label>
+                <input value="Whirlpool fridge receipt" style="width:100%;border:0;border-bottom:1.5px solid #eeeeee;padding:11px 0;font-size:16px;font-weight:600;outline:none;margin-bottom:22px;color:#212121">
+                <div style="font-size:13px;font-weight:700;color:#9e9e9e;margin-bottom:10px">Folder</div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px">
+                  <sc-for list="{{ folderChips }}" as="c" hint-placeholder-count="4">
+                    <button onClick="{{ c.pick }}" style="border:1.5px solid {{ c.border }};background:{{ c.bg }};color:{{ c.color }};font-size:14px;font-weight:600;padding:9px 16px;border-radius:999px;cursor:pointer">{{ c.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="font-size:13px;font-weight:700;color:#9e9e9e;margin-bottom:10px">Format</div>
+                <div style="display:flex;gap:8px;margin-bottom:26px">
+                  <sc-for list="{{ formats }}" as="fm" hint-placeholder-count="2">
+                    <button onClick="{{ fm.pick }}" style="flex:1;border:1.5px solid {{ fm.border }};background:{{ fm.bg }};color:{{ fm.color }};font-size:14px;font-weight:600;padding:14px;border-radius:14px;cursor:pointer">{{ fm.label }}</button>
+                  </sc-for>
+                </div>
+                <div style="display:flex;gap:12px">
+                  <button onClick="{{ closeSave }}" style="flex:1;border:0;background:#edeffe;color:#5468f0;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer" style-hover="background:#e2e6fd">Cancel</button>
+                  <button onClick="{{ saveDoc }}" style="flex:1.4;border:0;background:#5468f0;color:#ffffff;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Save to library</button>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isFiles }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#ffffff">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px 14px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:28px;height:28px;border-radius:50%;background:#5468f0;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#ffffff;display:block"></span></span>
+              <span style="font-size:23px;font-weight:800;letter-spacing:-.01em">Files</span>
+            </div>
+            <div style="display:flex;gap:16px;align-items:center">
+              <button style="border:0;background:transparent;cursor:pointer;padding:2px;display:flex" style-hover="opacity:.6">{{ icons.sort }}</button>
+              <button style="border:0;background:transparent;cursor:pointer;padding:2px;display:flex" style-hover="opacity:.6">{{ icons.folderPlus }}</button>
+            </div>
+          </div>
+          <div style="padding:0 24px 16px">
+            <div style="display:flex;align-items:center;gap:12px;background:#fafafa;border-radius:16px;padding:14px 16px">
+              {{ icons.searchMuted }}
+              <input placeholder="Search text inside your scans" style="flex:1;border:0;background:transparent;font-size:15px;font-weight:500;outline:none;color:#212121">
+            </div>
+          </div>
+          <div style="font-size:14px;font-weight:600;color:#9e9e9e;padding:0 24px 12px">Total 148 files &#183; 620 MB on device</div>
+          <div style="flex:1;overflow:hidden;padding:0 16px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px">
+              <sc-for list="{{ folders }}" as="f" hint-placeholder-count="2">
+                <div style="display:flex;align-items:center;gap:12px;background:#fafafa;border-radius:16px;padding:14px">
+                  <span style="width:44px;height:44px;border-radius:12px;background:#5468f0;display:flex;align-items:center;justify-content:center;flex:none">{{ icons.folderWhite }}</span>
+                  <span style="min-width:0">
+                    <span style="display:block;font-size:14px;font-weight:700;line-height:1.25">{{ f.name }}</span>
+                    <span style="display:block;font-size:11px;font-weight:500;color:#9e9e9e;margin-top:4px">{{ f.count }}</span>
+                  </span>
+                </div>
+              </sc-for>
+            </div>
+            <sc-for list="{{ docs }}" as="d" hint-placeholder-count="4">
+              <button onClick="{{ d.open }}" style="width:100%;text-align:left;display:flex;align-items:center;gap:14px;padding:12px;margin-bottom:10px;border:0;border-radius:16px;background:#fafafa;color:#212121;cursor:pointer" style-hover="background:#f4f4f4">
+                <span style="width:46px;height:62px;border-radius:6px;background:repeating-linear-gradient(180deg,#d4d4d4 0 2px,#f5f5f5 2px 6px);border:1px solid #eeeeee;flex:none"></span>
+                <span style="flex:1;min-width:0;display:block">
+                  <span style="display:block;font-size:15px;font-weight:700;line-height:1.35">{{ d.name }}</span>
+                  <span style="display:block;font-size:12px;font-weight:500;color:#9e9e9e;margin-top:6px">{{ d.meta }}</span>
+                </span>
+                <span style="display:flex;align-items:center;gap:10px;flex:none">{{ icons.shareInk }}{{ icons.moreInk }}</span>
+              </button>
+            </sc-for>
+          </div>
+          <div style="display:flex;padding:8px 0 24px">
+            <sc-for list="{{ tabsLight }}" as="tb" hint-placeholder-count="4">
+              <button onClick="{{ tb.go }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:6px 0;color:{{ tb.color }}">
+                {{ tb.icon }}<span style="font-size:11px;font-weight:{{ tb.weight }}">{{ tb.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#ffffff;position:relative">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 22px">
+            <button onClick="{{ nav.files }}" style="border:0;background:transparent;cursor:pointer;padding:0;display:flex">{{ icons.back }}</button>
+            <span style="font-size:17px;font-weight:700">Whirlpool fridge receipt</span>
+            <button style="border:0;background:transparent;cursor:pointer;padding:0;display:flex">{{ icons.moreInk }}</button>
+          </div>
+          <div style="flex:1;padding:6px 34px 0">
+            <div style="width:100%;aspect-ratio:3/4;background:#ffffff;border:1px solid #eeeeee;border-radius:14px;box-shadow:0 10px 30px rgba(33,33,33,.08);padding:22px 20px;overflow:hidden">
+              <div style="height:9px;width:55%;background:#212121;border-radius:3px"></div>
+              <div style="height:5px;width:35%;background:#bdbdbd;border-radius:3px;margin-top:10px"></div>
+              <div style="margin-top:20px;display:flex;flex-direction:column;gap:7px">
+                <sc-for list="{{ lines }}" as="l" hint-placeholder-count="12">
+                  <span style="display:block;height:5px;width:{{ l }};background:#eeeeee;border-radius:3px"></span>
+                </sc-for>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:18px">
+              <span style="font-size:12px;font-weight:700;color:#5468f0;background:#edeffe;padding:8px 14px;border-radius:999px">Receipt &#183; $1,249.00</span>
+              <span style="font-size:12px;font-weight:700;color:#1aa47f;background:#e3f8f1;padding:8px 14px;border-radius:999px">Warranty to Mar 2029</span>
+            </div>
+            <div style="font-size:13px;font-weight:500;color:#9e9e9e;margin-top:14px">Text layer read on device &#183; 2 pages &#183; 1.4 MB</div>
+          </div>
+          <div style="display:flex;gap:12px;padding:18px 20px 32px">
+            <button onClick="{{ nav.review }}" style="flex:1;border:0;background:#fafafa;color:#212121;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer" style-hover="background:#f2f2f2">Edit</button>
+            <button onClick="{{ openShare }}" style="flex:1.4;border:0;background:#5468f0;color:#ffffff;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Share &amp; export</button>
+          </div>
+          <sc-if value="{{ shareOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;background:rgba(24,24,24,.5);display:flex;align-items:flex-end">
+              <div style="width:100%;background:#ffffff;border-radius:28px 28px 0 0;padding:22px 24px 32px">
+                <span style="display:block;width:44px;height:4px;border-radius:3px;background:#eeeeee;margin:0 auto 20px"></span>
+                <h2 style="font-size:21px;font-weight:800;margin:0 0 18px">Share &amp; export</h2>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                  <sc-for list="{{ exports }}" as="e" hint-placeholder-count="4">
+                    <div style="background:#fafafa;border-radius:16px;padding:16px">
+                      <div style="font-size:15px;font-weight:700">{{ e.label }}</div>
+                      <div style="font-size:12px;font-weight:500;color:#9e9e9e;margin-top:5px">{{ e.note }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <button onClick="{{ closeShare }}" style="width:100%;border:0;background:#5468f0;color:#ffffff;font-size:16px;font-weight:700;padding:16px;border-radius:999px;cursor:pointer;margin-top:20px;box-shadow:0 10px 24px rgba(84,104,240,.35)" style-hover="background:#4356db">Done</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isPremium }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#ffffff">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:16px 24px 20px">
+            <span style="width:28px;height:28px;border-radius:50%;background:#5468f0;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#ffffff;display:block"></span></span>
+            <span style="font-size:23px;font-weight:800;letter-spacing:-.01em">Premium</span>
+          </div>
+          <div style="padding:0 20px;position:relative">
+            <span style="position:absolute;right:12px;top:34px;bottom:70px;width:26px;border-radius:20px;background:#fcaf4e"></span>
+            <div style="position:relative;background:#ff6b67;border-radius:26px;padding:30px 24px 24px;color:#ffffff;box-shadow:0 16px 34px rgba(255,107,103,.32)">
+              <div style="text-align:center;font-size:44px;font-weight:800;letter-spacing:-.02em">$14.99 <span style="font-size:17px;font-weight:600">/ once</span></div>
+              <p style="text-align:center;font-size:15px;font-weight:600;margin:10px 0 0;opacity:.95">One purchase, forever. Nothing recurring.</p>
+              <div style="height:1px;background:rgba(255,255,255,.35);margin:22px 4px"></div>
+              <div style="display:flex;flex-direction:column;gap:14px">
+                <sc-for list="{{ benefits }}" as="b" hint-placeholder-count="4">
+                  <div style="display:flex;gap:12px;align-items:flex-start;font-size:15px;font-weight:600;line-height:1.4">
+                    <span style="width:22px;height:22px;border-radius:7px;background:#ffffff;flex:none;display:flex;align-items:center;justify-content:center">{{ icons.checkCoral }}</span>{{ b }}
+                  </div>
+                </sc-for>
+              </div>
+              <button onClick="{{ nav.home }}" style="width:100%;border:0;background:#ffffff;color:#212121;font-size:16px;font-weight:700;padding:18px;border-radius:999px;cursor:pointer;margin-top:26px" style-hover="background:#fff3f2">Unlock Premium</button>
+            </div>
+            <button style="width:100%;border:0;background:transparent;color:#9e9e9e;font-size:14px;font-weight:600;padding:18px;cursor:pointer" style-hover="color:#5468f0">Restore purchases</button>
+          </div>
+          <div style="flex:1"></div>
+          <div style="display:flex;padding:8px 0 24px">
+            <sc-for list="{{ tabsLight }}" as="tb" hint-placeholder-count="4">
+              <button onClick="{{ tb.go }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:6px 0;color:{{ tb.color }}">
+                {{ tb.icon }}<span style="font-size:11px;font-weight:{{ tb.weight }}">{{ tb.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAccount }}" hint-placeholder-val="{{ false }}">
+        <div style="height:862px;display:flex;flex-direction:column;background:#ffffff">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:15px 24px 2px">
+            <span style="font-size:14px;font-weight:700">9:41</span>
+            <div style="display:flex;align-items:center;gap:5px"><span style="display:block;width:15px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:11px;height:9px;border-radius:2px;background:#212121"></span><span style="display:block;width:21px;height:10px;border-radius:3px;background:#212121"></span></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:16px 24px 18px">
+            <div style="display:flex;align-items:center;gap:10px">
+              <span style="width:28px;height:28px;border-radius:50%;background:#5468f0;display:flex;align-items:center;justify-content:center;flex:none"><span style="width:9px;height:9px;border-radius:50%;background:#ffffff;display:block"></span></span>
+              <span style="font-size:23px;font-weight:800;letter-spacing:-.01em">Account</span>
+            </div>
+            <button style="border:0;background:transparent;cursor:pointer;padding:2px;display:flex" style-hover="opacity:.6">{{ icons.moreCircle }}</button>
+          </div>
+          <div style="padding:0 20px">
+            <div style="display:flex;align-items:center;gap:16px;background:#fafafa;border-radius:20px;padding:16px">
+              <span style="width:56px;height:56px;border-radius:50%;background:#eeeeee;flex:none;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:#9e9e9e;text-align:center;line-height:1.2">photo</span>
+              <span style="flex:1;min-width:0;display:block">
+                <span style="display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700">Andrew Ainsley <span style="font-size:11px;font-weight:700;color:#5468f0;border:1px solid #5468f0;padding:2px 8px;border-radius:6px">Free</span></span>
+                <span style="display:block;font-size:12px;font-weight:600;color:#9e9e9e;margin-top:6px">620 MB / 1024 MB</span>
+                <span style="display:block;height:6px;border-radius:3px;background:#eeeeee;margin-top:8px"><span style="display:block;width:60%;height:6px;border-radius:3px;background:#5468f0"></span></span>
+              </span>
+            </div>
+            <button onClick="{{ nav.premium }}" style="width:100%;text-align:left;display:flex;align-items:center;gap:14px;border:0;background:#5468f0;border-radius:20px;padding:18px;margin-top:16px;cursor:pointer;box-shadow:0 12px 28px rgba(84,104,240,.35)" style-hover="background:#4356db">
+              <span style="width:46px;height:46px;border-radius:50%;background:#fcaf4e;flex:none;display:flex;align-items:center;justify-content:center">{{ icons.starWhite }}</span>
+              <span style="flex:1;display:block;color:#ffffff">
+                <span style="display:block;font-size:16px;font-weight:800">Go to Premium</span>
+                <span style="display:block;font-size:12px;font-weight:500;opacity:.9;margin-top:4px">Batch export, OCR languages, text layer</span>
+              </span>
+              <span style="background:#ffffff;color:#5468f0;font-size:13px;font-weight:700;padding:9px 16px;border-radius:999px">Unlock</span>
+            </button>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:14px 24px 0">
+            <sc-for list="{{ settings }}" as="s" hint-placeholder-count="6">
+              <div style="display:flex;align-items:center;gap:16px;padding:16px 0;color:{{ s.color }}">
+                {{ s.icon }}
+                <span style="flex:1;font-size:16px;font-weight:700">{{ s.label }}</span>
+                <span style="font-size:14px;font-weight:600;color:#9e9e9e">{{ s.value }}</span>
+                {{ s.chevron }}
+              </div>
+            </sc-for>
+            <div style="display:flex;align-items:center;gap:16px;padding:16px 0">
+              {{ icons.eye }}
+              <span style="flex:1;font-size:16px;font-weight:700">Dark Mode</span>
+              <button onClick="{{ toggleDark }}" style="width:48px;height:28px;border-radius:999px;border:0;background:{{ darkTrack }};position:relative;cursor:pointer;padding:0">
+                <span style="position:absolute;top:3px;left:{{ darkKnob }};width:22px;height:22px;border-radius:50%;background:#ffffff;box-shadow:0 2px 5px rgba(33,33,33,.2);transition:left .18s ease"></span>
+              </button>
+            </div>
+            <div style="height:1px;background:#eeeeee;margin:8px 0"></div>
+            <div style="display:flex;align-items:center;gap:16px;padding:16px 0;color:#ff6b67">
+              {{ icons.logout }}
+              <span style="flex:1;font-size:16px;font-weight:700">Logout</span>
+            </div>
+          </div>
+          <div style="display:flex;padding:8px 0 24px">
+            <sc-for list="{{ tabsLight }}" as="tb" hint-placeholder-count="4">
+              <button onClick="{{ tb.go }}" style="flex:1;border:0;background:transparent;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:6px 0;color:{{ tb.color }}">
+                {{ tb.icon }}<span style="font-size:11px;font-weight:{{ tb.weight }}">{{ tb.label }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+
+  <p style="font-size:13px;font-weight:500;color:#9e9e9e;margin:0;text-align:center;max-width:520px;line-height:1.6">Typography, palette, icon set, tiles and shadows now follow the reference kit: Urbanist, #5468F0 primary with coral / amber / mint accents, flat #FAFAFA tiles, outline icons that fill when active.</p>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:520,&quot;height&quot;:1010},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#5468f0&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#5468f0&quot;,&quot;#6c6bf0&quot;,&quot;#ff6b67&quot;,&quot;#2ed3a5&quot;]}}">
+class Component extends DCLogic {
+  state = {
+    screen: "home", slide: 0, remember: true, dark: false,
+    mode: "Document", filter: "Enhance", saveOpen: false, shareOpen: false,
+    folder: "Household", format: "PDF",
+  };
+
+  go = (s) => () => this.setState({ screen: s, saveOpen: false, shareOpen: false });
+
+  // Reference icon set: 24px grid, 1.8 stroke, round caps; filled variants for active states.
+  icon(name, opt) {
+    const o = opt || {};
+    const size = o.size || 22, color = o.color || "#212121", filled = !!o.filled;
+    const paths = {
+      home: "M4 10.6 12 4.2l8 6.4V19a1.6 1.6 0 0 1-1.6 1.6h-3.1v-5.3H8.7v5.3H5.6A1.6 1.6 0 0 1 4 19z",
+      folder: "M3.4 7.6a2 2 0 0 1 2-2h3.3l1.5 2h8.4a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z",
+      star: "M12 3.8l2.6 5.2 5.8.8-4.2 4.1 1 5.7-5.2-2.8-5.2 2.8 1-5.7-4.2-4.1 5.8-.8z",
+      user: "M5.6 20.2c.7-3.6 3.3-5.5 6.4-5.5s5.7 1.9 6.4 5.5",
+      search: "M16.6 16.6 21 21",
+      camera: "M4 8.6a2 2 0 0 1 2-2h1.9l1.2-1.8h5.8l1.2 1.8H19a2 2 0 0 1 2 2v8.8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z",
+      image: "M4 6.6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v10.8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z",
+      doc: "M6.2 4.4h7.4l4.2 4.2v11a1 1 0 0 1-1 1H7.2a1 1 0 0 1-1-1z",
+      shield: "M12 3.6l7 2.6v5.6c0 4-2.9 6.6-7 8.4-4.1-1.8-7-4.4-7-8.4V6.2z",
+      gear: "M12 3.6l1.4 2 2.4-.5.6 2.4 2.1 1.3-1.2 2.1 1.2 2.1-2.1 1.3-.6 2.4-2.4-.5L12 20.4l-1.4-2-2.4.5-.6-2.4L5.5 15l1.2-2.1L5.5 10.8l2.1-1.3.6-2.4 2.4.5z",
+      eye: "M2.8 12S6 6.6 12 6.6 21.2 12 21.2 12 18 17.4 12 17.4 2.8 12 2.8 12z",
+      logout: "M14.4 4.6H7.2a1.4 1.4 0 0 0-1.4 1.4v12a1.4 1.4 0 0 0 1.4 1.4h7.2",
+      info: "M5.4 5.4h13.2v13.2H5.4z",
+      sort: "M7 4.6v14.8M7 19.4 4.2 16.4M17 19.4V4.6M17 4.6l2.8 3",
+      folderPlus: "M3.4 7.6a2 2 0 0 1 2-2h3.3l1.5 2h8.4a2 2 0 0 1 2 2v7.2a2 2 0 0 1-2 2H5.4a2 2 0 0 1-2-2z",
+      arrowRight: "M4.6 12h14M13.8 6.4 19.4 12l-5.6 5.6",
+      back: "M19.4 12H5.4M11.2 5.6 4.8 12l6.4 6.4",
+      chevron: "M9.6 5.6 16 12l-6.4 6.4",
+      check: "M5.6 12.4 9.8 16.6 18.4 8",
+      crop: "M6.4 3.6v12.6a1.4 1.4 0 0 0 1.4 1.4h12.6M17.6 20.4V7.8a1.4 1.4 0 0 0-1.4-1.4H3.6",
+      rotate: "M20 11.4a8 8 0 1 1-2.5-5.8M20 4v4.2h-4.2",
+      retake: "M4 12.6a8 8 0 1 0 2.5-5.8M4 5v4.2h4.2",
+      frame: "M4 8.6V5.4a1.4 1.4 0 0 1 1.4-1.4h3.2M20 8.6V5.4A1.4 1.4 0 0 0 18.6 4h-3.2M4 15.4v3.2A1.4 1.4 0 0 0 5.4 20h3.2M20 15.4v3.2A1.4 1.4 0 0 1 18.6 20h-3.2",
+      spark: "M12 3.6l1.9 4.9 4.9 1.9-4.9 1.9L12 17.2l-1.9-4.9-4.9-1.9 4.9-1.9z",
+      flash: "M13.4 3.4 6.6 13.2h4.2l-.8 7.4 7-9.9h-4.2z",
+      csv: "M5.4 5.4h13.2v13.2H5.4zM5.4 10.2h13.2M10.2 10.2v8.4",
+      receipt: "M6.6 3.8h10.8v16.4l-2.7-1.8-2.7 1.8-2.7-1.8-2.7 1.8z",
+      idcard: "M3.4 7.4h17.2v9.2H3.4z",
+      pdf: "M7 3.8h6.6l4 4V20a.9.9 0 0 1-.9.9H7a.9.9 0 0 1-.9-.9V4.7A.9.9 0 0 1 7 3.8z",
+      shieldCheck: "M12 3.6l7 2.6v5.6c0 4-2.9 6.6-7 8.4-4.1-1.8-7-4.4-7-8.4V6.2z",
+      grid: "M4.6 4.6h5.6v5.6H4.6zM13.8 4.6h5.6v5.6h-5.6zM4.6 13.8h5.6v5.6H4.6zM13.8 13.8h5.6v5.6h-5.6z",
+      share: "M8.6 13.4 15.4 17M15.4 7 8.6 10.6",
+      dots: "",
+    };
+    const kids = [];
+    const key = (n) => name + "-" + n;
+    if (name === "search") {
+      kids.push(React.createElement("circle", { key: key(0), cx: 11, cy: 11, r: 6.6 }));
+      kids.push(React.createElement("path", { key: key(1), d: paths.search }));
+    } else if (name === "user") {
+      kids.push(React.createElement("circle", { key: key(0), cx: 12, cy: 8.4, r: 3.4, fill: filled ? color : "none" }));
+      kids.push(React.createElement("path", { key: key(1), d: paths.user }));
+    } else if (name === "camera" || name === "image") {
+      kids.push(React.createElement("path", { key: key(0), d: paths[name] }));
+      kids.push(React.createElement("circle", { key: key(1), cx: 12, cy: name === "camera" ? 12.6 : 10, r: name === "camera" ? 3.4 : 1.8 }));
+      if (name === "image") kids.push(React.createElement("path", { key: key(2), d: "M4.6 17 9.4 12l3.4 3.2 2.4-2 4.2 4" }));
+    } else if (name === "gear") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.gear }));
+      kids.push(React.createElement("circle", { key: key(1), cx: 12, cy: 12, r: 2.8 }));
+    } else if (name === "eye") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.eye }));
+      kids.push(React.createElement("circle", { key: key(1), cx: 12, cy: 12, r: 2.8 }));
+    } else if (name === "shieldCheck") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.shield }));
+      kids.push(React.createElement("path", { key: key(1), d: "M9.2 11.8 11.4 14l3.6-3.8" }));
+    } else if (name === "doc") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.doc }));
+      kids.push(React.createElement("path", { key: key(1), d: "M9 12.4h6M9 15.8h4" }));
+    } else if (name === "info") {
+      kids.push(React.createElement("rect", { key: key(0), x: 4.6, y: 4.6, width: 14.8, height: 14.8, rx: 4 }));
+      kids.push(React.createElement("path", { key: key(1), d: "M12 10.6v5.2M12 8.4v.1" }));
+    } else if (name === "logout") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.logout }));
+      kids.push(React.createElement("path", { key: key(1), d: "M17.4 8.6 20.8 12l-3.4 3.4M20.4 12h-8" }));
+    } else if (name === "share") {
+      kids.push(React.createElement("circle", { key: key(0), cx: 17.4, cy: 5.6, r: 2.4 }));
+      kids.push(React.createElement("circle", { key: key(1), cx: 6.6, cy: 12, r: 2.4 }));
+      kids.push(React.createElement("circle", { key: key(2), cx: 17.4, cy: 18.4, r: 2.4 }));
+      kids.push(React.createElement("path", { key: key(3), d: paths.share }));
+    } else if (name === "dots") {
+      [5.4, 12, 18.6].forEach((cy, i) => kids.push(React.createElement("circle", { key: key(i), cx: 12, cy, r: 1.6, fill: color, stroke: "none" })));
+    } else if (name === "dotsCircle") {
+      kids.push(React.createElement("circle", { key: key(0), cx: 12, cy: 12, r: 8.4 }));
+      [8.2, 12, 15.8].forEach((cx, i) => kids.push(React.createElement("circle", { key: key(i + 1), cx, cy: 12, r: 1.2, fill: color, stroke: "none" })));
+    } else if (name === "idcard") {
+      kids.push(React.createElement("rect", { key: key(0), x: 3.4, y: 6.6, width: 17.2, height: 10.8, rx: 2.6 }));
+      kids.push(React.createElement("circle", { key: key(1), cx: 8.6, cy: 12, r: 2.2 }));
+      kids.push(React.createElement("path", { key: key(2), d: "M13.6 10.4h4.2M13.6 13.6h3" }));
+    } else if (name === "pdf") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.pdf }));
+      kids.push(React.createElement("path", { key: key(1), d: "M13.2 3.9V8h4.2" }));
+    } else if (name === "grid") {
+      paths.grid.split("M").filter(Boolean).forEach((d, i) => kids.push(React.createElement("path", { key: key(i), d: "M" + d, fill: color, stroke: "none" })));
+    } else if (name === "star") {
+      kids.push(React.createElement("path", { key: key(0), d: paths.star }));
+    } else {
+      kids.push(React.createElement("path", { key: key(0), d: paths[name] || "" }));
+    }
+    return React.createElement("svg", {
+      width: size, height: size, viewBox: "0 0 24 24",
+      fill: filled ? color : "none", stroke: filled && (name === "home" || name === "star" || name === "folder") ? color : color,
+      strokeWidth: 1.8, strokeLinecap: "round", strokeLinejoin: "round",
+      style: { display: "block", flex: "none" },
+    }, kids);
+  }
+
+  renderVals() {
+    const s = this.state;
+    const A = this.props.accent ?? "#5468f0";
+    const INK = "#212121", MUTED = "#9e9e9e";
+    const ic = (n, o) => this.icon(n, o);
+
+    const screens = ["onboard", "signin", "signup", "forgot", "home", "scan", "review", "files", "detail", "premium", "account"];
+    const nav = {};
+    screens.forEach(n => { nav[n] = this.go(n); });
+
+    const dark = s.dark;
+    const ui = dark
+      ? { bg: "#181818", text: "#fafafa", muted: "#9e9e9e", tile: "#232323", line: "#2c2c2c", thumb: "repeating-linear-gradient(180deg,#3a3a3a 0 2px,#282828 2px 6px)" }
+      : { bg: "#ffffff", text: INK, muted: MUTED, tile: "#fafafa", line: "#eeeeee", thumb: "repeating-linear-gradient(180deg,#d4d4d4 0 2px,#f5f5f5 2px 6px)" };
+
+    const slides = [
+      { title: "Scan anything, keep it on your phone", body: "Receipts, warranty cards, leases. Docket captures pages and files them without sending anything to a server." },
+      { title: "Every word is searchable", body: "Text is read on device the moment a scan is saved, so you can find a document by what it says, not where you filed it." },
+      { title: "Receipts and warranties, tracked", body: "Docket pulls totals off receipts and reminds you before a warranty runs out." },
+    ];
+
+    const tabDefs = [
+      { label: "Home", key: "home", icon: "home" },
+      { label: "Files", key: "files", icon: "folder" },
+      { label: "Premium", key: "premium", icon: "star" },
+      { label: "Account", key: "account", icon: "user" },
+    ];
+    const mkTabs = (inactive) => tabDefs.map(t => {
+      const on = s.screen === t.key;
+      return {
+        label: t.label, go: nav[t.key], color: on ? A : inactive, weight: on ? 700 : 500,
+        icon: ic(t.icon, { size: 23, color: on ? A : inactive, filled: on }),
+      };
+    });
+
+    const docs = [
+      { name: "Whirlpool fridge receipt", meta: "12/03/2026   09:41" },
+      { name: "Apartment lease", meta: "09/03/2026   10:20" },
+      { name: "Dell XPS warranty card", meta: "04/03/2026   14:56" },
+      { name: "Pharmacy receipt", meta: "28/02/2026   09:37" },
+    ].map(d => ({ ...d, open: nav.detail }));
+
+    const filterSwatch = { Original: "#8a8a8a", "B & W": "#f5f5f5", Greyscale: "#bdbdbd", Enhance: "#edeffe" };
+
+    const settingDefs = [
+      { label: "Personal Info", value: "", icon: "user", color: INK },
+      { label: "Scan preferences", value: "High quality", icon: "gear", color: INK },
+      { label: "Security", value: "Biometric", icon: "shieldCheck", color: INK },
+      { label: "Language", value: "English (US)", icon: "doc", color: INK },
+      { label: "Backup & restore", value: "Off", icon: "info", color: INK },
+      { label: "Recently deleted", value: "6 files", icon: "folder", color: INK },
+    ];
+
+    return {
+      nav, ui,
+      isOnboard: s.screen === "onboard", isSignin: s.screen === "signin", isSignup: s.screen === "signup",
+      isForgot: s.screen === "forgot", isHome: s.screen === "home", isScan: s.screen === "scan",
+      isReview: s.screen === "review", isFiles: s.screen === "files", isDetail: s.screen === "detail",
+      isPremium: s.screen === "premium", isAccount: s.screen === "account",
+
+      icons: {
+        search: ic("search", { size: 24, color: ui.text }),
+        searchMuted: ic("search", { size: 20, color: MUTED }),
+        arrowRight: ic("arrowRight", { size: 22, color: A }),
+        back: ic("back", { size: 24 }),
+        backLight: ic("back", { size: 24, color: "#ffffff" }),
+        share: ic("share", { size: 20, color: ui.text }),
+        more: ic("dots", { size: 20, color: ui.text }),
+        shareInk: ic("share", { size: 20, color: INK }),
+        moreInk: ic("dots", { size: 20, color: INK }),
+        moreCircle: ic("dotsCircle", { size: 24 }),
+        camera: ic("camera", { size: 24, color: "#ffffff" }),
+        image: ic("image", { size: 24, color: "#ffffff" }),
+        sort: ic("sort", { size: 22 }),
+        folderPlus: ic("folderPlus", { size: 22 }),
+        folderWhite: ic("folder", { size: 22, color: "#ffffff" }),
+        folderLight: ic("folder", { size: 22, color: "#e0e0e0" }),
+        frameLight: ic("frame", { size: 22, color: "#ffffff" }),
+        sparkLight: ic("spark", { size: 22, color: "#ffffff" }),
+        flashLight: ic("flash", { size: 22, color: "#ffffff" }),
+        moreLight: ic("dotsCircle", { size: 22, color: "#ffffff" }),
+        starWhite: ic("star", { size: 24, color: "#ffffff", filled: true }),
+        checkCoral: ic("check", { size: 14, color: "#ff6b67" }),
+        eye: ic("eye", { size: 22 }),
+        logout: ic("logout", { size: 22, color: "#ff6b67" }),
+      },
+
+      menu: [
+        ["Onboarding", "onboard"], ["Sign in", "signin"], ["Sign up", "signup"], ["Reset", "forgot"],
+        ["Home", "home"], ["Scan", "scan"], ["Review", "review"], ["Files", "files"],
+        ["Detail", "detail"], ["Premium", "premium"], ["Account", "account"],
+      ].map(([label, key]) => ({
+        label, go: nav[key],
+        bg: s.screen === key ? A : "#ffffff",
+        fg: s.screen === key ? "#ffffff" : "#616161",
+      })),
+
+      slide: slides[s.slide],
+      dots: slides.map((_, i) => ({ w: i === s.slide ? "24px" : "8px", bg: i === s.slide ? A : "#e0e0e0" })),
+      onboardNext: () => s.slide < slides.length - 1 ? this.setState({ slide: s.slide + 1 }) : this.setState({ screen: "signin" }),
+
+      rememberBg: s.remember ? A : "transparent",
+      rememberMark: s.remember ? ic("check", { size: 14, color: "#ffffff" }) : "",
+      toggleRemember: () => this.setState({ remember: !s.remember }),
+
+      signupFields: [
+        { label: "Full name", value: "Andrew Ainsley" },
+        { label: "Email", value: "andrew.ainsley@yourdomain.com" },
+        { label: "Password", value: "••••••••••" },
+      ],
+      otp: ["4", "6", "7", ""].map(v => ({ v, border: v ? "#eeeeee" : "#eeeeee", bg: v ? "#fafafa" : "#ffffff" })),
+      keys: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"],
+
+      tools: [
+        { label: "Scan Doc", icon: "frame", tone: "#fcaf4e", light: "#fff3e1", deep: "#3a2f1c", go: nav.scan },
+        { label: "Receipt", icon: "receipt", tone: "#a1887f", light: "#f5efec", deep: "#332b28", go: nav.scan },
+        { label: "ID Card", icon: "idcard", tone: "#ff6b67", light: "#ffeceb", deep: "#3a2323", go: nav.scan },
+        { label: "Import PDF", icon: "pdf", tone: "#6c6bf0", light: "#eceafd", deep: "#26264a", go: nav.review },
+        { label: "Warranties", icon: "shieldCheck", tone: "#ff6b67", light: "#ffeceb", deep: "#3a2323", go: nav.files },
+        { label: "Protect", icon: "shield", tone: "#2ed3a5", light: "#e3f8f1", deep: "#173a30", go: nav.files },
+        { label: "Export CSV", icon: "csv", tone: "#fcaf4e", light: "#fff3e1", deep: "#3a2f1c", go: nav.files },
+        { label: "All Tools", icon: "grid", tone: "#5468f0", light: "#edeffe", deep: "#22284a", go: nav.files },
+      ].map(t => ({
+        label: t.label, go: t.go,
+        tint: dark ? t.deep : t.light,
+        icon: ic(t.icon, { size: 24, color: t.tone, filled: t.icon === "grid" }),
+      })),
+      docs,
+      tabsHome: mkTabs(dark ? "#9e9e9e" : MUTED),
+      tabsLight: mkTabs(MUTED),
+
+      modes: ["Document", "Receipt", "ID Card", "Book"].map(l => ({
+        label: l, pick: () => this.setState({ mode: l }),
+        color: s.mode === l ? "#ffffff" : "#bdbdbd",
+        underline: s.mode === l ? A : "transparent",
+      })),
+      modeHint: s.mode === "Receipt" ? "Hold steady over the receipt" : s.mode === "ID Card" ? "Fit the card inside the frame" : s.mode === "Book" ? "Both pages inside the frame" : "Page detected — tap to capture",
+
+      lines: ["100%", "92%", "97%", "88%", "100%", "72%", "95%", "90%", "60%", "98%", "84%", "45%"],
+      pageActions: [
+        { label: "Crop", icon: ic("crop", { size: 20, color: "#ffffff" }) },
+        { label: "Rotate", icon: ic("rotate", { size: 20, color: "#ffffff" }) },
+        { label: "Retake", icon: ic("retake", { size: 20, color: "#ffffff" }) },
+      ],
+      filters: ["Original", "B & W", "Greyscale", "Enhance"].map(l => ({
+        label: l, pick: () => this.setState({ filter: l }),
+        border: s.filter === l ? A : "#333333",
+        color: s.filter === l ? "#ffffff" : "#bdbdbd",
+        swatch: filterSwatch[l],
+      })),
+      pageBg: s.filter === "B & W" ? "#ffffff" : s.filter === "Greyscale" ? "#e8e8e8" : s.filter === "Original" ? "#efe9dd" : "#fcfcfd",
+
+      saveOpen: s.saveOpen,
+      openSave: () => this.setState({ saveOpen: true }),
+      closeSave: () => this.setState({ saveOpen: false }),
+      saveDoc: () => this.setState({ saveOpen: false, screen: "files" }),
+      folderChips: ["No folder", "Household", "Tax 2026", "+ New"].map(l => ({
+        label: l, pick: () => this.setState({ folder: l }),
+        border: s.folder === l ? A : "#eeeeee",
+        bg: s.folder === l ? "#edeffe" : "#ffffff",
+        color: s.folder === l ? A : "#616161",
+      })),
+      formats: ["PDF", "Separate images"].map(l => ({
+        label: l, pick: () => this.setState({ format: l }),
+        border: s.format === l ? A : "#eeeeee",
+        bg: s.format === l ? "#edeffe" : "#ffffff",
+        color: s.format === l ? A : "#616161",
+      })),
+
+      folders: [{ name: "Household", count: "34 files" }, { name: "Tax 2026", count: "21 files" }],
+
+      shareOpen: s.shareOpen,
+      openShare: () => this.setState({ shareOpen: true }),
+      closeShare: () => this.setState({ shareOpen: false }),
+      exports: [
+        { label: "PDF", note: "With searchable text layer" },
+        { label: "JPEG pages", note: "One image per page" },
+        { label: "CSV", note: "Receipt totals and dates" },
+        { label: "Share sheet", note: "Send to any app" },
+      ],
+
+      benefits: [
+        "Batch export, several documents at once",
+        "Searchable text layer in exported PDFs",
+        "Additional OCR languages",
+        "Unlimited folders",
+      ],
+
+      settings: settingDefs.map(d => ({
+        label: d.label, value: d.value, color: d.color,
+        icon: ic(d.icon, { size: 22, color: d.color }),
+        chevron: ic("chevron", { size: 18, color: "#bdbdbd" }),
+      })),
+      toggleDark: () => this.setState({ dark: !s.dark }),
+      darkTrack: s.dark ? A : "#e0e0e0",
+      darkKnob: s.dark ? "23px" : "3px",
+    };
+  }
+}
+</script>
+</body>
+</html>

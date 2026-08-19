@@ -48,6 +48,11 @@ class DocumentRepositoryImpl @Inject constructor(
         documentDao.observeLibraryRows(folderId, typeFilter.name, sortBy.name)
             .map { rows -> rows.map { it.toDomain() } }
 
+    override fun observeRecentDocuments(limit: Int): Flow<List<Document>> =
+        documentDao.observeRecent(limit).map { rows -> rows.map { it.toDomain() } }
+
+    override fun observeLibrarySize(): Flow<Int> = documentDao.observeLibrarySize()
+
     override fun observeDocument(documentId: Long): Flow<Document?> =
         documentDao.observeWithPages(documentId).map { it?.toDomain() }
 

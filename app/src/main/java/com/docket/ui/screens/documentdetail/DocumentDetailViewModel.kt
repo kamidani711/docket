@@ -30,7 +30,9 @@ import com.docket.domain.usecase.ParseReceiptUseCase
 import com.docket.domain.usecase.SetWarrantyUseCase
 import com.docket.ui.navigation.Destination
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
+import java.util.UUID
 import javax.inject.Inject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -134,6 +136,20 @@ class DocumentDetailViewModel @Inject constructor(
                 is Result.Success -> _exportState.value = ExportUiState.Done(
                     files = result.data.files,
                     mimeType = if (format == ImageExportFormat.PNG) "image/png" else "image/jpeg"
+                )
+                is Result.Error -> _exportState.value = result.toFailedState()
+                Result.Loading -> Unit
+            }
+        }
+    }
+
+    fun exportCsv() {
+        viewModelScope.launch {
+            _exportState.value = ExportUiState.Exporting
+            when (val result = exportDocumentUseCase.exportCsv(documentId)) {
+                is Result.Success -> _exportState.value = ExportUiState.Done(
+                    files = listOf(result.data),
+                    mimeType = "text/csv"
                 )
                 is Result.Error -> _exportState.value = result.toFailedState()
                 Result.Loading -> Unit

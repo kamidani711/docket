@@ -17,12 +17,14 @@ import com.docket.domain.model.PdfPageSize
 import com.docket.domain.model.AnalyticsEventType
 import com.docket.domain.model.PremiumFeature
 import com.docket.domain.repository.AnalyticsRepository
+import com.docket.domain.repository.CsvExporter
 import com.docket.domain.repository.DocumentRepository
 import com.docket.domain.repository.ImageExporter
 import com.docket.domain.repository.ImageProcessor
 import com.docket.domain.repository.OcrRepository
 import com.docket.domain.repository.PdfWriter
 import com.docket.domain.repository.PremiumRepository
+import com.docket.domain.repository.ReceiptRepository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.util.UUID
@@ -43,6 +45,8 @@ class ExportDocumentUseCase @Inject constructor(
     private val imageExporter: ImageExporter,
     private val premiumRepository: PremiumRepository,
     private val analyticsRepository: AnalyticsRepository,
+    private val csvExporter: CsvExporter,
+    private val receiptRepository: ReceiptRepository,
     @ApplicationContext private val appContext: Context
 ) {
     suspend fun exportPdf(
@@ -105,6 +109,21 @@ class ExportDocumentUseCase @Inject constructor(
         val result = imageExporter.exportImages(request)
         analyticsRepository.logEvent(AnalyticsEventType.DOCUMENT_EXPORTED)
         return Result.Success(result)
+    }
+
+    /** Docket's "CSV" quick-export is a single receipt's totals/date, not a batch — see
+     *  [com.docket.data.csv.CsvReceiptExporter]'s one-row-per-receipt shape and
+     *  [com.docket.ui.screens.receipts.ReceiptsViewModel] for the batch equivalent. */
+    suspend fun exportCsv(documentId: Long): Result<File> {
+        val document = documentRepository.getDocument(documentId)
+            ?: return Result.Error(IllegalStateException("Document $documentId not found"))
+        val receipt = receiptRepository.getReceiptForDocument(documentId)
+            ?: return Result.Error(IllegalStateException("This document isn't tagged as a receipt yet."))
+
+        val destination = File(newExportDir(), "${sanitizeFileName(document.title)}.csv")
+        val file = csvExporter.exportReceiptsToCsv(listOf(receipt), destination)
+        analyticsRepository.logEvent(AnalyticsEventType.DOCUMENT_EXPORTED)
+        return Result.Success(file)
     }
 
     private suspend fun renderPageBitmap(document: Document, index: Int, maxDimension: Int): Bitmap =

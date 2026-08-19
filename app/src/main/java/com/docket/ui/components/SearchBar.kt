@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
 import com.docket.R
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketDimens
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.theme.docketCardShadow
@@ -58,7 +59,7 @@ fun DocketSearchBar(
             horizontalArrangement = Arrangement.spacedBy(DocketSpacing.space12)
         ) {
             Icon(
-                imageVector = Icons.Filled.Search,
+                imageVector = DocketIcons.Search,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onSurfaceVariant
             )

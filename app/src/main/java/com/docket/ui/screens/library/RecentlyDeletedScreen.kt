@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Restore
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -29,6 +28,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.docket.domain.model.Document
 import com.docket.ui.components.DocketListRow
 import com.docket.ui.components.EmptyState
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.util.formatDisplayDate
 import java.util.concurrent.TimeUnit
@@ -47,7 +47,7 @@ fun RecentlyDeletedScreen(
                 title = { Text("Recently Deleted") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(DocketIcons.Back, contentDescription = "Back")
                     }
                 }
             )

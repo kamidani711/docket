@@ -20,6 +20,9 @@ object DocketDimens {
     /** Larger icon/avatar size for hero contexts (empty states, sheet headers). */
     val heroIconSize: Dp = 64.dp
 
+    /** Colored icon-tile size for QuickActionGrid — between rowIconSize and heroIconSize. */
+    val quickActionIconSize: Dp = 56.dp
+
     /** Default width for a DocumentThumbnail; height follows from its fixed page aspect ratio. */
     val thumbnailWidth: Dp = 96.dp
 

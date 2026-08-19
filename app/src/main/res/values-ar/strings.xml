@@ -160,4 +160,86 @@
     <string name="unlock_button_working">جارٍ التنفيذ…</string>
     <string name="unlock_button_with_price">فتح بريميوم — %1$s</string>
     <string name="unlock_restore">استعادة المشتريات</string>
+    <string name="unlock_price_suffix">/ دفعة واحدة</string>
+    <string name="unlock_active_label">بريميوم مفعّل</string>
+
+    <string name="onboarding_slide1_title">امسح أي شيء، واحتفظ به في هاتفك</string>
+    <string name="onboarding_slide1_body">الإيصالات وبطاقات الضمان وعقود الإيجار. يلتقط Docket الصفحات ويؤرشفها دون إرسال أي شيء إلى خادم.</string>
+    <string name="onboarding_slide2_title">كل كلمة قابلة للبحث</string>
+    <string name="onboarding_slide2_body">تتم قراءة النص على الجهاز فور حفظ المسح الضوئي، حتى تتمكن من إيجاد المستند بما يقوله، لا بمكان حفظه.</string>
+    <string name="onboarding_slide3_title">الإيصالات والضمانات، متتبَّعة</string>
+    <string name="onboarding_slide3_body">يستخرج Docket الإجماليات من الإيصالات ويذكّرك قبل انتهاء صلاحية الضمان.</string>
+    <string name="onboarding_skip">تخطي</string>
+    <string name="onboarding_next">التالي</string>
+
+    <string name="signin_headline">مرحبًا بعودتك</string>
+    <string name="signin_body">يحتفظ Docket بكل شيء على هذا الجهاز. سجّل الدخول فقط إذا أردت النسخ الاحتياطي والمزامنة.</string>
+    <string name="signin_email_label">البريد الإلكتروني</string>
+    <string name="signin_password_label">كلمة المرور</string>
+    <string name="signin_remember_me">تذكرني</string>
+    <string name="signin_forgot_password">نسيت كلمة المرور</string>
+    <string name="signin_or_continue_with">أو تابع باستخدام</string>
+    <string name="signin_button">تسجيل الدخول</string>
+    <string name="signin_no_account_prompt">ليس لديك حساب؟ </string>
+    <string name="signin_sign_up_link">إنشاء حساب</string>
+
+    <string name="signup_headline">إنشاء حساب</string>
+    <string name="signup_body">مجاني إلى الأبد. بريميوم عملية شراء واحدة، وليست اشتراكًا أبدًا.</string>
+    <string name="signup_name_label">الاسم الكامل</string>
+    <string name="signup_email_label">البريد الإلكتروني</string>
+    <string name="signup_password_label">كلمة المرور</string>
+    <string name="signup_consent">أوافق على شروط الخدمة وسياسة الخصوصية. تبقى المسوحات الضوئية على هذا الجهاز.</string>
+    <string name="signup_button">إنشاء حساب</string>
+    <string name="signup_have_account_prompt">لديك حساب بالفعل؟ </string>
+    <string name="signup_sign_in_link">تسجيل الدخول</string>
+
+    <string name="reset_headline">تحقق من بريدك</string>
+    <string name="reset_body">أرسلنا رمزًا مكوّنًا من ستة أرقام إلى %1$s. أدخله أدناه لإعادة تعيين كلمة المرور.</string>
+    <string name="reset_default_email">بريدك الإلكتروني</string>
+    <string name="reset_resend_prompt">لم تستلم البريد الإلكتروني؟</string>
+    <string name="reset_resend_prefix">يمكنك إعادة إرسال الرمز خلال </string>
+    <string name="reset_resend_seconds">%1$d ث</string>
+    <string name="reset_confirm_button">تأكيد</string>
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">عرض جميع الملفات</string>
+    <string name="home_recent_files_header">الملفات الأخيرة</string>
+    <string name="home_empty_title">لا توجد مستندات بعد</string>
+    <string name="home_empty_message">امسح مستندك الأول ضوئيًا لرؤيته هنا.</string>
+    <string name="home_scan_fab_desc">مسح ضوئي</string>
+    <string name="home_tool_scan_doc">مسح مستند</string>
+    <string name="home_tool_receipt">إيصال</string>
+    <string name="home_tool_id_card">بطاقة هوية</string>
+    <string name="home_tool_import_pdf">استيراد PDF</string>
+    <string name="home_tool_warranties">الضمانات</string>
+    <string name="home_tool_protect">حماية</string>
+    <string name="home_tool_export_csv">تصدير CSV</string>
+    <string name="home_tool_all_tools">جميع الأدوات</string>
+
+    <string name="account_title">الحساب</string>
+    <string name="account_more_desc">المزيد</string>
+    <string name="account_row_personal_info">المعلومات الشخصية</string>
+    <string name="account_row_scan_preferences">تفضيلات المسح الضوئي</string>
+    <string name="account_row_security">الأمان</string>
+    <string name="account_row_language">اللغة</string>
+    <string name="account_row_backup">النسخ الاحتياطي والاستعادة</string>
+    <string name="account_row_privacy">الخصوصية</string>
+    <string name="account_row_usage">الاستخدام</string>
+    <string name="account_storage_header">التخزين</string>
+    <string name="account_calculating">جارٍ الحساب…</string>
+    <string name="account_storage_used_cache">استخدام %1$s · ذاكرة تخزين مؤقت %2$s</string>
+    <string name="account_clearing_cache">جارٍ المسح…</string>
+    <string name="account_clear_cache">مسح ذاكرة التخزين المؤقت</string>
+    <string name="account_dark_mode">الوضع الداكن</string>
+    <string name="account_log_out">تسجيل الخروج</string>
+    <string name="account_not_signed_in_title">لم تسجّل الدخول</string>
+    <string name="account_not_signed_in_body">يعمل Docket بالكامل بدون ملف شخصي. سجّل الدخول أو أنشئ حسابًا فقط إذا أردت ظهور اسم وبريد إلكتروني هنا.</string>
+    <string name="account_create_account_button">إنشاء حساب</string>
+    <string name="account_used_on_device">تم استخدام %1$s على هذا الجهاز</string>
+    <string name="account_premium_banner_title">الانتقال إلى بريميوم</string>
+    <string name="account_premium_banner_subtitle">تصدير دفعي، لغات OCR، طبقة نص</string>
+    <string name="account_unlock_button">فتح</string>
+
+    <string name="document_detail_action_export">تصدير</string>
+    <string name="document_detail_action_rename">إعادة تسمية</string>
 </resources>

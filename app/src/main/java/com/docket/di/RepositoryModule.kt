@@ -14,6 +14,7 @@ import com.docket.data.repository.AnalyticsRepositoryImpl
 import com.docket.data.repository.DocumentRepositoryImpl
 import com.docket.data.repository.OcrRepositoryImpl
 import com.docket.data.repository.PremiumRepositoryImpl
+import com.docket.data.repository.ProfileRepositoryImpl
 import com.docket.data.repository.ReceiptRepositoryImpl
 import com.docket.data.repository.ScanSessionRepositoryImpl
 import com.docket.data.repository.SearchRepositoryImpl
@@ -35,6 +36,7 @@ import com.docket.domain.repository.OcrRepository
 import com.docket.domain.repository.PdfWriter
 import com.docket.domain.repository.PremiumRepository
 import com.docket.domain.repository.PreviewCache
+import com.docket.domain.repository.ProfileRepository
 import com.docket.domain.repository.ReceiptParser
 import com.docket.domain.repository.ReceiptRepository
 import com.docket.domain.repository.ReminderScheduler
@@ -123,4 +125,7 @@ abstract class RepositoryModule {
 
     @Binds
     abstract fun bindAnalyticsRepository(impl: AnalyticsRepositoryImpl): AnalyticsRepository
+
+    @Binds
+    abstract fun bindProfileRepository(impl: ProfileRepositoryImpl): ProfileRepository
 }

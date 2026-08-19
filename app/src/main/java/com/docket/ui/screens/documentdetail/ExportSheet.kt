@@ -14,12 +14,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Share
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.docket.domain.model.Document
@@ -37,6 +39,7 @@ import com.docket.domain.model.ImageExportFormat
 import com.docket.domain.model.PdfPageSize
 import com.docket.ui.components.PrimaryButton
 import com.docket.ui.components.SecondaryButton
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.util.openFile
 import com.docket.ui.util.saveFileToUri
@@ -51,6 +54,8 @@ fun ExportSheet(
     exportState: ExportUiState,
     onExportPdf: (PdfPageSize, Int, Boolean) -> Unit,
     onExportImages: (List<Int>, ImageExportFormat, Int) -> Unit,
+    onExportCsv: () -> Unit,
+    onShareSheet: () -> Unit,
     onOpenPremium: () -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -63,7 +68,56 @@ fun ExportSheet(
                 .padding(bottom = DocketSpacing.space32),
             verticalArrangement = Arrangement.spacedBy(DocketSpacing.space16)
         ) {
-            Text("Export", style = MaterialTheme.typography.headlineSmall)
+            Text("Share & export", style = MaterialTheme.typography.headlineSmall)
+
+            // 2x2 Quick export grid from prototype Screen 9
+            Column(
+                verticalArrangement = Arrangement.spacedBy(10.dp),
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    QuickExportCard(
+                        title = "PDF",
+                        subtitle = "With searchable text layer",
+                        onClick = { onExportPdf(PdfPageSize.FIT_TO_CONTENT, 90, hasOcrText && isPremium) },
+                        enabled = !isExporting,
+                        modifier = Modifier.weight(1f)
+                    )
+                    QuickExportCard(
+                        title = "JPEG pages",
+                        subtitle = "One image per page",
+                        onClick = { onExportImages(listOf(0), ImageExportFormat.JPEG, 90) },
+                        enabled = !isExporting,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(10.dp),
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    QuickExportCard(
+                        title = "CSV",
+                        subtitle = if (document.hasReceipt) {
+                            "Receipt totals and dates"
+                        } else {
+                            "Tag this document as a receipt first"
+                        },
+                        onClick = onExportCsv,
+                        enabled = document.hasReceipt && !isExporting,
+                        modifier = Modifier.weight(1f)
+                    )
+                    QuickExportCard(
+                        title = "Share sheet",
+                        subtitle = "Send to any app",
+                        onClick = onShareSheet,
+                        enabled = !isExporting,
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
 
             if (document.format == ExportFormat.PDF) {
                 PdfExportOptions(
@@ -134,7 +188,7 @@ private fun ExportDoneActions(files: List<java.io.File>, mimeType: String) {
         val compactPadding = PaddingValues(horizontal = DocketSpacing.space8, vertical = DocketSpacing.space12)
         SecondaryButton(
             text = "Share",
-            leadingIcon = Icons.Filled.Share,
+            leadingIcon = DocketIcons.Share,
             onClick = { shareFiles(context, files, mimeType) },
             modifier = Modifier.weight(1f),
             contentPadding = compactPadding
@@ -315,5 +369,39 @@ private fun PremiumToggleRow(
             onCheckedChange = onCheckedChange,
             enabled = enabled && isPremium
         )
+    }
+}
+
+@Composable
+private fun QuickExportCard(
+    title: String,
+    subtitle: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    Surface(
+        onClick = onClick,
+        enabled = enabled,
+        shape = androidx.compose.foundation.shape.RoundedCornerShape(16.dp),
+        color = MaterialTheme.colorScheme.surfaceContainerLowest,
+        modifier = modifier
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(16.dp)
+                .alpha(if (enabled) 1f else 0.5f),
+            verticalArrangement = Arrangement.spacedBy(5.dp)
+        ) {
+            Text(
+                text = title,
+                style = MaterialTheme.typography.titleSmall.copy(fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+            )
+            Text(
+                text = subtitle,
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+        }
     }
 }

@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.docket.ui.theme.DocketDimens
+import com.docket.ui.theme.DocketPillShape
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.theme.docketCardShadow
 
@@ -60,7 +61,7 @@ fun PrimaryButton(
         animationSpec = tween(120),
         label = "primaryButtonScale"
     )
-    val shape = MaterialTheme.shapes.medium
+    val shape = DocketPillShape
 
     Button(
         onClick = onClick,
@@ -69,7 +70,14 @@ fun PrimaryButton(
             .graphicsLayer { scaleX = scale; scaleY = scale }
             .then(
                 if (isEnabled) {
-                    Modifier.docketCardShadow(elevation = DocketSpacing.space8, shape = shape)
+                    // Handoff spec: primary button glow is rgba(84,104,240,.35), stronger than
+                    // docketCardShadow's default card-glow alpha.
+                    Modifier.docketCardShadow(
+                        elevation = DocketSpacing.space8,
+                        shape = shape,
+                        ambientAlpha = 0.20f,
+                        spotAlpha = 0.35f
+                    )
                 } else {
                     Modifier
                 }
@@ -121,7 +129,7 @@ fun SecondaryButton(
             .heightIn(min = DocketDimens.minTouchTarget)
             .graphicsLayer { scaleX = scale; scaleY = scale },
         enabled = enabled && !loading,
-        shape = MaterialTheme.shapes.medium,
+        shape = DocketPillShape,
         border = BorderStroke(1.dp, MaterialTheme.colorScheme.outlineVariant),
         interactionSource = interactionSource,
         colors = ButtonDefaults.outlinedButtonColors(
@@ -133,10 +141,60 @@ fun SecondaryButton(
     }
 }
 
-/**
- * Named `DocketTextButton` (not `TextButton`) to avoid colliding with M3's own composable of
- * that name, which this wraps.
- */
+/** Skip / Cancel — primary-tint fill, primary text, no glow. */
+@Composable
+fun TintedButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.heightIn(min = DocketDimens.primaryTouchTarget),
+        enabled = enabled,
+        shape = DocketPillShape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.primary
+        ),
+        elevation = null,
+        contentPadding = PaddingValues(
+            horizontal = DocketSpacing.space24,
+            vertical = DocketSpacing.space16
+        )
+    ) {
+        Text(text = text, style = MaterialTheme.typography.titleSmall)
+    }
+}
+
+/** Camera/review secondary action — dark tile fill, no glow. */
+@Composable
+fun QuietButton(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true
+) {
+    Button(
+        onClick = onClick,
+        modifier = modifier.heightIn(min = DocketDimens.primaryTouchTarget),
+        enabled = enabled,
+        shape = DocketPillShape,
+        colors = ButtonDefaults.buttonColors(
+            containerColor = MaterialTheme.colorScheme.surfaceContainerHigh,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        elevation = null,
+        contentPadding = PaddingValues(
+            horizontal = DocketSpacing.space24,
+            vertical = DocketSpacing.space16
+        )
+    ) {
+        Text(text = text, style = MaterialTheme.typography.titleSmall)
+    }
+}
+
 @Composable
 fun DocketTextButton(
     text: String,

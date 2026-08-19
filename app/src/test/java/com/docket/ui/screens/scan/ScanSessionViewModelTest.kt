@@ -369,6 +369,10 @@ class ScanSessionViewModelTest {
         override suspend fun setDefaultLibrarySort(sort: DocumentSort) = Unit
         override val appLockEnabled: Flow<Boolean> = flowOf(false)
         override suspend fun setAppLockEnabled(enabled: Boolean) = Unit
+        override val hasSeenOnboarding: Flow<Boolean> = flowOf(true)
+        override suspend fun setOnboardingSeen() = Unit
+        override val darkModeOverride: Flow<Boolean?> = flowOf(null)
+        override suspend fun setDarkModeOverride(enabled: Boolean) = Unit
     }
 
     private class FakeImageProcessor : ImageProcessor {
@@ -488,6 +492,8 @@ class ScanSessionViewModelTest {
             typeFilter: DocumentTypeFilter,
             sortBy: DocumentSort
         ): Flow<List<Document>> = flowOf(emptyList())
+        override fun observeRecentDocuments(limit: Int): Flow<List<Document>> = flowOf(emptyList())
+        override fun observeLibrarySize(): Flow<Int> = flowOf(0)
         override fun observeDocument(documentId: Long): Flow<Document?> = flowOf(null)
         override suspend fun getDocument(documentId: Long): Document? = null
         override suspend fun getTitlesCreatedBetween(dayStart: Long, dayEnd: Long): List<String> = emptyList()

@@ -130,4 +130,86 @@
     <string name="unlock_button_working">Memproses…</string>
     <string name="unlock_button_with_price">Buka Premium — %1$s</string>
     <string name="unlock_restore">Pulihkan pembelian</string>
+    <string name="unlock_price_suffix">/ sekali bayar</string>
+    <string name="unlock_active_label">Premium Aktif</string>
+
+    <string name="onboarding_slide1_title">Pindai apa saja, simpan di ponselmu</string>
+    <string name="onboarding_slide1_body">Struk, kartu garansi, kontrak sewa. Docket menangkap halaman dan mengarsipkannya tanpa mengirim apa pun ke server.</string>
+    <string name="onboarding_slide2_title">Setiap kata dapat dicari</string>
+    <string name="onboarding_slide2_body">Teks dibaca di perangkat begitu pemindaian disimpan, jadi kamu bisa menemukan dokumen berdasarkan isinya, bukan tempat penyimpanannya.</string>
+    <string name="onboarding_slide3_title">Struk dan garansi, terpantau</string>
+    <string name="onboarding_slide3_body">Docket mengambil total dari struk dan mengingatkanmu sebelum garansi habis.</string>
+    <string name="onboarding_skip">Lewati</string>
+    <string name="onboarding_next">Berikutnya</string>
+
+    <string name="signin_headline">Selamat datang kembali</string>
+    <string name="signin_body">Docket menyimpan semuanya di perangkat ini. Masuk hanya jika kamu ingin cadangan dan sinkronisasi.</string>
+    <string name="signin_email_label">Email</string>
+    <string name="signin_password_label">Kata sandi</string>
+    <string name="signin_remember_me">Ingat saya</string>
+    <string name="signin_forgot_password">Lupa kata sandi</string>
+    <string name="signin_or_continue_with">atau lanjutkan dengan</string>
+    <string name="signin_button">Masuk</string>
+    <string name="signin_no_account_prompt">Belum punya akun? </string>
+    <string name="signin_sign_up_link">Daftar</string>
+
+    <string name="signup_headline">Buat akun</string>
+    <string name="signup_body">Gratis selamanya. Premium adalah pembelian sekali saja, bukan langganan.</string>
+    <string name="signup_name_label">Nama lengkap</string>
+    <string name="signup_email_label">Email</string>
+    <string name="signup_password_label">Kata sandi</string>
+    <string name="signup_consent">Saya setuju dengan Ketentuan Layanan dan Kebijakan Privasi. Pemindaian tetap ada di perangkat ini.</string>
+    <string name="signup_button">Daftar</string>
+    <string name="signup_have_account_prompt">Sudah punya akun? </string>
+    <string name="signup_sign_in_link">Masuk</string>
+
+    <string name="reset_headline">Periksa email Anda</string>
+    <string name="reset_body">Kami mengirim kode enam digit ke %1$s. Masukkan di bawah untuk mengatur ulang kata sandi Anda.</string>
+    <string name="reset_default_email">email Anda</string>
+    <string name="reset_resend_prompt">Belum menerima email?</string>
+    <string name="reset_resend_prefix">Anda dapat mengirim ulang kode dalam </string>
+    <string name="reset_resend_seconds">%1$d dtk</string>
+    <string name="reset_confirm_button">Konfirmasi</string>
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">Lihat semua berkas</string>
+    <string name="home_recent_files_header">Berkas Terbaru</string>
+    <string name="home_empty_title">Belum ada dokumen</string>
+    <string name="home_empty_message">Pindai dokumen pertamamu untuk melihatnya di sini.</string>
+    <string name="home_scan_fab_desc">Pindai</string>
+    <string name="home_tool_scan_doc">Pindai Dok.</string>
+    <string name="home_tool_receipt">Struk</string>
+    <string name="home_tool_id_card">Kartu ID</string>
+    <string name="home_tool_import_pdf">Impor PDF</string>
+    <string name="home_tool_warranties">Garansi</string>
+    <string name="home_tool_protect">Lindungi</string>
+    <string name="home_tool_export_csv">Ekspor CSV</string>
+    <string name="home_tool_all_tools">Semua Alat</string>
+
+    <string name="account_title">Akun</string>
+    <string name="account_more_desc">Lainnya</string>
+    <string name="account_row_personal_info">Info Pribadi</string>
+    <string name="account_row_scan_preferences">Preferensi pemindaian</string>
+    <string name="account_row_security">Keamanan</string>
+    <string name="account_row_language">Bahasa</string>
+    <string name="account_row_backup">Cadangan &amp; pemulihan</string>
+    <string name="account_row_privacy">Privasi</string>
+    <string name="account_row_usage">Penggunaan</string>
+    <string name="account_storage_header">Penyimpanan</string>
+    <string name="account_calculating">Menghitung…</string>
+    <string name="account_storage_used_cache">%1$s terpakai · %2$s cache</string>
+    <string name="account_clearing_cache">Menghapus…</string>
+    <string name="account_clear_cache">Hapus cache</string>
+    <string name="account_dark_mode">Mode Gelap</string>
+    <string name="account_log_out">Keluar</string>
+    <string name="account_not_signed_in_title">Anda belum masuk</string>
+    <string name="account_not_signed_in_body">Docket berfungsi penuh tanpa profil. Masuk atau buat akun hanya jika ingin nama dan email ditampilkan di sini.</string>
+    <string name="account_create_account_button">Buat akun</string>
+    <string name="account_used_on_device">%1$s terpakai di perangkat ini</string>
+    <string name="account_premium_banner_title">Ke Premium</string>
+    <string name="account_premium_banner_subtitle">Ekspor massal, bahasa OCR, lapisan teks</string>
+    <string name="account_unlock_button">Buka</string>
+
+    <string name="document_detail_action_export">Ekspor</string>
+    <string name="document_detail_action_rename">Ganti nama</string>
 </resources>

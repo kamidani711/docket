@@ -330,6 +330,8 @@ class DocumentDetailViewModelTest {
             imageExporter = FakeImageExporter(),
             premiumRepository = premiumRepository,
             analyticsRepository = analyticsRepository,
+            csvExporter = FakeCsvExporter(),
+            receiptRepository = receiptRepository,
             appContext = mock(Context::class.java)
         ),
         parseReceiptUseCase = ParseReceiptUseCase(documentRepository, ocrRepository, receiptParser),
@@ -481,6 +483,11 @@ class DocumentDetailViewModelTest {
             throw UnsupportedOperationException("not exercised by these tests — see the class doc")
     }
 
+    private class FakeCsvExporter : com.docket.domain.repository.CsvExporter {
+        override suspend fun exportReceiptsToCsv(receipts: List<Receipt>, destination: java.io.File) =
+            throw UnsupportedOperationException("not exercised by these tests — see the class doc")
+    }
+
     private class FakeDocumentRepository(private val document: Document?) : DocumentRepository {
         val renamedTitles = mutableListOf<String>()
         val softDeletedIds = mutableListOf<Long>()
@@ -496,6 +503,8 @@ class DocumentDetailViewModelTest {
             typeFilter: com.docket.domain.model.DocumentTypeFilter,
             sortBy: com.docket.domain.model.DocumentSort
         ): Flow<List<Document>> = flowOf(emptyList())
+        override fun observeRecentDocuments(limit: Int): Flow<List<Document>> = flowOf(emptyList())
+        override fun observeLibrarySize(): Flow<Int> = flowOf(0)
         override fun observeDocument(documentId: Long): Flow<Document?> = documentFlow
         override suspend fun getDocument(documentId: Long): Document? = documentFlow.value
         override suspend fun getTitlesCreatedBetween(dayStart: Long, dayEnd: Long): List<String> = emptyList()

@@ -30,18 +30,14 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileDownload
-import androidx.compose.material.icons.filled.MoreVert
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.DropdownMenu
@@ -79,17 +75,21 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.docket.R
 import com.docket.domain.model.Document
 import com.docket.ui.components.DocketTextButton
 import com.docket.ui.components.SecondaryButton
 import com.docket.ui.components.WarrantyCard
+import com.docket.ui.icons.DocketIcons
 import com.docket.ui.theme.DocketDimens
+import com.docket.ui.theme.DocketPillShape
 import com.docket.ui.theme.DocketSpacing
 import com.docket.ui.theme.docketCardShadow
 import com.docket.ui.util.formatDisplayDate
@@ -153,14 +153,14 @@ fun DocumentDetailScreen(
                 title = {},
                 navigationIcon = {
                     IconButton(onClick = onBack) {
-                        Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
+                        Icon(DocketIcons.Back, contentDescription = "Back")
                     }
                 },
                 actions = {
                     if (document != null && receipt == null) {
                         Box {
                             IconButton(onClick = { showOverflowMenu = true }) {
-                                Icon(Icons.Filled.MoreVert, contentDescription = "More actions")
+                                Icon(DocketIcons.Dots, contentDescription = "More actions")
                             }
                             DropdownMenu(expanded = showOverflowMenu, onDismissRequest = { showOverflowMenu = false }) {
                                 DropdownMenuItem(
@@ -294,6 +294,8 @@ fun DocumentDetailScreen(
                 exportState = exportState,
                 onExportPdf = viewModel::exportPdf,
                 onExportImages = viewModel::exportImages,
+                onExportCsv = viewModel::exportCsv,
+                onShareSheet = viewModel::shareDocument,
                 onOpenPremium = onOpenPremium,
                 onDismiss = {
                     showExportSheet = false
@@ -416,7 +418,7 @@ private fun EditableDocumentName(
 private fun SearchableBadge(hasOcrText: Boolean) {
     Surface(
         color = MaterialTheme.colorScheme.surfaceContainerHigh,
-        shape = RoundedCornerShape(50)
+        shape = DocketPillShape
     ) {
         Text(
             text = if (hasOcrText) "Text searchable" else "Extracting text…",
@@ -438,10 +440,10 @@ private fun DetailActionRow(
     modifier: Modifier = Modifier
 ) {
     Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-        DetailActionButton(Icons.Filled.Share, "Share", onShare)
-        DetailActionButton(Icons.Filled.FileDownload, "Export", onExport)
-        DetailActionButton(Icons.Filled.Edit, "Rename", onRename)
-        DetailActionButton(Icons.Filled.Delete, "Delete", onDelete)
+        DetailActionButton(DocketIcons.Share, stringResource(R.string.common_share), onShare)
+        DetailActionButton(Icons.Filled.FileDownload, stringResource(R.string.document_detail_action_export), onExport)
+        DetailActionButton(Icons.Filled.Edit, stringResource(R.string.document_detail_action_rename), onRename)
+        DetailActionButton(Icons.Filled.Delete, stringResource(R.string.common_delete), onDelete)
     }
 }
 
@@ -545,7 +547,7 @@ private fun FullScreenPageViewer(
                         .statusBarsPadding()
                         .padding(DocketSpacing.space16),
                     color = Color.Black.copy(alpha = 0.5f),
-                    shape = RoundedCornerShape(50)
+                    shape = DocketPillShape
                 ) {
                     Text(
                         text = "${pagerState.currentPage + 1} / ${document.pageCount}",

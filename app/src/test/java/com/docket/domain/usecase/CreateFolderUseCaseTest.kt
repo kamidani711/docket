@@ -89,6 +89,8 @@ class CreateFolderUseCaseTest {
         override suspend fun renameDocument(documentId: Long, title: String) = Unit
         override fun observeLibrary(folderId: Long?, typeFilter: DocumentTypeFilter, sortBy: DocumentSort): Flow<List<Document>> =
             flowOf(emptyList())
+        override fun observeRecentDocuments(limit: Int): Flow<List<Document>> = flowOf(emptyList())
+        override fun observeLibrarySize(): Flow<Int> = flowOf(0)
         override fun observeDocument(documentId: Long): Flow<Document?> = MutableStateFlow(null)
         override suspend fun getDocument(documentId: Long): Document? = null
         override fun observeDeletedDocuments(): Flow<List<Document>> = flowOf(emptyList())

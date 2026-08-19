@@ -133,4 +133,86 @@
     <string name="unlock_button_working">Processando…</string>
     <string name="unlock_button_with_price">Desbloquear Premium — %1$s</string>
     <string name="unlock_restore">Restaurar compras</string>
+    <string name="unlock_price_suffix">/ pagamento único</string>
+    <string name="unlock_active_label">Premium ativo</string>
+
+    <string name="onboarding_slide1_title">Digitalize qualquer coisa, mantenha no seu celular</string>
+    <string name="onboarding_slide1_body">Recibos, cartões de garantia, contratos de aluguel. O Docket captura páginas e as arquiva sem enviar nada para um servidor.</string>
+    <string name="onboarding_slide2_title">Cada palavra é pesquisável</string>
+    <string name="onboarding_slide2_body">O texto é lido no dispositivo no momento em que uma digitalização é salva, então você pode encontrar um documento pelo que ele diz, não por onde foi arquivado.</string>
+    <string name="onboarding_slide3_title">Recibos e garantias, monitorados</string>
+    <string name="onboarding_slide3_body">O Docket extrai os totais dos recibos e avisa antes que uma garantia expire.</string>
+    <string name="onboarding_skip">Pular</string>
+    <string name="onboarding_next">Próximo</string>
+
+    <string name="signin_headline">Bem-vindo de volta</string>
+    <string name="signin_body">O Docket mantém tudo neste dispositivo. Entre apenas se quiser backup e sincronização.</string>
+    <string name="signin_email_label">E-mail</string>
+    <string name="signin_password_label">Senha</string>
+    <string name="signin_remember_me">Lembrar de mim</string>
+    <string name="signin_forgot_password">Esqueci minha senha</string>
+    <string name="signin_or_continue_with">ou continue com</string>
+    <string name="signin_button">Entrar</string>
+    <string name="signin_no_account_prompt">Não tem uma conta? </string>
+    <string name="signin_sign_up_link">Cadastre-se</string>
+
+    <string name="signup_headline">Criar conta</string>
+    <string name="signup_body">Grátis para sempre. O Premium é uma compra única, nunca uma assinatura.</string>
+    <string name="signup_name_label">Nome completo</string>
+    <string name="signup_email_label">E-mail</string>
+    <string name="signup_password_label">Senha</string>
+    <string name="signup_consent">Concordo com os Termos de Serviço e a Política de Privacidade. As digitalizações permanecem neste dispositivo.</string>
+    <string name="signup_button">Cadastrar</string>
+    <string name="signup_have_account_prompt">Já tem uma conta? </string>
+    <string name="signup_sign_in_link">Entrar</string>
+
+    <string name="reset_headline">Verifique seu e-mail</string>
+    <string name="reset_body">Enviamos um código de seis dígitos para %1$s. Digite-o abaixo para redefinir sua senha.</string>
+    <string name="reset_default_email">seu e-mail</string>
+    <string name="reset_resend_prompt">Não recebeu o e-mail?</string>
+    <string name="reset_resend_prefix">Você pode reenviar o código em </string>
+    <string name="reset_resend_seconds">%1$d s</string>
+    <string name="reset_confirm_button">Confirmar</string>
+
+    <string name="home_title">Docket</string>
+    <string name="home_see_all_desc">Ver todos os arquivos</string>
+    <string name="home_recent_files_header">Arquivos recentes</string>
+    <string name="home_empty_title">Ainda não há documentos</string>
+    <string name="home_empty_message">Digitalize seu primeiro documento para vê-lo aqui.</string>
+    <string name="home_scan_fab_desc">Digitalizar</string>
+    <string name="home_tool_scan_doc">Digitalizar doc.</string>
+    <string name="home_tool_receipt">Recibo</string>
+    <string name="home_tool_id_card">Documento</string>
+    <string name="home_tool_import_pdf">Importar PDF</string>
+    <string name="home_tool_warranties">Garantias</string>
+    <string name="home_tool_protect">Proteger</string>
+    <string name="home_tool_export_csv">Exportar CSV</string>
+    <string name="home_tool_all_tools">Todas as ferramentas</string>
+
+    <string name="account_title">Conta</string>
+    <string name="account_more_desc">Mais</string>
+    <string name="account_row_personal_info">Informações pessoais</string>
+    <string name="account_row_scan_preferences">Preferências de digitalização</string>
+    <string name="account_row_security">Segurança</string>
+    <string name="account_row_language">Idioma</string>
+    <string name="account_row_backup">Backup e restauração</string>
+    <string name="account_row_privacy">Privacidade</string>
+    <string name="account_row_usage">Uso</string>
+    <string name="account_storage_header">Armazenamento</string>
+    <string name="account_calculating">Calculando…</string>
+    <string name="account_storage_used_cache">%1$s usados · %2$s em cache</string>
+    <string name="account_clearing_cache">Limpando…</string>
+    <string name="account_clear_cache">Limpar cache</string>
+    <string name="account_dark_mode">Modo escuro</string>
+    <string name="account_log_out">Sair</string>
+    <string name="account_not_signed_in_title">Você não está conectado</string>
+    <string name="account_not_signed_in_body">O Docket funciona totalmente sem um perfil. Entre ou crie um apenas se quiser que um nome e e-mail apareçam aqui.</string>
+    <string name="account_create_account_button">Criar conta</string>
+    <string name="account_used_on_device">%1$s usados neste dispositivo</string>
+    <string name="account_premium_banner_title">Ir para o Premium</string>
+    <string name="account_premium_banner_subtitle">Exportação em lote, idiomas de OCR, camada de texto</string>
+    <string name="account_unlock_button">Desbloquear</string>
+
+    <string name="document_detail_action_export">Exportar</string>
+    <string name="document_detail_action_rename">Renomear</string>
 </resources>
