@@ -68,7 +68,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -109,18 +109,18 @@ fun LibraryScreen(
     onOpenDocument: (Long) -> Unit,
     onOpenSearch: () -> Unit,
     onOpenRecentlyDeleted: () -> Unit,
-    onNavigate: (String) -> Unit,
+    onNavigate: (Destination) -> Unit,
     viewModel: LibraryViewModel = hiltViewModel()
 ) {
-    val folders by viewModel.folders.collectAsState()
-    val folderDocumentCounts by viewModel.folderDocumentCounts.collectAsState()
-    val documents by viewModel.documents.collectAsState()
-    val folderStack by viewModel.folderStack.collectAsState()
-    val canCreateSubfolder by viewModel.canCreateSubfolder.collectAsState()
-    val sortBy by viewModel.sortBy.collectAsState()
-    val typeFilter by viewModel.typeFilter.collectAsState()
-    val viewMode by viewModel.viewMode.collectAsState()
-    val selection by viewModel.selection.collectAsState()
+    val folders by viewModel.folders.collectAsStateWithLifecycle()
+    val folderDocumentCounts by viewModel.folderDocumentCounts.collectAsStateWithLifecycle()
+    val documents by viewModel.documents.collectAsStateWithLifecycle()
+    val folderStack by viewModel.folderStack.collectAsStateWithLifecycle()
+    val canCreateSubfolder by viewModel.canCreateSubfolder.collectAsStateWithLifecycle()
+    val sortBy by viewModel.sortBy.collectAsStateWithLifecycle()
+    val typeFilter by viewModel.typeFilter.collectAsStateWithLifecycle()
+    val viewMode by viewModel.viewMode.collectAsStateWithLifecycle()
+    val selection by viewModel.selection.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val snackbarHostState = remember { SnackbarHostState() }
@@ -147,7 +147,7 @@ fun LibraryScreen(
                     if (result == SnackbarResult.ActionPerformed) viewModel.undoDelete(event.documentIds)
                 }
                 is LibraryEvent.ShareFiles -> shareFiles(context, event.files, event.mimeType)
-                LibraryEvent.PremiumRequired -> onNavigate(Destination.Unlock.route)
+                LibraryEvent.PremiumRequired -> onNavigate(Destination.Unlock)
             }
         }
     }
@@ -180,14 +180,14 @@ fun LibraryScreen(
                     onNewFolder = { showNewFolderPrompt = true },
                     canCreateSubfolder = canCreateSubfolder,
                     onOpenRecentlyDeleted = onOpenRecentlyDeleted,
-                    onOpenSettingsClick = { onNavigate(Destination.Settings.route) }
+                    onOpenSettingsClick = { onNavigate(Destination.Settings) }
                 )
             }
         },
         floatingActionButton = {
             if (!isSelectionMode) {
                 FloatingActionButton(
-                    onClick = { onNavigate(Destination.Scan.route) },
+                    onClick = { onNavigate(Destination.Scan) },
                     containerColor = MaterialTheme.colorScheme.primary,
                     contentColor = MaterialTheme.colorScheme.onPrimary,
                     elevation = FloatingActionButtonDefaults.elevation(
@@ -207,7 +207,7 @@ fun LibraryScreen(
                 message = stringResource(R.string.library_empty_message),
                 illustration = { LibraryEmptyIllustration() },
                 actionLabel = stringResource(R.string.library_scan_a_document),
-                onAction = { onNavigate(Destination.Scan.route) },
+                onAction = { onNavigate(Destination.Scan) },
                 modifier = Modifier.padding(innerPadding).fillMaxSize()
             )
         } else {

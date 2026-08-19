@@ -13,7 +13,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.text.style.TextOverflow
+import com.docket.R
 import com.docket.ui.theme.DocketDimens
 
 @Composable
@@ -57,11 +59,8 @@ fun FolderCard(
             maxLines = 1,
             overflow = TextOverflow.Ellipsis
         )
-        // NOTE: plain English pluralization for now — this is the layout/RTL pass, not the
-        // localization pass. Route through string resources (with proper plural rules for
-        // Arabic/Urdu) before ship.
         Text(
-            text = if (documentCount == 1) "1 document" else "$documentCount documents",
+            text = pluralStringResource(R.plurals.library_folder_document_count, documentCount, documentCount),
             style = MaterialTheme.typography.bodySmall,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

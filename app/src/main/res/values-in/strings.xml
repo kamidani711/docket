@@ -48,6 +48,7 @@
     <string name="review_no_pages_message">Tambahkan halaman untuk memulai.</string>
     <string name="review_add_page">Tambah halaman</string>
     <string name="review_page_being_cropped_desc">Halaman yang sedang dipangkas</string>
+    <string name="review_page_selected_desc">Dipilih</string>
 
     <string name="filter_original">Asli</string>
     <string name="filter_black_and_white">Hitam Putih</string>
@@ -105,6 +106,9 @@
     </plurals>
     <string name="library_type_receipt_desc">Struk</string>
     <string name="library_type_warranty_desc">Garansi</string>
+    <plurals name="library_folder_document_count">
+        <item quantity="other">%1$d dokumen</item>
+    </plurals>
 
     <string name="search_placeholder">Cari di dokumen Anda</string>
     <string name="search_empty_title">Cari semua yang pernah Anda pindai</string>
@@ -112,6 +116,7 @@
     <string name="search_no_results_title">Tidak ada hasil</string>
     <string name="search_no_results_message">Tidak ada yang cocok dengan “%1$s”.</string>
     <string name="search_page_label">Halaman %1$d</string>
+    <string name="search_clear_desc">Hapus pencarian</string>
 
     <string name="unlock_title">Premium</string>
     <string name="unlock_owned_title">Anda memiliki Premium</string>

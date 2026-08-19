@@ -28,7 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -71,13 +71,13 @@ fun ReviewScreen(
     onSaveComplete: (documentId: Long) -> Unit,
     onOpenPremium: () -> Unit
 ) = DocketTheme(darkTheme = true) {
-    val session by viewModel.session.collectAsState()
-    val previewBitmaps by viewModel.previewBitmaps.collectAsState()
-    val filterSwatches by viewModel.filterSwatches.collectAsState()
-    val cropBaseImage by viewModel.cropBaseImage.collectAsState()
-    val exportProgress by viewModel.exportProgress.collectAsState()
-    val folders by viewModel.folders.collectAsState()
-    val defaultExportFormat by viewModel.defaultExportFormat.collectAsState()
+    val session by viewModel.session.collectAsStateWithLifecycle()
+    val previewBitmaps by viewModel.previewBitmaps.collectAsStateWithLifecycle()
+    val filterSwatches by viewModel.filterSwatches.collectAsStateWithLifecycle()
+    val cropBaseImage by viewModel.cropBaseImage.collectAsStateWithLifecycle()
+    val exportProgress by viewModel.exportProgress.collectAsStateWithLifecycle()
+    val folders by viewModel.folders.collectAsStateWithLifecycle()
+    val defaultExportFormat by viewModel.defaultExportFormat.collectAsStateWithLifecycle()
 
     var selectedPageId by remember { mutableStateOf<String?>(null) }
     var isCropping by remember { mutableStateOf(false) }

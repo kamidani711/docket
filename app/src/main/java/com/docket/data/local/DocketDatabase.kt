@@ -26,6 +26,13 @@ import com.docket.data.local.entity.WarrantyEntity
 // v4 -> v5: added the local-only analytics_events table.
 // fallbackToDestructiveMigration is fine pre-release (no installed users yet) — swap it for a
 // real Migration before shipping anything that ships with data worth keeping.
+//
+// exportSchema is true (schema JSON lands in app/schemas — see the ksp{} block in
+// build.gradle.kts) so that future Migration has a pair of snapshots to actually test against,
+// per Room's migration-testing guide. This alone doesn't add a migration — there's still only
+// ever been the one shipped version, so there's nothing to migrate *from* yet — it just means
+// the day a real Migration is written (the version bump above this comment), Room can generate
+// and verify it instead of that migration being untested.
 @Database(
     entities = [
         DocumentEntity::class,
@@ -41,7 +48,7 @@ import com.docket.data.local.entity.WarrantyEntity
         AnalyticsEventEntity::class
     ],
     version = 5,
-    exportSchema = false
+    exportSchema = true
 )
 abstract class DocketDatabase : RoomDatabase() {
     abstract fun documentDao(): DocumentDao

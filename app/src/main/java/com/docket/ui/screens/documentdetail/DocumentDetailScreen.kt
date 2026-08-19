@@ -58,7 +58,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -114,15 +114,15 @@ fun DocumentDetailScreen(
     onOpenPremium: () -> Unit,
     viewModel: DocumentDetailViewModel = hiltViewModel()
 ) {
-    val document by viewModel.document.collectAsState()
-    val hasOcrText by viewModel.hasOcrText.collectAsState()
-    val isPremium by viewModel.isPremium.collectAsState()
-    val exportState by viewModel.exportState.collectAsState()
-    val receipt by viewModel.receipt.collectAsState()
-    val warranty by viewModel.warranty.collectAsState()
-    val receiptDraft by viewModel.receiptDraft.collectAsState()
-    val isParsingReceipt by viewModel.isParsingReceipt.collectAsState()
-    val pageBitmaps by viewModel.pageBitmaps.collectAsState()
+    val document by viewModel.document.collectAsStateWithLifecycle()
+    val hasOcrText by viewModel.hasOcrText.collectAsStateWithLifecycle()
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
+    val exportState by viewModel.exportState.collectAsStateWithLifecycle()
+    val receipt by viewModel.receipt.collectAsStateWithLifecycle()
+    val warranty by viewModel.warranty.collectAsStateWithLifecycle()
+    val receiptDraft by viewModel.receiptDraft.collectAsStateWithLifecycle()
+    val isParsingReceipt by viewModel.isParsingReceipt.collectAsStateWithLifecycle()
+    val pageBitmaps by viewModel.pageBitmaps.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val haptics = LocalHapticFeedback.current

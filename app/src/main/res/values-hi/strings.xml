@@ -49,6 +49,7 @@
     <string name="review_no_pages_message">शुरू करने के लिए एक पेज जोड़ें।</string>
     <string name="review_add_page">पेज जोड़ें</string>
     <string name="review_page_being_cropped_desc">क्रॉप किया जा रहा पेज</string>
+    <string name="review_page_selected_desc">चयनित</string>
 
     <string name="filter_original">मूल</string>
     <string name="filter_black_and_white">ब्लैक एंड व्हाइट</string>
@@ -108,6 +109,10 @@
     </plurals>
     <string name="library_type_receipt_desc">रसीद</string>
     <string name="library_type_warranty_desc">वारंटी</string>
+    <plurals name="library_folder_document_count">
+        <item quantity="one">%1$d दस्तावेज़</item>
+        <item quantity="other">%1$d दस्तावेज़</item>
+    </plurals>
 
     <string name="search_placeholder">अपने दस्तावेज़ों में खोजें</string>
     <string name="search_empty_title">जो कुछ भी आपने स्कैन किया है उसमें खोजें</string>
@@ -115,6 +120,7 @@
     <string name="search_no_results_title">कोई नतीजा नहीं</string>
     <string name="search_no_results_message">"%1$s" से कुछ मेल नहीं खाया।</string>
     <string name="search_page_label">पेज %1$d</string>
+    <string name="search_clear_desc">खोज साफ़ करें</string>
 
     <string name="unlock_title">प्रीमियम</string>
     <string name="unlock_owned_title">आपके पास प्रीमियम है</string>

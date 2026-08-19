@@ -25,7 +25,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,10 +49,10 @@ import com.docket.ui.theme.DocketSpacing
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UnlockScreen(onBack: () -> Unit, viewModel: UnlockViewModel = hiltViewModel()) {
-    val isPremium by viewModel.isPremium.collectAsState()
-    val price by viewModel.price.collectAsState()
-    val isBusy by viewModel.isBusy.collectAsState()
-    val message by viewModel.message.collectAsState()
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
+    val price by viewModel.price.collectAsStateWithLifecycle()
+    val isBusy by viewModel.isBusy.collectAsStateWithLifecycle()
+    val message by viewModel.message.collectAsStateWithLifecycle()
     val activity = LocalContext.current as? Activity
 
     val benefits = listOf(

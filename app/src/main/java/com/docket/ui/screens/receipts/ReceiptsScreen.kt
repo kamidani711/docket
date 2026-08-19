@@ -22,7 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -50,10 +50,10 @@ fun ReceiptsScreen(
     onOpenDocument: (Long) -> Unit,
     viewModel: ReceiptsViewModel = hiltViewModel()
 ) {
-    val receipts by viewModel.receipts.collectAsState()
-    val monthlySpend by viewModel.monthlySpend.collectAsState()
-    val csvFile by viewModel.csvFile.collectAsState()
-    val isExportingCsv by viewModel.isExportingCsv.collectAsState()
+    val receipts by viewModel.receipts.collectAsStateWithLifecycle()
+    val monthlySpend by viewModel.monthlySpend.collectAsStateWithLifecycle()
+    val csvFile by viewModel.csvFile.collectAsStateWithLifecycle()
+    val isExportingCsv by viewModel.isExportingCsv.collectAsStateWithLifecycle()
     val context = LocalContext.current
 
     var merchantQuery by remember { mutableStateOf("") }

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
@@ -58,10 +59,20 @@ android {
     }
 }
 
+ksp {
+    // Room schema export destination — see DocketDatabase's exportSchema note. Each version
+    // bump drops a new JSON snapshot here; a real Migration (once one exists) is tested against
+    // the pair of snapshots it bridges, per Room's own migration-testing guide.
+    arg("room.schemaLocation", "$projectDir/schemas")
+}
+
 dependencies {
     // Core / Lifecycle
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
+    // Lifecycle-aware StateFlow collection in Compose (collectAsStateWithLifecycle) — pauses
+    // collection below STARTED instead of collecting for the app's entire process lifetime.
+    implementation(libs.androidx.lifecycle.runtime.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.androidx.activity.compose)
 
@@ -73,6 +84,9 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.androidx.navigation.compose)
+    // Navigation Compose's type-safe (@Serializable route) API needs this on the classpath —
+    // see Destination.kt.
+    implementation(libs.kotlinx.serialization.core)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
 
@@ -127,6 +141,10 @@ dependencies {
     // Testing
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
+    // Stands in for the couple of Android framework types (Context, Bitmap) that leak into a
+    // few use case constructors — see the version catalog note. Everything domain-owned stays a
+    // hand-written fake.
+    testImplementation(libs.mockito.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))

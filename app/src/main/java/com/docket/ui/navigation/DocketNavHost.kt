@@ -14,11 +14,9 @@ import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
 import androidx.navigation.compose.rememberNavController
 import com.docket.ui.screens.analytics.AnalyticsScreen
 import com.docket.ui.screens.backup.BackupScreen
@@ -37,8 +35,6 @@ import com.docket.ui.screens.settings.SettingsScreen
 import com.docket.ui.screens.unlock.UnlockScreen
 import com.docket.ui.screens.warranties.WarrantiesScreen
 
-private const val SCAN_FLOW_ROUTE = "scan_flow"
-
 @Composable
 fun DocketNavHost(
     navController: NavHostController = rememberNavController(),
@@ -48,7 +44,7 @@ fun DocketNavHost(
     // Warranty reminder notification taps land here — see MainActivity.
     LaunchedEffect(pendingDocumentId) {
         if (pendingDocumentId != null) {
-            navController.navigate(Destination.DocumentDetail.createRoute(pendingDocumentId))
+            navController.navigate(Destination.DocumentDetail(pendingDocumentId))
             onPendingDocumentIdConsumed()
         }
     }
@@ -73,24 +69,24 @@ fun DocketNavHost(
 
     NavHost(
         navController = navController,
-        startDestination = Destination.Library.route,
+        startDestination = Destination.Library,
         enterTransition = enter,
         exitTransition = exit,
         popEnterTransition = popEnter,
         popExitTransition = popExit
     ) {
-        composable(Destination.Library.route) {
+        composable<Destination.Library> {
             LibraryScreen(
                 onOpenDocument = { documentId ->
-                    navController.navigate(Destination.DocumentDetail.createRoute(documentId))
+                    navController.navigate(Destination.DocumentDetail(documentId))
                 },
-                onOpenSearch = { navController.navigate(Destination.Search.route) },
-                onOpenRecentlyDeleted = { navController.navigate(Destination.RecentlyDeleted.route) },
-                onNavigate = { route -> navController.navigate(route) }
+                onOpenSearch = { navController.navigate(Destination.Search) },
+                onOpenRecentlyDeleted = { navController.navigate(Destination.RecentlyDeleted) },
+                onNavigate = { destination -> navController.navigate(destination) }
             )
         }
 
-        composable(Destination.RecentlyDeleted.route) {
+        composable<Destination.RecentlyDeleted> {
             RecentlyDeletedScreen(onBack = navController::popBackStack)
         }
 
@@ -99,101 +95,99 @@ fun DocketNavHost(
         // navigate Scan -> Review -> (add a page, which pops back to Scan's launcher) -> Review
         // without the in-progress session resetting at any point in between. See
         // ScanSessionViewModel's class doc for why there's barely any state to lose either way.
-        navigation(startDestination = Destination.Scan.route, route = SCAN_FLOW_ROUTE) {
-            composable(Destination.Scan.route) { backStackEntry ->
+        navigation<Destination.ScanFlow>(startDestination = Destination.Scan) {
+            composable<Destination.Scan> { backStackEntry ->
                 val parentEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(SCAN_FLOW_ROUTE)
+                    navController.getBackStackEntry<Destination.ScanFlow>()
                 }
                 val viewModel: ScanSessionViewModel = hiltViewModel(parentEntry)
                 ScanScreen(
                     viewModel = viewModel,
                     onBack = navController::popBackStack,
-                    onContinueToReview = { navController.navigate(Destination.Review.route) }
+                    onContinueToReview = { navController.navigate(Destination.Review) }
                 )
             }
-            composable(Destination.Review.route) { backStackEntry ->
+            composable<Destination.Review> { backStackEntry ->
                 val parentEntry = remember(backStackEntry) {
-                    navController.getBackStackEntry(SCAN_FLOW_ROUTE)
+                    navController.getBackStackEntry<Destination.ScanFlow>()
                 }
                 val viewModel: ScanSessionViewModel = hiltViewModel(parentEntry)
                 ReviewScreen(
                     viewModel = viewModel,
                     onBack = navController::popBackStack,
                     onSaveComplete = {
-                        navController.navigate(Destination.Library.route) {
-                            popUpTo(SCAN_FLOW_ROUTE) { inclusive = true }
+                        navController.navigate(Destination.Library) {
+                            popUpTo<Destination.ScanFlow> { inclusive = true }
                         }
                     },
-                    onOpenPremium = { navController.navigate(Destination.Unlock.route) }
+                    onOpenPremium = { navController.navigate(Destination.Unlock) }
                 )
             }
         }
 
-        composable(
-            route = Destination.DocumentDetail.route,
-            arguments = listOf(navArgument(Destination.ARG_DOCUMENT_ID) { type = NavType.LongType })
-        ) {
+        composable<Destination.DocumentDetail> {
             // documentId itself is read from SavedStateHandle inside DocumentDetailViewModel
-            // (Hilt's nav-arg integration wires it in automatically) rather than threaded
-            // through here as a screen parameter.
+            // (Hilt's nav-arg integration wires it in automatically, keyed by
+            // Destination.ARG_DOCUMENT_ID) rather than threaded through here as a screen
+            // parameter.
             DocumentDetailScreen(
                 onBack = navController::popBackStack,
-                onOpenPremium = { navController.navigate(Destination.Unlock.route) }
+                onOpenPremium = { navController.navigate(Destination.Unlock) }
             )
         }
 
-        composable(Destination.Search.route) {
+        composable<Destination.Search> {
             SearchScreen(
                 onBack = navController::popBackStack,
                 onResultSelected = { documentId ->
-                    navController.navigate(Destination.DocumentDetail.createRoute(documentId))
+                    navController.navigate(Destination.DocumentDetail(documentId))
                 }
             )
         }
 
-        composable(Destination.Receipts.route) {
+        composable<Destination.Receipts> {
             ReceiptsScreen(
                 onBack = navController::popBackStack,
                 onOpenDocument = { documentId ->
-                    navController.navigate(Destination.DocumentDetail.createRoute(documentId))
+                    navController.navigate(Destination.DocumentDetail(documentId))
                 }
             )
         }
-        composable(Destination.Warranties.route) {
+        composable<Destination.Warranties> {
             WarrantiesScreen(
                 onBack = navController::popBackStack,
                 onOpenDocument = { documentId ->
-                    navController.navigate(Destination.DocumentDetail.createRoute(documentId))
+                    navController.navigate(Destination.DocumentDetail(documentId))
                 }
             )
         }
-        composable(Destination.Settings.route) {
+        composable<Destination.Settings> {
             SettingsScreen(
                 onBack = navController::popBackStack,
-                onOpenBackup = { navController.navigate(Destination.Backup.route) },
-                onOpenPrivacy = { navController.navigate(Destination.Privacy.route) },
-                onOpenPremium = { navController.navigate(Destination.Unlock.route) },
-                onOpenAnalytics = { navController.navigate(Destination.Analytics.route) },
-                onOpenDesignSystem = { navController.navigate(Destination.DesignSystem.route) },
-                onOpenPipelineDebug = { navController.navigate(Destination.PipelineDebug.route) }
+                onOpenBackup = { navController.navigate(Destination.Backup) },
+                onOpenPrivacy = { navController.navigate(Destination.Privacy) },
+                onOpenPremium = { navController.navigate(Destination.Unlock) },
+                onOpenAnalytics = { navController.navigate(Destination.Analytics) },
+                onOpenDesignSystem = { navController.navigate(Destination.DesignSystem) },
+                onOpenPipelineDebug = { navController.navigate(Destination.PipelineDebug) }
             )
         }
-        composable(Destination.Backup.route) {
+        composable<Destination.Backup> {
             BackupScreen(onBack = navController::popBackStack)
         }
-        composable(Destination.Privacy.route) {
+        composable<Destination.Privacy> {
             PrivacyScreen(onBack = navController::popBackStack)
         }
-        composable(Destination.Analytics.route) {
+        composable<Destination.Analytics> {
             AnalyticsScreen(onBack = navController::popBackStack)
         }
-        composable(Destination.Unlock.route) {
+        composable<Destination.Unlock> {
             UnlockScreen(onBack = navController::popBackStack)
         }
-        composable(Destination.DesignSystem.route) {
+        composable<Destination.DesignSystem> {
             DesignSystemScreen(onBack = navController::popBackStack)
         }
-        composable(Destination.PipelineDebug.route) {
+        composable<Destination.PipelineDebug> {
             PipelineDebugScreen(onBack = navController::popBackStack)
         }
     }

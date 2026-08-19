@@ -27,7 +27,7 @@ import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,15 +63,15 @@ fun SettingsScreen(
     onOpenPipelineDebug: () -> Unit,
     viewModel: SettingsViewModel = hiltViewModel()
 ) {
-    val languagePacks by viewModel.languagePacks.collectAsState()
-    val isPremium by viewModel.isPremium.collectAsState()
-    val installingLanguage by viewModel.installingLanguage.collectAsState()
-    val errorMessage by viewModel.errorMessage.collectAsState()
-    val defaultExportFormat by viewModel.defaultExportFormat.collectAsState()
-    val defaultLibrarySort by viewModel.defaultLibrarySort.collectAsState()
-    val appLockEnabled by viewModel.appLockEnabled.collectAsState()
-    val storageBreakdown by viewModel.storageBreakdown.collectAsState()
-    val isClearingCache by viewModel.isClearingCache.collectAsState()
+    val languagePacks by viewModel.languagePacks.collectAsStateWithLifecycle()
+    val isPremium by viewModel.isPremium.collectAsStateWithLifecycle()
+    val installingLanguage by viewModel.installingLanguage.collectAsStateWithLifecycle()
+    val errorMessage by viewModel.errorMessage.collectAsStateWithLifecycle()
+    val defaultExportFormat by viewModel.defaultExportFormat.collectAsStateWithLifecycle()
+    val defaultLibrarySort by viewModel.defaultLibrarySort.collectAsStateWithLifecycle()
+    val appLockEnabled by viewModel.appLockEnabled.collectAsStateWithLifecycle()
+    val storageBreakdown by viewModel.storageBreakdown.collectAsStateWithLifecycle()
+    val isClearingCache by viewModel.isClearingCache.collectAsStateWithLifecycle()
 
     // BiometricPrompt needs a live FragmentActivity (see BiometricAuthenticator) — MainActivity
     // is one, so this cast is safe everywhere this screen is actually reachable from.

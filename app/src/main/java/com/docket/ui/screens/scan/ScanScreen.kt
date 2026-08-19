@@ -51,7 +51,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -96,8 +96,8 @@ fun ScanScreen(
     onBack: () -> Unit,
     onContinueToReview: () -> Unit
 ) {
-    val session by viewModel.session.collectAsState()
-    val previewBitmaps by viewModel.previewBitmaps.collectAsState()
+    val session by viewModel.session.collectAsStateWithLifecycle()
+    val previewBitmaps by viewModel.previewBitmaps.collectAsStateWithLifecycle()
     var errorMessage by remember { mutableStateOf<String?>(null) }
     var selectedMode by remember { mutableStateOf(ScanCaptureMode.DOCUMENT) }
 

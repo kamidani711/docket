@@ -14,7 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,7 +41,7 @@ fun AppLockGate(
     viewModel: AppLockViewModel = hiltViewModel(),
     content: @Composable () -> Unit
 ) {
-    val appLockEnabled by viewModel.appLockEnabled.collectAsState()
+    val appLockEnabled by viewModel.appLockEnabled.collectAsStateWithLifecycle()
     var isUnlocked by remember { mutableStateOf(false) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 

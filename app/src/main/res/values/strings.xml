@@ -100,6 +100,8 @@
     <string name="review_add_page">Add page</string>
     <!-- Content description for the page thumbnail shown full-size in the crop tool -->
     <string name="review_page_being_cropped_desc">Page being cropped</string>
+    <!-- Content description overlay on a page-strip thumbnail when it's the one currently open -->
+    <string name="review_page_selected_desc">Selected</string>
 
     <!-- Filter names shown under each filter swatch on the Review screen -->
     <string name="filter_original">Original</string>
@@ -197,6 +199,11 @@
     <!-- Grid card type-indicator icon content description, shown when a document has an active
          warranty attached -->
     <string name="library_type_warranty_desc">Warranty</string>
+    <!-- Folder chip's document count — %d is the number of documents filed in that folder -->
+    <plurals name="library_folder_document_count">
+        <item quantity="one">%1$d document</item>
+        <item quantity="other">%1$d documents</item>
+    </plurals>
 
     <!-- ===================== Search screen ===================== -->
 
@@ -211,6 +218,8 @@
     <string name="search_no_results_message">Nothing matched “%1$s”.</string>
     <!-- Result row subtitle — %d is which page of the document the match was found on -->
     <string name="search_page_label">Page %1$d</string>
+    <!-- Content description for the "X" button that clears the current search query -->
+    <string name="search_clear_desc">Clear search</string>
 
     <!-- ===================== Unlock (Premium) screen ===================== -->
 

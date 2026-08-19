@@ -48,6 +48,7 @@
     <string name="review_no_pages_message">Adicione uma página para começar.</string>
     <string name="review_add_page">Adicionar página</string>
     <string name="review_page_being_cropped_desc">Página sendo recortada</string>
+    <string name="review_page_selected_desc">Selecionada</string>
 
     <string name="filter_original">Original</string>
     <string name="filter_black_and_white">Preto e branco</string>
@@ -107,6 +108,10 @@
     </plurals>
     <string name="library_type_receipt_desc">Recibo</string>
     <string name="library_type_warranty_desc">Garantia</string>
+    <plurals name="library_folder_document_count">
+        <item quantity="one">%1$d documento</item>
+        <item quantity="other">%1$d documentos</item>
+    </plurals>
 
     <string name="search_placeholder">Pesquise seus documentos</string>
     <string name="search_empty_title">Pesquise tudo o que você já digitalizou</string>
@@ -114,6 +119,7 @@
     <string name="search_no_results_title">Nenhum resultado</string>
     <string name="search_no_results_message">Nada correspondeu a “%1$s”.</string>
     <string name="search_page_label">Página %1$d</string>
+    <string name="search_clear_desc">Limpar busca</string>
 
     <string name="unlock_title">Premium</string>
     <string name="unlock_owned_title">Você tem o Premium</string>
